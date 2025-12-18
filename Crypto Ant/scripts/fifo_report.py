@@ -60,7 +60,7 @@ class Lot:
         self.ref = ref
 
 
-def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
+def generate_fy_report(fy, sales, fees, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
     output_csv = os.path.join(output_dir, f"fy{fy}_report.csv")
     with open(output_csv, 'w', newline='') as f:
         writer = csv.writer(f)
@@ -79,6 +79,21 @@ def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, out
             # Lot rows
             for lot in lots_by_ccy[ccy]:
                 writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost)])
+
+        writer.writerow([])
+        writer.writerow(['Fees'])
+        writer.writerow(['Category', 'Date', 'Description', 'Trans Ref', 'Lot Ref', 'Fee (ZAR)'])
+        categories = {}
+        for fee in fees:
+            cat = fee['Category']
+            if cat not in categories:
+                categories[cat] = []
+            categories[cat].append(fee)
+        for cat in sorted(categories.keys()):
+            for fee in categories[cat]:
+                writer.writerow([fee['Category'], fee['Date'], fee['Description'], fee['Trans Ref'], fee['Lot Ref'], fee['Fee (ZAR)']])
+            total_fee = sum(Decimal(fee['Fee (ZAR)']) for fee in categories[cat])
+            writer.writerow([f'Total {cat}', '', '', '', '', s2(total_fee)])
 
     print(f"Wrote {output_csv}")
 
@@ -288,6 +303,7 @@ def process_fy(csv_files, output_dir, timestamp):
     balance_value = defaultdict(lambda: Decimal('0'))
 
     sales_per_fy = defaultdict(list)
+    fees_per_fy = defaultdict(list)
     last_trans_per_ccy = defaultdict(str)
     last_trans_ref_per_ccy = defaultdict(str)
 
@@ -311,23 +327,23 @@ def process_fy(csv_files, output_dir, timestamp):
         if 'fee' in desc.lower():
             balance_units[ccy] += qty_delta
             balance_value[ccy] -= value_amount
-            sales_per_fy[fy].append({
+            category = 'Other'
+            if 'Bought' in last_trans_per_ccy[ccy]:
+                category = 'Buying'
+            elif 'Sold' in last_trans_per_ccy[ccy]:
+                category = 'Selling'
+            fees_per_fy[fy].append({
+                'Category': category,
                 'Date': row['Timestamp (UTC)'],
-                'Currency': ccy,
                 'Description': f"Fee for {last_trans_per_ccy[ccy]}",
                 'Trans Ref': last_trans_ref_per_ccy[ccy],
                 'Lot Ref': '',
-                'Qty Sold': q8(qty_delta),
-                'Unit Cost': '',
-                'Total Cost': '',
-                'Proceeds': '',
-                'Profit': '',
                 'Fee (ZAR)': s2(value_amount),
             })
             continue
 
         if current_fy is not None and fy != current_fy:
-            generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+            generate_fy_report(current_fy, sales_per_fy[current_fy], fees_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
         current_fy = fy
 
@@ -409,7 +425,7 @@ def process_fy(csv_files, output_dir, timestamp):
             last_trans_per_ccy[ccy] = desc
 
     if current_fy is not None:
-        generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+        generate_fy_report(current_fy, sales_per_fy[current_fy], fees_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
 
 if __name__ == '__main__':
