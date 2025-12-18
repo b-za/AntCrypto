@@ -61,13 +61,13 @@ class Lot:
 
 
 def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
-    output_csv = os.path.join(output_dir, f"fy{fy}_report_{timestamp}.csv")
+    output_csv = os.path.join(output_dir, f"fy{fy}_report.csv")
     with open(output_csv, 'w', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(['Transactions for FY', fy])
-        writer.writerow(['Date', 'Currency', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
+        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
         for sale in sales:
-            writer.writerow([sale['Date'], sale['Currency'], sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
+            writer.writerow([sale['Date'], sale['Currency'], sale.get('Description', ''), sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
         writer.writerow(['Balances at end of FY', fy])
         writer.writerow(['Currency', 'Balance Units', 'Balance Value (ZAR)', 'Remaining Lots'])
@@ -299,6 +299,7 @@ def process_fy(csv_files, output_dir, timestamp):
             sales_per_fy[fy].append({
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
+                'Description': desc,
                 'Trans Ref': '',
                 'Lot Ref': '',
                 'Qty Sold': '',
@@ -353,6 +354,7 @@ def process_fy(csv_files, output_dir, timestamp):
                 sales_per_fy[fy].append({
                     'Date': row['Timestamp (UTC)'],
                     'Currency': ccy,
+                    'Description': desc,
                     'Trans Ref': trans_id,
                     'Lot Ref': lot.ref,
                     'Qty Sold': q8(-consume),
@@ -374,6 +376,7 @@ def process_fy(csv_files, output_dir, timestamp):
                 sales_per_fy[fy].append({
                     'Date': row['Timestamp (UTC)'],
                     'Currency': ccy,
+                    'Description': desc,
                     'Trans Ref': trans_id,
                     'Lot Ref': 'N/A',
                     'Qty Sold': q8(-remaining),
@@ -393,8 +396,10 @@ if __name__ == '__main__':
     data_dir = '../data'
     csv_files = glob.glob(os.path.join(data_dir, '*.csv'))
     timestamp = datetime.now().strftime('%Y_%m_%d_%H%M')
+    output_dir = os.path.join('../reports', timestamp)
+    os.makedirs(output_dir, exist_ok=True)
     for csv_file in csv_files:
         base = os.path.basename(csv_file).rsplit('.', 1)[0]
-        output_csv = os.path.join('../reports', f"{base}_fifo_{timestamp}.csv")
+        output_csv = os.path.join(output_dir, f"{base}_fifo.csv")
         main(csv_file, output_csv)
-    process_fy(csv_files, '../reports', timestamp)
+    process_fy(csv_files, output_dir, timestamp)
