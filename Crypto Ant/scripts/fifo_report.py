@@ -281,12 +281,10 @@ def main(input_csv, output_csv):
                     'Balance Value (ZAR)': s2(balance_value[ccy]),
             })
 
-            remaining -= consume
-
+                remaining -= consume
             
-            # If after consuming all available lots we still have remaining (shouldn't usually happen),
-            # treat remainder as sold from zero-cost lot
-            if remaining > Decimal('0.0000000001'):
+
+            if remaining > 0:
                 unit_cost = Decimal('0')
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
@@ -432,14 +430,9 @@ def process_fy(csv_files, output_dir, timestamp):
             last_trans_ref_per_ccy[ccy] = trans_id
             remaining = sell_qty
             total_qty_for_sale = sell_qty
-
-            while True:
-                if remaining <= Decimal('0.0000000001') or not lots_by_ccy[ccy]:
-                    break
+            while remaining > 0 and lots_by_ccy[ccy]:
                 lot = lots_by_ccy[ccy][0]
                 consume = lot.qty if lot.qty <= remaining else remaining
-                if consume <= 0:
-                    break
 
                 unit_cost = lot.unit_cost
                 total_cost = consume * unit_cost
@@ -498,10 +491,10 @@ def process_fy(csv_files, output_dir, timestamp):
                         'Profit': s2(profit),
                         'Fee (ZAR)': s2(Decimal('0')),
                     })
-
                 remaining -= consume
+            
 
-            if remaining > Decimal('0.0000000001'):
+            if remaining > 0:
                 unit_cost = Decimal('0')
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
