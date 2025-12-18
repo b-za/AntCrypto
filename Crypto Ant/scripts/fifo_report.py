@@ -73,9 +73,9 @@ def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, out
         writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)'])
         for ccy in sorted(lots_by_ccy.keys()):
             units = balance_units[ccy]
-            value = balance_value[ccy]
+            total_value = sum(lot.qty * r2(lot.unit_cost) for lot in lots_by_ccy[ccy])
             # Total row
-            writer.writerow([ccy, q8(units), s2(value), '', '', ''])
+            writer.writerow([ccy, q8(units), s2(total_value), '', '', ''])
             # Lot rows
             for lot in lots_by_ccy[ccy]:
                 writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost)])
@@ -124,7 +124,7 @@ def main(input_csv, output_csv):
             # Treat as fee, include in output but no inventory change
             output_rows.append({
                 'Financial Year': fy,
-                'Trans Ref': '',
+                'Trans Ref': last_trans_ref,
                 'Date': row['Timestamp (UTC)'],
                 'Description': f"Fee for {last_trans_desc}",
                 'Type': 'Fee',
@@ -151,6 +151,7 @@ def main(input_csv, output_csv):
             balance_value[ccy] += total_cost
 
             trans_id = next(buy_id_gen)
+            last_trans_ref = trans_id
 
             output_rows.append({
                 'Financial Year': fy,
@@ -178,6 +179,7 @@ def main(input_csv, output_csv):
                 lots_by_ccy[ccy].append(Lot(qty=Decimal('0'), unit_cost=Decimal('0'), ref='N/A'))
 
             trans_id = next(sell_id_gen)
+            last_trans_ref = trans_id
             remaining = sell_qty
 
             # Pre-calc to allocate proceeds proportionally by quantity
@@ -285,6 +287,7 @@ def process_fy(csv_files, output_dir, timestamp):
 
     sales_per_fy = defaultdict(list)
     last_trans_per_ccy = defaultdict(str)
+    last_trans_ref_per_ccy = defaultdict(str)
 
     current_fy = None
 
@@ -308,7 +311,7 @@ def process_fy(csv_files, output_dir, timestamp):
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
                 'Description': f"Fee for {last_trans_per_ccy[ccy]}",
-                'Trans Ref': '',
+                'Trans Ref': last_trans_ref_per_ccy[ccy],
                 'Lot Ref': '',
                 'Qty Sold': '',
                 'Unit Cost': '',
@@ -331,6 +334,8 @@ def process_fy(csv_files, output_dir, timestamp):
             balance_units[ccy] += qty
             total_cost = qty * unit_cost
             balance_value[ccy] += total_cost
+            last_trans_per_ccy[ccy] = desc
+            last_trans_ref_per_ccy[ccy] = ''
         else:
             sell_qty = -qty_delta
             proceeds_total = value_amount
@@ -338,6 +343,7 @@ def process_fy(csv_files, output_dir, timestamp):
                 lots_by_ccy[ccy].append(Lot(qty=Decimal('0'), unit_cost=Decimal('0'), ref='N/A'))
 
             trans_id = next(sell_id_gen)
+            last_trans_ref_per_ccy[ccy] = trans_id
             remaining = sell_qty
             total_qty_for_sale = sell_qty
 
