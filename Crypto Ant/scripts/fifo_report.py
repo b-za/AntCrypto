@@ -102,6 +102,7 @@ def main(input_csv, output_csv):
     sell_id_gen = gen_txn_ids('S')
 
     output_rows = []
+    last_trans_desc = ''
 
     for row in rows:
         ccy = row['Currency']
@@ -121,7 +122,7 @@ def main(input_csv, output_csv):
                 'Financial Year': fy,
                 'Trans Ref': '',
                 'Date': row['Timestamp (UTC)'],
-                'Description': desc,
+                'Description': f"Fee for {last_trans_desc}",
                 'Type': 'Fee',
                 'Lot Reference': '',
                 'Qty Change': '',
@@ -244,6 +245,8 @@ def main(input_csv, output_csv):
                 })
                 remaining = Decimal('0')
 
+            last_trans_desc = desc
+
     # Write output CSV
     fieldnames = [
         'Financial Year','Trans Ref','Date','Description','Type','Lot Reference',
@@ -277,6 +280,7 @@ def process_fy(csv_files, output_dir, timestamp):
     balance_value = defaultdict(lambda: Decimal('0'))
 
     sales_per_fy = defaultdict(list)
+    last_trans_per_ccy = defaultdict(str)
 
     current_fy = None
 
@@ -299,7 +303,7 @@ def process_fy(csv_files, output_dir, timestamp):
             sales_per_fy[fy].append({
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
-                'Description': desc,
+                'Description': f"Fee for {last_trans_per_ccy[ccy]}",
                 'Trans Ref': '',
                 'Lot Ref': '',
                 'Qty Sold': '',
@@ -387,6 +391,8 @@ def process_fy(csv_files, output_dir, timestamp):
                     'Fee (ZAR)': s2(Decimal('0')),
                 })
                 remaining = Decimal('0')
+
+            last_trans_per_ccy[ccy] = desc
 
     if current_fy is not None:
         generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
