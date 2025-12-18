@@ -1,6 +1,10 @@
-I have uploaded a CSV file containing my crypto trading history. Please run the fifo_report.py script to generate the detailed FIFO (First-In-First-Out) inventory tracking report.
+I have uploaded CSV files containing my crypto trading history. Please run the fifo_report.py script to generate the detailed FIFO (First-In-First-Out) inventory tracking reports.
 
-The script will process the data according to the following logic:
+The script will process all CSV files in the data/ directory and generate:
+1. Individual FIFO reports for each currency (e.g., eth_fifo_2025_12_18_0819.csv).
+2. Financial year reports for each FY (e.g., fy2021_report.csv), summarizing sales and end-of-year balances across all currencies.
+
+The script processes the data according to the following logic:
 
 *1. Data Preparation:*
 •⁠  ⁠*Item:* Treat the 'Currency' (e.g., ETH) as the inventory item.
@@ -21,10 +25,10 @@ The script will process the data according to the following logic:
     * FIFO Logic: Deduct the sold quantity from the oldest available Buy Lot(s).
     * Splits: If a sale consumes multiple lots, generate *separate output rows* for each lot consumed.
 
-*3. Output Columns:*
-The script generates a CSV with the following columns:
+*3. Output for Individual Currency Reports:*
+The script generates a CSV for each currency with the following columns:
 •⁠  ⁠⁠ Financial Year ⁠: The calculated financial year (e.g., 2021, 2022).
-•⁠  ⁠⁠ Trans Ref ⁠: Unique 3-letter ID for each transaction (e.g., BAA, SAA). Splits share the same ID.
+•⁠  ⁠⁠ Trans Ref ⁠: Unique ID for each transaction (e.g., B000, S000). Splits share the same ID.
 •⁠  ⁠⁠ Date ⁠: ⁠ Timestamp (UTC) ⁠.
 •⁠  ⁠⁠ Description ⁠: Original description.
 •⁠  ⁠⁠ Type ⁠: 'Buy' or 'Sell'.
@@ -36,3 +40,8 @@ The script generates a CSV with the following columns:
 •⁠  ⁠⁠ Profit (ZAR) ⁠: ⁠ Proceeds - Total Cost ⁠.
 •⁠  ⁠⁠ Balance Units ⁠: Running total of units held.
 •⁠  ⁠⁠ Balance Value (ZAR) ⁠: Running total of cost basis.
+
+*4. Output for Financial Year Reports:*
+For each financial year, a CSV is generated containing:
+- Sales section: All sales in the FY with details of lots used (Date, Currency, Trans Ref, Lot Ref, Qty Sold, Unit Cost, Total Cost, Proceeds, Profit).
+- Balances section: End-of-year balances for each currency (Balance Units, Balance Value, Remaining Lots details).
