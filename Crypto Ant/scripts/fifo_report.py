@@ -70,15 +70,16 @@ def generate_fy_report(fy, sales, fees, lots_by_ccy, balance_units, balance_valu
             writer.writerow([sale['Date'], sale['Currency'], sale.get('Description', ''), sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
         writer.writerow(['Balances at end of FY', fy])
-        writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)'])
+        writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)', 'Lot Total Value (ZAR)'])
         for ccy in sorted(lots_by_ccy.keys()):
             units = balance_units[ccy]
             total_value = sum(lot.qty * r2(lot.unit_cost) for lot in lots_by_ccy[ccy])
             # Total row
-            writer.writerow([ccy, q8(units), s2(total_value), '', '', ''])
+            writer.writerow([ccy, q8(units), s2(total_value), '', '', '', ''])
             # Lot rows
             for lot in lots_by_ccy[ccy]:
-                writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost)])
+                lot_value = lot.qty * r2(lot.unit_cost)
+                writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost), s2(lot_value)])
 
         writer.writerow([])
         writer.writerow(['Fees'])
