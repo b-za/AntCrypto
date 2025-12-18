@@ -121,7 +121,9 @@ def main(input_csv, output_csv):
             continue
 
         if 'fee' in desc.lower():
-            # Treat as fee, include in output but no inventory change
+            # Treat as fee, include in inventory change
+            balance_units[ccy] += qty_delta
+            balance_value[ccy] -= value_amount
             output_rows.append({
                 'Financial Year': fy,
                 'Trans Ref': last_trans_ref,
@@ -129,7 +131,7 @@ def main(input_csv, output_csv):
                 'Description': f"Fee for {last_trans_desc}",
                 'Type': 'Fee',
                 'Lot Reference': '',
-                'Qty Change': '',
+                'Qty Change': q8(qty_delta),
                 'Unit Cost (ZAR)': '',
                 'Total Cost (ZAR)': '',
                 'Proceeds (ZAR)': '',
@@ -307,13 +309,15 @@ def process_fy(csv_files, output_dir, timestamp):
             continue
 
         if 'fee' in desc.lower():
+            balance_units[ccy] += qty_delta
+            balance_value[ccy] -= value_amount
             sales_per_fy[fy].append({
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
                 'Description': f"Fee for {last_trans_per_ccy[ccy]}",
                 'Trans Ref': last_trans_ref_per_ccy[ccy],
                 'Lot Ref': '',
-                'Qty Sold': '',
+                'Qty Sold': q8(qty_delta),
                 'Unit Cost': '',
                 'Total Cost': '',
                 'Proceeds': '',
