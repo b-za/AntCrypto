@@ -4,11 +4,12 @@ from decimal import Decimal, getcontext, ROUND_HALF_UP
 from datetime import datetime
 from collections import deque, defaultdict
 import sys
+import os
+import glob
 
 getcontext().prec = 28
 
-INPUT_CSV = '1899885129957957982_0001.csv'
-OUTPUT_CSV = 'fifo_inventory_report.csv'
+
 
 # Utility functions
 ALPHABET = [chr(c) for c in range(ord('A'), ord('Z')+1)]
@@ -58,9 +59,9 @@ class Lot:
         self.ref = ref
 
 
-def main():
+def main(input_csv, output_csv):
     rows = []
-    with open(INPUT_CSV, newline='') as f:
+    with open(input_csv, newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
             # Normalize numeric fields
@@ -210,13 +211,18 @@ def main():
         'Qty Change','Unit Cost (ZAR)','Total Cost (ZAR)','Proceeds (ZAR)','Profit (ZAR)',
         'Balance Units','Balance Value (ZAR)'
     ]
-    with open(OUTPUT_CSV, 'w', newline='') as f:
+    with open(output_csv, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         for orow in output_rows:
             writer.writerow(orow)
 
-    print(f"Wrote {OUTPUT_CSV} with {len(output_rows)} rows.")
+    print(f"Wrote {output_csv} with {len(output_rows)} rows.")
 
 if __name__ == '__main__':
-    main()
+    data_dir = '../data'
+    csv_files = glob.glob(os.path.join(data_dir, '*.csv'))
+    for csv_file in csv_files:
+        base = os.path.basename(csv_file).rsplit('.', 1)[0]
+        output_csv = os.path.join('../reports', f"{base}_fifo_2025_12_18_0819.csv")
+        main(csv_file, output_csv)
