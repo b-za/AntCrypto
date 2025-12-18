@@ -1,4 +1,6 @@
-I have uploaded a CSV file containing my crypto trading history. Please act as a Data Analyst and process this data to create a detailed FIFO (First-In-First-Out) inventory tracking report.
+I have uploaded a CSV file containing my crypto trading history. Please run the fifo_report.py script to generate the detailed FIFO (First-In-First-Out) inventory tracking report.
+
+The script will process the data according to the following logic:
 
 *1. Data Preparation:*
 •⁠  ⁠*Item:* Treat the 'Currency' (e.g., ETH) as the inventory item.
@@ -20,7 +22,7 @@ I have uploaded a CSV file containing my crypto trading history. Please act as a
     * Splits: If a sale consumes multiple lots, generate *separate output rows* for each lot consumed.
 
 *3. Output Columns:*
-Please generate a CSV with the following columns:
+The script generates a CSV with the following columns:
 •⁠  ⁠⁠ Financial Year ⁠: The calculated financial year (e.g., 2021, 2022).
 •⁠  ⁠⁠ Trans Ref ⁠: Unique 3-letter ID for each transaction (e.g., BAA, SAA). Splits share the same ID.
 •⁠  ⁠⁠ Date ⁠: ⁠ Timestamp (UTC) ⁠.
