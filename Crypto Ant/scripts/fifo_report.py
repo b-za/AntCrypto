@@ -70,12 +70,15 @@ def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, out
             writer.writerow([sale['Date'], sale['Currency'], sale.get('Description', ''), sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
         writer.writerow(['Balances at end of FY', fy])
-        writer.writerow(['Currency', 'Balance Units', 'Balance Value (ZAR)', 'Remaining Lots'])
+        writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)'])
         for ccy in sorted(lots_by_ccy.keys()):
             units = balance_units[ccy]
             value = balance_value[ccy]
-            lots_str = '; '.join(f"{lot.ref}:{q8(lot.qty)}:{s2(lot.unit_cost)}" for lot in lots_by_ccy[ccy])
-            writer.writerow([ccy, q8(units), s2(value), lots_str])
+            # Total row
+            writer.writerow([ccy, q8(units), s2(value), '', '', ''])
+            # Lot rows
+            for lot in lots_by_ccy[ccy]:
+                writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost)])
 
     print(f"Wrote {output_csv}")
 
@@ -103,6 +106,7 @@ def main(input_csv, output_csv):
 
     output_rows = []
     last_trans_desc = ''
+    last_trans_ref = ''
 
     for row in rows:
         ccy = row['Currency']
