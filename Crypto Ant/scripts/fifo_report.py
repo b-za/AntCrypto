@@ -142,7 +142,7 @@ def main(input_csv, output_csv):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
-        is_send = 'send' in desc.lower() or 'ant' in desc.lower()
+        is_send = 'send' in desc.lower() or 'sent' in desc.lower() or 'transfer' in desc.lower() or 'ant' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -230,7 +230,8 @@ def main(input_csv, output_csv):
                 # Allocate proceeds proportionally by fraction of quantity sold in this split
                 split_proceeds = proceeds_total * (consume / total_qty_for_sale)
                 profit = split_proceeds - total_cost
-                if is_send:
+                if trans_type in ('Send', 'Other'):
+                    split_proceeds = Decimal('0')
                     profit = Decimal('0')
 
                 # Update lot and balances
@@ -268,7 +269,8 @@ def main(input_csv, output_csv):
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
                 profit = split_proceeds - total_cost
-                if is_send:
+                if trans_type in ('Send', 'Other'):
+                    split_proceeds = Decimal('0')
                     profit = Decimal('0')
                 balance_units[ccy] -= remaining
                 # balance_value unchanged as zero cost
@@ -342,7 +344,7 @@ def process_fy(csv_files, output_dir, timestamp):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
-        is_send = 'send' in desc.lower() or 'ant' in desc.lower()
+        is_send = 'send' in desc.lower() or 'sent' in desc.lower() or 'transfer' in desc.lower() or 'ant' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -406,7 +408,8 @@ def process_fy(csv_files, output_dir, timestamp):
                 total_cost = consume * unit_cost
                 split_proceeds = proceeds_total * (consume / total_qty_for_sale)
                 profit = split_proceeds - total_cost
-                if is_send:
+                if trans_type == 'Send':
+                    split_proceeds = Decimal('0')
                     profit = Decimal('0')
 
                 lot.qty -= consume
@@ -466,7 +469,8 @@ def process_fy(csv_files, output_dir, timestamp):
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
                 profit = split_proceeds - total_cost
-                if is_send:
+                if trans_type == 'Send':
+                    split_proceeds = Decimal('0')
                     profit = Decimal('0')
                 balance_units[ccy] -= remaining
                 if trans_type == 'Sell':
