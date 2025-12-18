@@ -130,6 +130,7 @@ def main(input_csv, output_csv):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
+        is_send = 'send' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -188,9 +189,10 @@ def main(input_csv, output_csv):
                 'Balance Value (ZAR)': s2(balance_value[ccy]),
             })
         else:
-            # Sell (or any outflow)
+            # Sell or Send (any outflow)
             sell_qty = -qty_delta  # positive
             proceeds_total = value_amount
+            trans_type = 'Sell' if desc.startswith('Sold') else ('Send' if is_send else 'Other')
             # If there are no lots, we will create a negative inventory entry (allowed here)
             # But better: consume from empty -> create lot with zero cost to allow proceeds
             if not lots_by_ccy[ccy]:
@@ -203,7 +205,9 @@ def main(input_csv, output_csv):
             # Pre-calc to allocate proceeds proportionally by quantity
             total_qty_for_sale = sell_qty
 
-            while remaining > Decimal('0.0000000001') and lots_by_ccy[ccy]:
+            while True:
+                if remaining <= Decimal('0.0000000001') or not lots_by_ccy[ccy]:
+                    break
                 lot = lots_by_ccy[ccy][0]
                 consume = lot.qty if lot.qty <= remaining else remaining
                 if consume <= 0:
@@ -214,6 +218,8 @@ def main(input_csv, output_csv):
                 # Allocate proceeds proportionally by fraction of quantity sold in this split
                 split_proceeds = proceeds_total * (consume / total_qty_for_sale)
                 profit = split_proceeds - total_cost
+                if is_send:
+                    profit = Decimal('0')
 
                 # Update lot and balances
                 lot.qty -= consume
@@ -228,8 +234,8 @@ def main(input_csv, output_csv):
                     'Trans Ref': trans_id,
                     'Date': row['Timestamp (UTC)'],
                     'Description': desc,
-                    'Type': 'Sell',
-                    'Lot Reference': lot.ref,
+                'Type': trans_type,
+                'Lot Reference': lot.ref,
                     'Qty Change': q8(-consume),
                     'Unit Cost (ZAR)': s2(unit_cost),
                     'Total Cost (ZAR)': s2(total_cost.copy_abs()),
@@ -238,10 +244,11 @@ def main(input_csv, output_csv):
                     'Fee (ZAR)': s2(Decimal('0')),
                     'Balance Units': q8(balance_units[ccy]),
                     'Balance Value (ZAR)': s2(balance_value[ccy]),
-                })
+            })
 
-                remaining -= consume
+            remaining -= consume
 
+            
             # If after consuming all available lots we still have remaining (shouldn't usually happen),
             # treat remainder as sold from zero-cost lot
             if remaining > Decimal('0.0000000001'):
@@ -249,6 +256,8 @@ def main(input_csv, output_csv):
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
                 profit = split_proceeds - total_cost
+                if is_send:
+                    profit = Decimal('0')
                 balance_units[ccy] -= remaining
                 # balance_value unchanged as zero cost
                 output_rows.append({
@@ -256,7 +265,7 @@ def main(input_csv, output_csv):
                     'Trans Ref': trans_id,
                     'Date': row['Timestamp (UTC)'],
                     'Description': desc,
-                    'Type': 'Sell',
+                    'Type': trans_type,
                     'Lot Reference': 'N/A',
                     'Qty Change': q8(-remaining),
                     'Unit Cost (ZAR)': s2(unit_cost),
@@ -319,6 +328,7 @@ def process_fy(csv_files, output_dir, timestamp):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
+        is_send = 'send' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -357,9 +367,11 @@ def process_fy(csv_files, output_dir, timestamp):
             balance_value[ccy] += total_cost
             last_trans_per_ccy[ccy] = desc
             last_trans_ref_per_ccy[ccy] = ''
+
         else:
             sell_qty = -qty_delta
             proceeds_total = value_amount
+            trans_type = 'Send' if is_send else 'Sell'
             if not lots_by_ccy[ccy]:
                 lots_by_ccy[ccy].append(Lot(qty=Decimal('0'), unit_cost=Decimal('0'), ref='N/A'))
 
@@ -368,7 +380,9 @@ def process_fy(csv_files, output_dir, timestamp):
             remaining = sell_qty
             total_qty_for_sale = sell_qty
 
-            while remaining > Decimal('0.0000000001') and lots_by_ccy[ccy]:
+            while True:
+                if remaining <= Decimal('0.0000000001') or not lots_by_ccy[ccy]:
+                    break
                 lot = lots_by_ccy[ccy][0]
                 consume = lot.qty if lot.qty <= remaining else remaining
                 if consume <= 0:
@@ -378,6 +392,8 @@ def process_fy(csv_files, output_dir, timestamp):
                 total_cost = consume * unit_cost
                 split_proceeds = proceeds_total * (consume / total_qty_for_sale)
                 profit = split_proceeds - total_cost
+                if is_send:
+                    profit = Decimal('0')
 
                 lot.qty -= consume
                 if lot.qty <= Decimal('0.0000000001'):
@@ -407,6 +423,8 @@ def process_fy(csv_files, output_dir, timestamp):
                 total_cost = Decimal('0')
                 split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
                 profit = split_proceeds - total_cost
+                if is_send:
+                    profit = Decimal('0')
                 balance_units[ccy] -= remaining
                 sales_per_fy[fy].append({
                     'Date': row['Timestamp (UTC)'],
