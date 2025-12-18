@@ -142,7 +142,7 @@ def main(input_csv, output_csv):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
-        is_send = 'send' in desc.lower()
+        is_send = 'send' in desc.lower() or 'ant' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -342,7 +342,7 @@ def process_fy(csv_files, output_dir, timestamp):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
-        is_send = 'send' in desc.lower()
+        is_send = 'send' in desc.lower() or 'ant' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
