@@ -60,14 +60,32 @@ class Lot:
         self.ref = ref
 
 
-def generate_fy_report(fy, sales, fees, sends, others, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
+def generate_fy_report(fy, buys, sales, fees, sends, others, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
     output_csv = os.path.join(output_dir, f"fy{fy}_report.csv")
     with open(output_csv, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['Transactions for FY', fy])
+        writer.writerow(['Boughts for FY', fy])
+        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Bought', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
+        for buy in buys:
+            writer.writerow([buy['Date'], buy['Currency'], buy.get('Description', ''), buy['Trans Ref'], buy['Lot Ref'], buy['Qty Bought'], buy['Unit Cost'], buy['Total Cost'], buy['Proceeds'], buy['Profit'], buy.get('Fee (ZAR)', '0.00')])
+        writer.writerow([])
+
+        writer.writerow(['Solds for FY', fy])
         writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
         for sale in sales:
             writer.writerow([sale['Date'], sale['Currency'], sale.get('Description', ''), sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
+        writer.writerow([])
+
+        writer.writerow(['Sends for FY', fy])
+        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Sent', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
+        for send in sends:
+            writer.writerow([send['Date'], send['Currency'], send.get('Description', ''), send['Trans Ref'], send['Lot Ref'], send['Qty Sold'], send['Unit Cost'], send['Total Cost'], send['Proceeds'], send['Profit'], send.get('Fee (ZAR)', '0.00')])
+        writer.writerow([])
+
+        writer.writerow(['Others for FY', fy])
+        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Other', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
+        for other in others:
+            writer.writerow([other['Date'], other['Currency'], other.get('Description', ''), other['Trans Ref'], other['Lot Ref'], other['Qty Sold'], other['Unit Cost'], other['Total Cost'], other['Proceeds'], other['Profit'], other.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
         writer.writerow(['Balances at end of FY', fy])
         writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)', 'Lot Total Value (ZAR)'])
@@ -81,21 +99,7 @@ def generate_fy_report(fy, sales, fees, sends, others, lots_by_ccy, balance_unit
                 lot_value = lot.qty * r2(lot.unit_cost)
                 writer.writerow([ccy, '', '', lot.ref, q8(lot.qty), s2(lot.unit_cost), s2(lot_value)])
 
-        writer.writerow([])
-        writer.writerow([])
-        writer.writerow(['Sends for FY', fy])
-        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Sent', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
-        for send in sends:
-            writer.writerow([send['Date'], send['Currency'], send.get('Description', ''), send['Trans Ref'], send['Lot Ref'], send['Qty Sold'], send['Unit Cost'], send['Total Cost'], send['Proceeds'], send['Profit'], send.get('Fee (ZAR)', '0.00')])
-        writer.writerow([])
-        writer.writerow(['Others for FY', fy])
-        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Other', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
-        for other in others:
-            writer.writerow([other['Date'], other['Currency'], other.get('Description', ''), other['Trans Ref'], other['Lot Ref'], other['Qty Sold'], other['Unit Cost'], other['Total Cost'], other['Proceeds'], other['Profit'], other.get('Fee (ZAR)', '0.00')])
 
-        writer.writerow([])
-        writer.writerow(['Fees'])
-        writer.writerow(['Category', 'Date', 'Description', 'Trans Ref', 'Lot Ref', 'Fee (ZAR)'])
         categories = {}
         for fee in fees:
             cat = fee['Category']
@@ -103,10 +107,28 @@ def generate_fy_report(fy, sales, fees, sends, others, lots_by_ccy, balance_unit
                 categories[cat] = []
             categories[cat].append(fee)
         for cat in sorted(categories.keys()):
-            for fee in categories[cat]:
-                writer.writerow([fee['Category'], fee['Date'], fee['Description'], fee['Trans Ref'], fee['Lot Ref'], fee['Fee (ZAR)']])
-            total_fee = sum(Decimal(fee['Fee (ZAR)']) for fee in categories[cat])
-            writer.writerow([f'Total {cat}', '', '', '', '', s2(total_fee)])
+            if cat == 'Buying':
+                writer.writerow(['Buying Fees'])
+                writer.writerow(['Date', 'Description', 'Trans Ref', 'Lot Ref', 'Fee (ZAR)'])
+                for fee in categories[cat]:
+                    writer.writerow([fee['Date'], fee['Description'], fee['Trans Ref'], fee['Lot Ref'], fee['Fee (ZAR)']])
+                total_fee = sum(Decimal(fee['Fee (ZAR)']) for fee in categories[cat])
+                writer.writerow(['Total Buying Fees', '', '', '', s2(total_fee)])
+            elif cat == 'Selling':
+                writer.writerow(['Selling Fees'])
+                writer.writerow(['Date', 'Description', 'Trans Ref', 'Lot Ref', 'Fee (ZAR)'])
+                for fee in categories[cat]:
+                    writer.writerow([fee['Date'], fee['Description'], fee['Trans Ref'], fee['Lot Ref'], fee['Fee (ZAR)']])
+                total_fee = sum(Decimal(fee['Fee (ZAR)']) for fee in categories[cat])
+                writer.writerow(['Total Selling Fees', '', '', '', s2(total_fee)])
+            else:
+                writer.writerow(['Other Fees'])
+                writer.writerow(['Date', 'Description', 'Trans Ref', 'Lot Ref', 'Fee (ZAR)'])
+                for fee in categories[cat]:
+                    writer.writerow([fee['Date'], fee['Description'], fee['Trans Ref'], fee['Lot Ref'], fee['Fee (ZAR)']])
+                total_fee = sum(Decimal(fee['Fee (ZAR)']) for fee in categories[cat])
+                writer.writerow(['Total Other Fees', '', '', '', s2(total_fee)])
+            writer.writerow([])
 
     print(f"Wrote {output_csv}")
 
@@ -326,6 +348,7 @@ def process_fy(csv_files, output_dir, timestamp):
     balance_units = defaultdict(lambda: Decimal('0'))
     balance_value = defaultdict(lambda: Decimal('0'))
 
+    buys_per_fy = defaultdict(list)
     sales_per_fy = defaultdict(list)
     fees_per_fy = defaultdict(list)
     sends_per_fy = defaultdict(list)
@@ -370,7 +393,7 @@ def process_fy(csv_files, output_dir, timestamp):
             continue
 
         if current_fy is not None and fy != current_fy:
-            generate_fy_report(current_fy, sales_per_fy[current_fy], fees_per_fy[current_fy], sends_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+            generate_fy_report(current_fy, buys_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], sends_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
         current_fy = fy
 
@@ -381,8 +404,22 @@ def process_fy(csv_files, output_dir, timestamp):
             balance_units[ccy] += qty
             total_cost = qty * unit_cost
             balance_value[ccy] += total_cost
+            trans_id = next(buy_id_gen)
             last_trans_per_ccy[ccy] = desc
-            last_trans_ref_per_ccy[ccy] = ''
+            last_trans_ref_per_ccy[ccy] = trans_id
+            buys_per_fy[fy].append({
+                'Date': row['Timestamp (UTC)'],
+                'Currency': ccy,
+                'Description': desc,
+                'Trans Ref': trans_id,
+                'Lot Ref': ref,
+                'Qty Bought': q8(qty),
+                'Unit Cost': s2(unit_cost),
+                'Total Cost': s2(total_cost),
+                'Proceeds': s2(Decimal('0')),
+                'Profit': s2(Decimal('0')),
+                'Fee (ZAR)': s2(Decimal('0')),
+            })
 
         else:
             sell_qty = -qty_delta
@@ -520,7 +557,7 @@ def process_fy(csv_files, output_dir, timestamp):
             last_trans_per_ccy[ccy] = desc
 
     if current_fy is not None:
-        generate_fy_report(current_fy, sales_per_fy[current_fy], fees_per_fy[current_fy], sends_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+        generate_fy_report(current_fy, buys_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], sends_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
 
 if __name__ == '__main__':

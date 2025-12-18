@@ -16,7 +16,7 @@ def parse_fy_report(filepath):
         for row in reader:
             if not row:
                 continue
-            if row[0] == 'Transactions for FY':
+            if row[0] == 'Solds for FY':
                 section = 'transactions'
             elif row[0] == 'Balances at end of FY':
                 section = 'balances'
@@ -76,7 +76,7 @@ def main():
     output_file = os.path.join(latest_dir, 'overview_report.csv')
     with open(output_file, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['FY', 'Losses Proceeds (ZAR)', 'Losses Base Cost (ZAR)', 'Losses Gain/Loss (ZAR)', 'Gains Proceeds (ZAR)', 'Gains Base Cost (ZAR)', 'Gains Gain/Loss (ZAR)', 'Net Gain/Loss (ZAR)', 'Total Coin Value (ZAR)', 'BCH Units', 'BCH Value (ZAR)', 'ETH Units', 'ETH Value (ZAR)', 'XBT Units', 'XBT Value (ZAR)', 'XRP Units', 'XRP Value (ZAR)'])
+        writer.writerow(['FY', 'Losses Proceeds (ZAR)', 'Losses Base Cost (ZAR)', 'Losses Gain/Loss (ZAR)', 'Gains Proceeds (ZAR)', 'Gains Base Cost (ZAR)', 'Gains Gain/Loss (ZAR)', 'Net Gain/Loss (ZAR)', 'Total Coin Value (ZAR)', 'BCH Units', 'BCH Value (ZAR)', 'ETH Units', 'ETH Value (ZAR)', 'XBT Units', 'XBT Value (ZAR)', 'XRP Units', 'XRP Value (ZAR)', 'LTC Units', 'LTC Value (ZAR)'])
         for fy, proceeds_loss, cost_loss, profit_loss, proceeds_gain, cost_gain, profit_gain, net, total_value, bal in overview:
             writer.writerow([
                 fy,
@@ -96,6 +96,8 @@ def main():
                 f"{bal['XBT']['value']:.2f}",
                 f"{bal['XRP']['units']:.8f}",
                 f"{bal['XRP']['value']:.2f}",
+                f"{bal['LTC']['units']:.8f}",
+                f"{bal['LTC']['value']:.2f}",
             ])
 
     print(f"Wrote {output_file}")
