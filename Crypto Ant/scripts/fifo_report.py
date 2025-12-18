@@ -60,14 +60,14 @@ class Lot:
         self.ref = ref
 
 
-def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, output_dir):
-    output_csv = os.path.join(output_dir, f"fy{fy}_report.csv")
+def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
+    output_csv = os.path.join(output_dir, f"fy{fy}_report_{timestamp}.csv")
     with open(output_csv, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['Sales for FY', fy])
-        writer.writerow(['Date', 'Currency', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)'])
+        writer.writerow(['Transactions for FY', fy])
+        writer.writerow(['Date', 'Currency', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
         for sale in sales:
-            writer.writerow([sale['Date'], sale['Currency'], sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit']])
+            writer.writerow([sale['Date'], sale['Currency'], sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
         writer.writerow(['Balances at end of FY', fy])
         writer.writerow(['Currency', 'Balance Units', 'Balance Value (ZAR)', 'Remaining Lots'])
@@ -76,6 +76,7 @@ def generate_fy_report(fy, sales, lots_by_ccy, balance_units, balance_value, out
             value = balance_value[ccy]
             lots_str = '; '.join(f"{lot.ref}:{q8(lot.qty)}:{s2(lot.unit_cost)}" for lot in lots_by_ccy[ccy])
             writer.writerow([ccy, q8(units), s2(value), lots_str])
+
     print(f"Wrote {output_csv}")
 
 
@@ -84,16 +85,13 @@ def main(input_csv, output_csv):
     with open(input_csv, newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            # Normalize numeric fields
             row['Balance delta'] = dec(row['Balance delta'])
             row['Value amount'] = dec(row['Value amount'])
             row['_dt'] = parse_dt(row['Timestamp (UTC)'])
             rows.append(row)
 
-    # Sort by timestamp oldest -> newest (stable)
     rows.sort(key=lambda r: r['_dt'])
 
-    # We will track by currency. Here it's mostly ETH, but generalize.
     lots_by_ccy = defaultdict(deque)
     balance_units = defaultdict(lambda: Decimal('0'))
     balance_value = defaultdict(lambda: Decimal('0'))
@@ -112,16 +110,34 @@ def main(input_csv, output_csv):
         qty_delta = row['Balance delta']
         desc = row['Description']
         ref = row['Reference']
-        value_amount = row['Value amount']  # ZAR
+        value_amount = row['Value amount']
 
-        # Skip zero-qty rows just in case
         if qty_delta == 0:
+            continue
+
+        if 'fee' in desc.lower():
+            # Treat as fee, include in output but no inventory change
+            output_rows.append({
+                'Financial Year': fy,
+                'Trans Ref': '',
+                'Date': row['Timestamp (UTC)'],
+                'Description': desc,
+                'Type': 'Fee',
+                'Lot Reference': '',
+                'Qty Change': '',
+                'Unit Cost (ZAR)': '',
+                'Total Cost (ZAR)': '',
+                'Proceeds (ZAR)': '',
+                'Profit (ZAR)': '',
+                'Fee (ZAR)': s2(value_amount),
+                'Balance Units': q8(balance_units[ccy]),
+                'Balance Value (ZAR)': s2(balance_value[ccy]),
+            })
             continue
 
         if qty_delta > 0:
             # Buy lot
             qty = qty_delta
-            # Guard against division by zero
             unit_cost = value_amount / qty if qty != 0 else Decimal('0')
             lots_by_ccy[ccy].append(Lot(qty=qty, unit_cost=unit_cost, ref=ref))
 
@@ -143,6 +159,7 @@ def main(input_csv, output_csv):
                 'Total Cost (ZAR)': s2(total_cost),
                 'Proceeds (ZAR)': s2(Decimal('0')),
                 'Profit (ZAR)': s2(Decimal('0')),
+                'Fee (ZAR)': s2(Decimal('0')),
                 'Balance Units': q8(balance_units[ccy]),
                 'Balance Value (ZAR)': s2(balance_value[ccy]),
             })
@@ -193,6 +210,7 @@ def main(input_csv, output_csv):
                     'Total Cost (ZAR)': s2(total_cost.copy_abs()),
                     'Proceeds (ZAR)': s2(split_proceeds),
                     'Profit (ZAR)': s2(profit),
+                    'Fee (ZAR)': s2(Decimal('0')),
                     'Balance Units': q8(balance_units[ccy]),
                     'Balance Value (ZAR)': s2(balance_value[ccy]),
                 })
@@ -220,6 +238,7 @@ def main(input_csv, output_csv):
                     'Total Cost (ZAR)': s2(total_cost.copy_abs()),
                     'Proceeds (ZAR)': s2(split_proceeds),
                     'Profit (ZAR)': s2(profit),
+                    'Fee (ZAR)': s2(Decimal('0')),
                     'Balance Units': q8(balance_units[ccy]),
                     'Balance Value (ZAR)': s2(balance_value[ccy]),
                 })
@@ -229,7 +248,7 @@ def main(input_csv, output_csv):
     fieldnames = [
         'Financial Year','Trans Ref','Date','Description','Type','Lot Reference',
         'Qty Change','Unit Cost (ZAR)','Total Cost (ZAR)','Proceeds (ZAR)','Profit (ZAR)',
-        'Balance Units','Balance Value (ZAR)'
+        'Fee (ZAR)','Balance Units','Balance Value (ZAR)'
     ]
     with open(output_csv, 'w', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -240,7 +259,7 @@ def main(input_csv, output_csv):
     print(f"Wrote {output_csv} with {len(output_rows)} rows.")
 
 
-def process_fy(csv_files, output_dir):
+def process_fy(csv_files, output_dir, timestamp):
     rows = []
     for csv_file in csv_files:
         with open(csv_file, newline='') as f:
@@ -276,8 +295,23 @@ def process_fy(csv_files, output_dir):
         if qty_delta == 0:
             continue
 
+        if 'fee' in desc.lower():
+            sales_per_fy[fy].append({
+                'Date': row['Timestamp (UTC)'],
+                'Currency': ccy,
+                'Trans Ref': '',
+                'Lot Ref': '',
+                'Qty Sold': '',
+                'Unit Cost': '',
+                'Total Cost': '',
+                'Proceeds': '',
+                'Profit': '',
+                'Fee (ZAR)': s2(value_amount),
+            })
+            continue
+
         if current_fy is not None and fy != current_fy:
-            generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir)
+            generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
         current_fy = fy
 
@@ -326,6 +360,7 @@ def process_fy(csv_files, output_dir):
                     'Total Cost': s2(total_cost.copy_abs()),
                     'Proceeds': s2(split_proceeds),
                     'Profit': s2(profit),
+                    'Fee (ZAR)': s2(Decimal('0')),
                 })
 
                 remaining -= consume
@@ -346,18 +381,20 @@ def process_fy(csv_files, output_dir):
                     'Total Cost': s2(total_cost.copy_abs()),
                     'Proceeds': s2(split_proceeds),
                     'Profit': s2(profit),
+                    'Fee (ZAR)': s2(Decimal('0')),
                 })
                 remaining = Decimal('0')
 
     if current_fy is not None:
-        generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir)
+        generate_fy_report(current_fy, sales_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
 
 if __name__ == '__main__':
     data_dir = '../data'
     csv_files = glob.glob(os.path.join(data_dir, '*.csv'))
+    timestamp = datetime.now().strftime('%Y_%m_%d_%H%M')
     for csv_file in csv_files:
         base = os.path.basename(csv_file).rsplit('.', 1)[0]
-        output_csv = os.path.join('../reports', f"{base}_fifo_2025_12_18_0819.csv")
+        output_csv = os.path.join('../reports', f"{base}_fifo_{timestamp}.csv")
         main(csv_file, output_csv)
-    process_fy(csv_files, '../reports')
+    process_fy(csv_files, '../reports', timestamp)
