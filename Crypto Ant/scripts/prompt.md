@@ -1,47 +1,41 @@
-I have uploaded CSV files containing my crypto trading history. Please run the fifo_report.py script to generate the detailed FIFO (First-In-First-Out) inventory tracking reports.
+This system processes crypto trading history CSV files to generate detailed FIFO (First-In-First-Out) inventory tracking reports for tax purposes. It categorizes transactions into Buy, Sell, Fee, and Other, applies FIFO for cost basis calculation, and produces reports per currency and financial year.
 
-The script will process all CSV files in the data/ directory and generate:
-1. Individual FIFO reports for each currency (e.g., eth_fifo_2025_12_18_0819.csv).
-2. Financial year reports for each FY (e.g., fy2021_report.csv), summarizing sales and end-of-year balances across all currencies.
+## System Setup and File Structure
+- **Root Directory:** `Crypto Ant/`
+- **Input Data:** Place CSV files in `data/` subdirectory. Each CSV must have headers: Timestamp (UTC), Description, Reference, Value amount, Balance delta, Currency. Files are named like `ltc.csv`, `eth.csv`, etc.
+- **Scripts:** Located in `scripts/` subdirectory.
+  - `fifo_report.py`: Main script for processing data and generating FIFO/FY reports.
+  - `overview_report.py`: Script to generate overview summary from FY reports.
+  - `prompt.md`: This documentation.
+- **Output Directory:** Reports are generated in `reports/` subdirectory, in a new timestamped subfolder (e.g., `2025_12_19_0725/`) each run to avoid overwriting.
+- **Dependencies:** Requires Python 3 with `decimal`, `csv`, `datetime`, `collections` modules (standard library).
 
-The script processes the data according to the following logic:
+## Workflow for New Agents
+1. **Place Data:** Ensure CSV files are in `data/`. If new data arrives, add/update CSVs there.
+2. **Run FIFO Processor:** From `scripts/` directory, execute `python fifo_report.py`. This reads all CSVs from `../data/`, processes them (see logic below), and writes outputs to a new `../reports/YYYY_MM_DD_HHMM/` folder.
+3. **Run Overview Generator:** Execute `python overview_report.py`. This finds the latest reports folder, parses FY CSVs, and adds `overview_report.csv` to that folder.
+4. **Review Outputs:** Check the timestamped reports folder for all generated CSVs. Use for tax filing or analysis.
 
-*1. Data Preparation:*
-•⁠  ⁠*Item:* Treat the 'Currency' (e.g., ETH) as the inventory item.
-•⁠  ⁠*Sort:* Ensure data is sorted by ⁠ Timestamp (UTC) ⁠ oldest to newest.
-•⁠  ⁠*Financial Year Logic:* Calculate a ⁠ Financial Year ⁠ column. The financial year runs from *1 March to End Feb*.
-    * If Month >= 3 (March - Dec): Financial Year = Year + 1.
-    * If Month < 3 (Jan - Feb): Financial Year = Year.
-    * Example: 2021-01-06 is FY2021. 2021-03-01 is FY2022.
+## Processing Logic Overview
+Refer to `fifo_report.py` for full implementation details. Key points:
+- **Data Prep:** Sorts by timestamp; calculates FY (March-Feb).
+- **Categorization:** Based on Balance delta and Description keywords (e.g., 'Bought' for buys, 'Sold' for sells, 'fee' for fees).
+- **FIFO:** Buys create lots; sells/others consume oldest lots first, splitting rows if needed.
+- **Outputs:** See below for formats. Scripts handle edge cases like empty lots or remaining quantities.
 
-*2. Inventory Logic (FIFO):*
-•⁠  ⁠*Buys (Inflows):* Rows where ⁠ Balance delta ⁠ is *positive*.
-    * Cost Basis: ⁠ Value amount ⁠.
-    * Unit Cost: ⁠ Value amount ⁠ / ⁠ Balance delta ⁠.
-    * Lot ID: ⁠ Reference ⁠.
-•⁠  ⁠*Sells (Outflows):* Rows where ⁠ Balance delta ⁠ is *negative*.
-    * Quantity Sold: Absolute value of ⁠ Balance delta ⁠.
-    * Proceeds: ⁠ Value amount ⁠.
-    * FIFO Logic: Deduct the sold quantity from the oldest available Buy Lot(s).
-    * Splits: If a sale consumes multiple lots, generate *separate output rows* for each lot consumed.
+## Output Formats
 
-*3. Output for Individual Currency Reports:*
-The script generates a CSV for each currency with the following columns:
-•⁠  ⁠⁠ Financial Year ⁠: The calculated financial year (e.g., 2021, 2022).
-•⁠  ⁠⁠ Trans Ref ⁠: Unique ID for each transaction (e.g., B000, S000). Splits share the same ID.
-•⁠  ⁠⁠ Date ⁠: ⁠ Timestamp (UTC) ⁠.
-•⁠  ⁠⁠ Description ⁠: Original description.
-•⁠  ⁠⁠ Type ⁠: 'Buy' or 'Sell'.
-•⁠  ⁠⁠ Lot Reference ⁠: The ⁠ Reference ⁠ of the specific Buy lot being touched.
-•⁠  ⁠⁠ Qty Change ⁠: The quantity moved in this specific row (Positive for Buy, Negative for Sell).
-•⁠  ⁠⁠ Unit Cost (ZAR) ⁠: The specific unit cost of the Lot.
-•⁠  ⁠⁠ Total Cost (ZAR) ⁠: ⁠ abs(Qty Change) * Unit Cost ⁠.
-•⁠  ⁠⁠ Proceeds (ZAR) ⁠: For sells, the portion of ⁠ Value amount ⁠ allocated to this row.
-•⁠  ⁠⁠ Profit (ZAR) ⁠: ⁠ Proceeds - Total Cost ⁠.
-•⁠  ⁠⁠ Balance Units ⁠: Running total of units held.
-•⁠  ⁠⁠ Balance Value (ZAR) ⁠: Running total of cost basis.
+### Individual Currency FIFO Reports (e.g., ltc_fifo.csv)
+Detailed per-transaction CSV with columns as defined in `fifo_report.py` (Type, Qty Change, etc.). Tracks running balances.
 
-*4. Output for Financial Year Reports:*
-For each financial year, a CSV is generated containing:
-- Sales section: All sales in the FY with details of lots used (Date, Currency, Trans Ref, Lot Ref, Qty Sold, Unit Cost, Total Cost, Proceeds, Profit).
-- Balances section: End-of-year balances for each currency (Balance Units, Balance Value, Remaining Lots details).
+### Financial Year Reports (e.g., fy2021_report.csv)
+Structured CSV with sections for Buys, Sells, Others, Fees, and Balances. See `generate_fy_report()` in `fifo_report.py` for exact layout.
+
+### Overview Report (overview_report.csv)
+Aggregated summary per FY: Gains/losses, net profit, total value, asset balances. Generated by `overview_report.py` parsing FY reports.
+
+## Important Notes
+- Always run `fifo_report.py` first, then `overview_report.py`.
+- If data changes, re-run both scripts.
+- Scripts assume data integrity; validate CSVs for correct formats.
+- For code details, read `fifo_report.py` and `overview_report.py` directly.
