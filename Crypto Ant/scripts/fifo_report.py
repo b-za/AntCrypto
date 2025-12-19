@@ -517,7 +517,7 @@ def process_fy(csv_files, output_dir, timestamp):
                     consume = lot.qty if lot.qty <= remaining else remaining
                     unit_cost = lot.unit_cost
                     total_cost = consume * unit_cost
-                    split_proceeds = proceeds_total * (consume / total_qty_for_sale) if total_qty_for_sale > 0 else Decimal('0')
+                    split_proceeds = Decimal('0')
                     profit = Decimal('0')
                     
                     lot.qty -= consume
