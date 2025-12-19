@@ -139,14 +139,18 @@ def main(input_csv, output_csv):
 
     rows.sort(key=lambda r: r['_dt'])
 
+    if rows:
+        ccy = rows[0]['Currency']
+    else:
+        ccy = 'UNK'
+
     lots_by_ccy = defaultdict(deque)
     balance_units = defaultdict(lambda: Decimal('0'))
     balance_value = defaultdict(lambda: Decimal('0'))
 
-    # Transaction ID generators per Type per FY to keep IDs smaller (optional)
-    # But user only requires unique 3-letter per transaction overall; simpler: global counters
-    buy_id_gen = gen_txn_ids('B')
-    sell_id_gen = gen_txn_ids('S')
+    # Transaction ID generators per currency
+    buy_id_gen = gen_txn_ids(f'B_{ccy.upper()}_')
+    sell_id_gen = gen_txn_ids(f'S_{ccy.upper()}_')
 
     output_rows = []
     last_trans_desc = ''
@@ -199,6 +203,7 @@ def main(input_csv, output_csv):
 
              trans_id = next(buy_id_gen)
              last_trans_ref = trans_id
+
 
              output_rows.append({
                  'Financial Year': fy,
@@ -364,15 +369,15 @@ def process_fy(csv_files, output_dir, timestamp):
     buys_per_fy = defaultdict(list)
     sales_per_fy = defaultdict(list)
     fees_per_fy = defaultdict(list)
-
+    sends_per_fy = defaultdict(list)
     others_per_fy = defaultdict(list)
     last_trans_per_ccy = defaultdict(str)
     last_trans_ref_per_ccy = defaultdict(str)
 
     current_fy = None
 
-    buy_id_gen = gen_txn_ids('B')
-    sell_id_gen = gen_txn_ids('S')
+    buy_id_gens = defaultdict(lambda: None)  # Will create per ccy
+    sell_id_gens = defaultdict(lambda: None)
 
     for row in rows:
         ccy = row['Currency']
@@ -417,7 +422,9 @@ def process_fy(csv_files, output_dir, timestamp):
             balance_units[ccy] += qty
             total_cost = qty * unit_cost
             balance_value[ccy] += total_cost
-            trans_id = next(buy_id_gen)
+            if buy_id_gens[ccy] is None:
+                buy_id_gens[ccy] = gen_txn_ids(f'B_{ccy.upper()}_')
+            trans_id = next(buy_id_gens[ccy])
             last_trans_per_ccy[ccy] = desc
             last_trans_ref_per_ccy[ccy] = trans_id
             buys_per_fy[fy].append({
@@ -457,7 +464,9 @@ def process_fy(csv_files, output_dir, timestamp):
             if not lots_by_ccy[ccy]:
                 lots_by_ccy[ccy].append(Lot(qty=Decimal('0'), unit_cost=Decimal('0'), ref='N/A'))
 
-            trans_id = next(sell_id_gen)
+            if sell_id_gens[ccy] is None:
+                sell_id_gens[ccy] = gen_txn_ids(f'S_{ccy.upper()}_')
+            trans_id = next(sell_id_gens[ccy])
             last_trans_ref_per_ccy[ccy] = trans_id
             remaining = sell_qty
             total_qty_for_sale = sell_qty
