@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import csv
+import json
 from decimal import Decimal, getcontext, ROUND_HALF_UP
 from datetime import datetime
 from collections import deque, defaultdict
@@ -8,6 +9,13 @@ import os
 import glob
 
 getcontext().prec = 28
+
+def load_buys_for_others_mapping():
+    mapping_file = os.path.join(os.path.dirname(__file__), '..', 'data', 'buys_for_others.json')
+    if os.path.exists(mapping_file):
+        with open(mapping_file, 'r') as f:
+            return json.load(f)
+    return {}
 
 
 
@@ -60,7 +68,7 @@ class Lot:
         self.ref = ref
 
 
-def generate_fy_report(fy, buys, sales, fees, others, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
+def generate_fy_report(fy, buys, buys_for_others, sales, fees, others, lots_by_ccy, balance_units, balance_value, output_dir, timestamp):
     output_csv = os.path.join(output_dir, f"fy{fy}_report.csv")
     with open(output_csv, 'w', newline='') as f:
         writer = csv.writer(f)
@@ -74,6 +82,12 @@ def generate_fy_report(fy, buys, sales, fees, others, lots_by_ccy, balance_units
         writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Sold', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
         for sale in sales:
             writer.writerow([sale['Date'], sale['Currency'], sale.get('Description', ''), sale['Trans Ref'], sale['Lot Ref'], sale['Qty Sold'], sale['Unit Cost'], sale['Total Cost'], sale['Proceeds'], sale['Profit'], sale.get('Fee (ZAR)', '0.00')])
+        writer.writerow([])
+
+        writer.writerow(['Buys for Others FY', fy])
+        writer.writerow(['Date', 'Currency', 'Description', 'Trans Ref', 'Lot Ref', 'Qty Bought', 'Unit Cost (ZAR)', 'Total Cost (ZAR)', 'Proceeds (ZAR)', 'Profit (ZAR)', 'Fee (ZAR)'])
+        for buy in buys_for_others:
+            writer.writerow([buy['Date'], buy['Currency'], buy.get('Description', ''), buy['Trans Ref'], buy['Lot Ref'], buy['Qty Bought'], buy['Unit Cost'], buy['Total Cost'], buy['Proceeds'], buy['Profit'], buy.get('Fee (ZAR)', '0.00')])
         writer.writerow([])
 
         writer.writerow(['Others for FY', fy])
@@ -349,7 +363,15 @@ def main(input_csv, output_csv):
     print(f"Wrote {output_csv} with {len(output_rows)} rows.")
 
 
+def find_lot_by_ref(lots_deque, ref):
+    for i, lot in enumerate(lots_deque):
+        if lot.ref == ref:
+            return i, lot
+    return None, None
+
 def process_fy(csv_files, output_dir, timestamp):
+    buys_for_others_mapping = load_buys_for_others_mapping()
+    
     rows = []
     for csv_file in csv_files:
         with open(csv_file, newline='') as f:
@@ -367,17 +389,22 @@ def process_fy(csv_files, output_dir, timestamp):
     balance_value = defaultdict(lambda: Decimal('0'))
 
     buys_per_fy = defaultdict(list)
+    buys_for_others_per_fy = defaultdict(list)
     sales_per_fy = defaultdict(list)
     fees_per_fy = defaultdict(list)
-    sends_per_fy = defaultdict(list)
     others_per_fy = defaultdict(list)
     last_trans_per_ccy = defaultdict(str)
     last_trans_ref_per_ccy = defaultdict(str)
 
+    buy_refs_for_others = set()
+    for ccy, refs in buys_for_others_mapping.items():
+        for ref in refs.keys():
+            buy_refs_for_others.add((ccy, ref))
+
     current_fy = None
 
-    buy_id_gens = defaultdict(lambda: None)  # Will create per ccy
-    sell_id_gens = defaultdict(lambda: None)
+    buy_id_gens = {}
+    sell_id_gens = {}
 
     for row in rows:
         ccy = row['Currency']
@@ -385,7 +412,6 @@ def process_fy(csv_files, output_dir, timestamp):
         fy = financial_year(dt)
         qty_delta = row['Balance delta']
         desc = row['Description']
-        is_send = 'send' in desc.lower() or 'sent' in desc.lower() or 'transfer' in desc.lower() or 'ant' in desc.lower()
         ref = row['Reference']
         value_amount = row['Value amount']
 
@@ -411,7 +437,7 @@ def process_fy(csv_files, output_dir, timestamp):
             continue
 
         if current_fy is not None and fy != current_fy:
-            generate_fy_report(current_fy, buys_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+            generate_fy_report(current_fy, buys_per_fy[current_fy], buys_for_others_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
         current_fy = fy
 
@@ -422,12 +448,14 @@ def process_fy(csv_files, output_dir, timestamp):
             balance_units[ccy] += qty
             total_cost = qty * unit_cost
             balance_value[ccy] += total_cost
-            if buy_id_gens[ccy] is None:
+            if ccy not in buy_id_gens:
                 buy_id_gens[ccy] = gen_txn_ids(f'B_{ccy.upper()}_')
             trans_id = next(buy_id_gens[ccy])
             last_trans_per_ccy[ccy] = desc
             last_trans_ref_per_ccy[ccy] = trans_id
-            buys_per_fy[fy].append({
+            
+            is_for_other = (ccy, ref) in buy_refs_for_others
+            buy_record = {
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
                 'Description': desc,
@@ -439,7 +467,12 @@ def process_fy(csv_files, output_dir, timestamp):
                 'Proceeds': s2(Decimal('0')),
                 'Profit': s2(Decimal('0')),
                 'Fee (ZAR)': s2(Decimal('0')),
-            })
+            }
+            if is_for_other:
+                buys_for_others_per_fy[fy].append(buy_record)
+            else:
+                buys_per_fy[fy].append(buy_record)
+                
         elif qty_delta > 0:
             balance_units[ccy] += qty_delta
             balance_value[ccy] += value_amount
@@ -449,7 +482,7 @@ def process_fy(csv_files, output_dir, timestamp):
                 'Description': desc,
                 'Trans Ref': '',
                 'Lot Ref': '',
-                'Qty Change': q8(qty_delta),
+                'Qty Sold': q8(qty_delta),
                 'Unit Cost': '',
                 'Total Cost': '',
                 'Proceeds': '',
@@ -464,21 +497,62 @@ def process_fy(csv_files, output_dir, timestamp):
             if not lots_by_ccy[ccy]:
                 lots_by_ccy[ccy].append(Lot(qty=Decimal('0'), unit_cost=Decimal('0'), ref='N/A'))
 
-            if sell_id_gens[ccy] is None:
+            if ccy not in sell_id_gens:
                 sell_id_gens[ccy] = gen_txn_ids(f'S_{ccy.upper()}_')
             trans_id = next(sell_id_gens[ccy])
             last_trans_ref_per_ccy[ccy] = trans_id
             remaining = sell_qty
             total_qty_for_sale = sell_qty
-            while remaining > 0 and lots_by_ccy[ccy]:
+            
+            matched_lot_ref = None
+            if trans_type == 'Other' and ccy in buys_for_others_mapping:
+                for buy_ref, match_info in buys_for_others_mapping[ccy].items():
+                    if match_info['other_timestamp'] == row['Timestamp (UTC)']:
+                        matched_lot_ref = buy_ref
+                        break
+            
+            if matched_lot_ref:
+                idx, lot = find_lot_by_ref(lots_by_ccy[ccy], matched_lot_ref)
+                if lot is not None:
+                    consume = lot.qty if lot.qty <= remaining else remaining
+                    unit_cost = lot.unit_cost
+                    total_cost = consume * unit_cost
+                    split_proceeds = proceeds_total * (consume / total_qty_for_sale) if total_qty_for_sale > 0 else Decimal('0')
+                    profit = Decimal('0')
+                    
+                    lot.qty -= consume
+                    if lot.qty <= Decimal('0.0000000001'):
+                        del lots_by_ccy[ccy][idx]
+                    
+                    balance_units[ccy] -= consume
+                    balance_value[ccy] -= total_cost
+                    
+                    others_per_fy[fy].append({
+                        'Date': row['Timestamp (UTC)'],
+                        'Currency': ccy,
+                        'Description': desc,
+                        'Trans Ref': trans_id,
+                        'Lot Ref': matched_lot_ref,
+                        'Qty Sold': q8(-consume),
+                        'Unit Cost': s2(unit_cost),
+                        'Total Cost': s2(total_cost.copy_abs()),
+                        'Proceeds': s2(split_proceeds),
+                        'Profit': s2(profit),
+                        'Fee (ZAR)': s2(Decimal('0')),
+                    })
+                    remaining -= consume
+            
+            while remaining > Decimal('0.0000000001') and lots_by_ccy[ccy]:
                 lot = lots_by_ccy[ccy][0]
                 consume = lot.qty if lot.qty <= remaining else remaining
+                if consume <= 0:
+                    break
 
                 unit_cost = lot.unit_cost
                 total_cost = consume * unit_cost
-                split_proceeds = proceeds_total * (consume / total_qty_for_sale)
+                split_proceeds = proceeds_total * (consume / total_qty_for_sale) if total_qty_for_sale > 0 else Decimal('0')
                 profit = split_proceeds - total_cost
-                if trans_type == 'Send':
+                if trans_type == 'Other':
                     split_proceeds = Decimal('0')
                     profit = Decimal('0')
 
@@ -518,14 +592,13 @@ def process_fy(csv_files, output_dir, timestamp):
                         'Fee (ZAR)': s2(Decimal('0')),
                     })
                 remaining -= consume
-            
 
-            if remaining > 0:
+            if remaining > Decimal('0.0000000001'):
                 unit_cost = Decimal('0')
                 total_cost = Decimal('0')
-                split_proceeds = proceeds_total * (remaining / total_qty_for_sale)
+                split_proceeds = proceeds_total * (remaining / total_qty_for_sale) if total_qty_for_sale > 0 else Decimal('0')
                 profit = split_proceeds - total_cost
-                if trans_type == 'Send':
+                if trans_type == 'Other':
                     split_proceeds = Decimal('0')
                     profit = Decimal('0')
                 balance_units[ccy] -= remaining
@@ -557,12 +630,11 @@ def process_fy(csv_files, output_dir, timestamp):
                         'Profit': s2(profit),
                         'Fee (ZAR)': s2(Decimal('0')),
                     })
-                remaining = Decimal('0')
 
             last_trans_per_ccy[ccy] = desc
 
     if current_fy is not None:
-        generate_fy_report(current_fy, buys_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
+        generate_fy_report(current_fy, buys_per_fy[current_fy], buys_for_others_per_fy[current_fy], sales_per_fy[current_fy], fees_per_fy[current_fy], others_per_fy[current_fy], lots_by_ccy, balance_units, balance_value, output_dir, timestamp)
 
 
 if __name__ == '__main__':

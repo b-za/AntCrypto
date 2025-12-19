@@ -1,0 +1,218 @@
+{
+  "XBT": {
+    "974f0b5f": {
+      "other_timestamp": "2021-04-16 15:14:14",
+      "other_desc": "First bitcoin transaction to coinbase",
+      "buy_qty": "0.00106000",
+      "other_qty": "0.01000000"
+    },
+    "9ec0051d": {
+      "other_timestamp": "2021-05-17 05:56:50",
+      "other_desc": "Bought 0.20 BCH/BTC @ 0.02406",
+      "buy_qty": "0.00200000",
+      "other_qty": "0.00481200"
+    },
+    "7fdb3aab": {
+      "other_timestamp": "2021-05-17 06:26:13",
+      "other_desc": "Bought 0.05 BCH/BTC @ 0.024356",
+      "buy_qty": "0.00089700",
+      "other_qty": "0.00121780"
+    },
+    "75bec86e": {
+      "other_timestamp": "2021-05-17 06:26:13",
+      "other_desc": "Bought 0.09 BCH/BTC @ 0.024357",
+      "buy_qty": "0.00200000",
+      "other_qty": "0.00219213"
+    },
+    "3ccfdaee": {
+      "other_timestamp": "2021-05-17 06:26:14",
+      "other_desc": "Bought 0.05 BCH/BTC @ 0.024366",
+      "buy_qty": "0.00064100",
+      "other_qty": "0.00121830"
+    },
+    "30d05177": {
+      "other_timestamp": "2021-05-17 15:32:46",
+      "other_desc": "Bought 0.20 BCH/BTC @ 0.023961",
+      "buy_qty": "0.00300000",
+      "other_qty": "0.00479220"
+    },
+    "b87a97b6": {
+      "other_timestamp": "2021-05-19 04:58:11",
+      "other_desc": "Bought 0.49 BCH/BTC @ 0.023858",
+      "buy_qty": "0.00200000",
+      "other_qty": "0.01169042"
+    },
+    "4743f719": {
+      "other_timestamp": "2025-05-30 18:27:17",
+      "other_desc": "Ant Speirs",
+      "buy_qty": "0.01027300",
+      "other_qty": "0.01722567"
+    },
+    "3c055fa2": {
+      "other_timestamp": "2025-06-05 17:26:14",
+      "other_desc": "Ant S",
+      "buy_qty": "0.01612700",
+      "other_qty": "0.01601863"
+    },
+    "4ffa3b43": {
+      "other_timestamp": "2025-11-17 07:09:21",
+      "other_desc": "Ant Speirs",
+      "buy_qty": "0.00000200",
+      "other_qty": "0.00560825"
+    },
+    "84dbf40a": {
+      "other_timestamp": "2025-11-22 14:05:38",
+      "other_desc": "Ant Speirs",
+      "buy_qty": "0.02725500",
+      "other_qty": "0.02705873"
+    }
+  },
+  "ETH": {
+    "b6e2957e": {
+      "other_timestamp": "2021-05-11 00:32:41",
+      "other_desc": "Sent Ethereum to 0x1C5fEFB2FBaf17449253a9ce721B2f4eFd211c8D",
+      "buy_qty": "0.01551000",
+      "other_qty": "0.01697147"
+    }
+  },
+  "LTC": {
+    "39da93f4": {
+      "other_timestamp": "2021-05-10 17:18:22",
+      "other_desc": "Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ",
+      "buy_qty": "0.03770000",
+      "other_qty": "0.10000000"
+    },
+    "bd77c577": {
+      "other_timestamp": "2021-05-10 18:02:09",
+      "other_desc": "Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ",
+      "buy_qty": "0.30000000",
+      "other_qty": "1.67404034"
+    },
+    "e8f89cfc": {
+      "other_timestamp": "2021-05-10 18:47:05",
+      "other_desc": "Sent Litecoin to M8NBgkHKmv2EDFhz8QMogJVTQq5SKs2fmR",
+      "buy_qty": "0.16230000",
+      "other_qty": "0.17639445"
+    },
+    "da6fbe13": {
+      "other_timestamp": "2021-05-10 22:14:38",
+      "other_desc": "Sent Litecoin to MTk2iYaLm6xcAwaNt7g2QEwfq1scsWDmMF",
+      "buy_qty": "0.25000000",
+      "other_qty": "1.61067714"
+    },
+    "8491ac7e": {
+      "other_timestamp": "2021-05-12 20:29:38",
+      "other_desc": "Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ",
+      "buy_qty": "0.50000000",
+      "other_qty": "1.71031778"
+    },
+    "427c8ee2": {
+      "other_timestamp": "2021-05-15 16:17:42",
+      "other_desc": "Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ",
+      "buy_qty": "0.18450000",
+      "other_qty": "2.18151462"
+    },
+    "2d5269d1": {
+      "other_timestamp": "2021-05-15 19:29:40",
+      "other_desc": "First LTC payment to KUcoin",
+      "buy_qty": "0.11550000",
+      "other_qty": "0.22334672"
+    },
+    "85eaf788": {
+      "other_timestamp": "2021-05-15 20:25:29",
+      "other_desc": "Second payment to Kucoin R2000",
+      "buy_qty": "0.46240000",
+      "other_qty": "0.43633611"
+    },
+    "6aa0f3d7": {
+      "other_timestamp": "2021-05-17 06:14:45",
+      "other_desc": "3rd payment to Kucoin",
+      "buy_qty": "0.50000000",
+      "other_qty": "1.65296019"
+    },
+    "45d1d151": {
+      "other_timestamp": "2021-05-19 10:12:04",
+      "other_desc": "Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2",
+      "buy_qty": "0.98750000",
+      "other_qty": "1.29477855"
+    },
+    "22aabccb": {
+      "other_timestamp": "2021-05-25 12:50:41",
+      "other_desc": "Luno to Kucoin",
+      "buy_qty": "1.00000000",
+      "other_qty": "4.06928075"
+    },
+    "287586df": {
+      "other_timestamp": "2021-05-30 02:38:11",
+      "other_desc": "Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2",
+      "buy_qty": "1.00000000",
+      "other_qty": "4.28596249"
+    },
+    "831f140e": {
+      "other_timestamp": "2021-12-03 06:59:16",
+      "other_desc": "Transfer to Kucoin",
+      "buy_qty": "0.24910000",
+      "other_qty": "3.00000000"
+    },
+    "6768dcfb": {
+      "other_timestamp": "2021-12-03 20:45:57",
+      "other_desc": "Kucoin",
+      "buy_qty": "0.64600000",
+      "other_qty": "4.34364147"
+    },
+    "4a95d779": {
+      "other_timestamp": "2021-12-04 05:19:31",
+      "other_desc": "Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2",
+      "buy_qty": "0.55950000",
+      "other_qty": "3.99998523"
+    },
+    "06a4156b": {
+      "other_timestamp": "2021-12-04 07:19:38",
+      "other_desc": "Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2",
+      "buy_qty": "2.00000000",
+      "other_qty": "1.99798523"
+    },
+    "d1f42fb4": {
+      "other_timestamp": "2021-12-05 09:33:05",
+      "other_desc": "Transfer to Kucoin",
+      "buy_qty": "2.00000000",
+      "other_qty": "3.99998523"
+    },
+    "01b1aaf0": {
+      "other_timestamp": "2021-12-10 11:57:36",
+      "other_desc": "Send to Kucoin",
+      "buy_qty": "0.63000000",
+      "other_qty": "2.76191523"
+    },
+    "11a7e6e3": {
+      "other_timestamp": "2021-12-11 08:27:48",
+      "other_desc": "Kucoin deposit",
+      "buy_qty": "0.73940000",
+      "other_qty": "3.99998523"
+    },
+    "77606884": {
+      "other_timestamp": "2021-12-13 15:34:23",
+      "other_desc": "Kucoin deposit",
+      "buy_qty": "2.26850000",
+      "other_qty": "6.71328523"
+    },
+    "e5856500": {
+      "other_timestamp": "2022-05-13 12:38:50",
+      "other_desc": "To Kucoin",
+      "buy_qty": "0.13090000",
+      "other_qty": "6.24535953"
+    },
+    "c273b514": {
+      "other_timestamp": "2022-05-14 16:29:41",
+      "other_desc": "To Kucoin",
+      "buy_qty": "3.48430000",
+      "other_qty": "7.35520093"
+    },
+    "9f8ba4b5": {
+      "other_timestamp": "2022-05-28 07:10:33",
+      "other_desc": "Kucoin transfer",
+      "buy_qty": "0.00440000",
+      "other_qty": "9.90378863"
+    }
+  }
+}
