@@ -1,0 +1,23 @@
+Boughts for FY,2020
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Solds for FY,2020
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Sold,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2019-05-27 15:51:47,XBT,"Sold 0.042073 BTC/ZAR @ 135,000",S_XBT_010,856b83a5,-0.01172931,156999.82,1841.50,1583.46,-258.04,0.00
+2019-05-27 15:51:47,XBT,"Sold 0.042073 BTC/ZAR @ 135,000",S_XBT_010,1c896bac,-0.02759100,136999.75,3779.96,3724.78,-55.18,0.00
+2019-05-27 15:51:47,XBT,"Sold 0.042073 BTC/ZAR @ 135,000",S_XBT_010,7b2ea7db,-0.00119400,110000.00,131.34,161.19,29.85,0.00
+2019-05-27 15:51:47,XBT,"Sold 0.042073 BTC/ZAR @ 135,000",S_XBT_010,4dac9a05,-0.00155869,110000.00,171.46,210.42,38.97,0.00
+
+Buys for Others FY,2020
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Others for FY,2020
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Other,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2019-05-27 15:51:47,ZAR,"Sold 0.042073 BTC/ZAR @ 135,000",,,5679.85500000,,,,,
+
+Balances at end of FY,2020
+Currency,Total Units,Total Value (ZAR),Lot Ref,Lot Qty,Lot Unit Cost (ZAR),Lot Total Value (ZAR)
+XBT,0.03443400,4287.28,,,,
+XBT,,,4dac9a05,0.03897531,110000.00,4287.28
+ZAR,5679.89700000,0.00,,,,
+ZAR,,,N/A,0E-8,0.00,0.00

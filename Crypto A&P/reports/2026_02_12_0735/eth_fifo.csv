@@ -1,0 +1,5 @@
+Financial Year,Trans Ref,Date,Description,Type,Lot Reference,Qty Change,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR),Balance Units,Balance Value (ZAR)
+2024,,2023-12-08 12:10:39,Received Ethereum into Ethereum from Bittrex,Other,,0.00700000,,,,,,0.00700000,316.62
+2024,,2023-12-08 12:39:49,Received Ethereum into Ethereum from Bittrex,Other,,2.98700000,,,,,,2.99400000,135459.74
+2026,B_ETH_000,2025-04-10 10:41:40,"Bought 2.00 ETH/ZAR @ 31,420",Buy,1be52889,2.00000000,31420.00,62840.00,0.00,0.00,0.00,4.99400000,198299.74
+2026,B_ETH_000,2025-04-10 10:41:40,Fee for ,Fee,,-0.00800000,,,,,250.65,4.98600000,198049.09

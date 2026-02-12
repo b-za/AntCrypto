@@ -1,0 +1,29 @@
+Boughts for FY,2023
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2022-06-13 07:23:44,XBT,"Bought 0.010074 BTC/ZAR @ 403,000",B_XBT_027,a7ec9842,0.01007400,402999.80,4059.82,0.00,0.00,0.00
+
+Solds for FY,2023
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Sold,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Buys for Others FY,2023
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Others for FY,2023
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Other,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2022-06-13 07:23:44,ZAR,"Bought 0.010074 BTC/ZAR @ 403,000",S_ZAR_028,N/A,-4059.82200000,0.00,0.00,0.00,0.00,0.00
+
+Balances at end of FY,2023
+Currency,Total Units,Total Value (ZAR),Lot Ref,Lot Qty,Lot Unit Cost (ZAR),Lot Total Value (ZAR)
+XBT,0.04687922,34306.52,,,,
+XBT,,,1241cc50,0.00454131,800000.00,3633.05
+XBT,,,9ac5ebff,0.00483800,900000.00,4354.20
+XBT,,,741457e8,0.00500000,850000.00,4250.00
+XBT,,,1f7e2542,0.01000000,800000.00,8000.00
+XBT,,,9e7ed68a,0.00500000,700200.00,3501.00
+XBT,,,c30d091f,0.00584600,600198.43,3508.76
+XBT,,,3f3563d3,0.00599700,500198.43,2999.69
+XBT,,,a7ec9842,0.01007400,402999.80,4059.82
+XRP,0.66400000,20.00,,,,
+XRP,,,1c634e58,1.00000000,20.00,20.00
+ZAR,0.16640000,0.00,,,,
+ZAR,,,N/A,0E-8,0.00,0.00

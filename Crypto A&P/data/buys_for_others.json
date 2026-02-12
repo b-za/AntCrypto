@@ -1,0 +1,46 @@
+{
+  "XBT": {
+    "b98eb80d": {
+      "other_timestamp": "2017-08-30 18:32:21",
+      "other_desc": "all bitcoin",
+      "buy_qty": "0.15934000",
+      "other_qty": "0.15622401"
+    },
+    "b4ca59cc": {
+      "other_timestamp": "2017-09-01 22:13:40",
+      "other_desc": "Ants bitcoin",
+      "buy_qty": "0.07241000",
+      "other_qty": "0.07162321"
+    },
+    "975ad480": {
+      "other_timestamp": "2017-09-04 16:43:10",
+      "other_desc": "ants 2nd half",
+      "buy_qty": "0.07758000",
+      "other_qty": "0.07666183"
+    },
+    "b00e5f81": {
+      "other_timestamp": "2017-11-01 08:41:37",
+      "other_desc": "bruce investment",
+      "buy_qty": "0.04741216",
+      "other_qty": "0.04741216"
+    },
+    "f453b6fb": {
+      "other_timestamp": "2017-12-09 15:32:03",
+      "other_desc": "ripple time",
+      "buy_qty": "0.02076245",
+      "other_qty": "0.02076200"
+    },
+    "777d8006": {
+      "other_timestamp": "2017-12-13 13:00:06",
+      "other_desc": "next 5k",
+      "buy_qty": "0.01829724",
+      "other_qty": "0.01695138"
+    },
+    "249bdc0a": {
+      "other_timestamp": "2017-12-18 08:38:19",
+      "other_desc": "last R5000 with bruce",
+      "buy_qty": "0.01675000",
+      "other_qty": "0.01675000"
+    }
+  }
+}
