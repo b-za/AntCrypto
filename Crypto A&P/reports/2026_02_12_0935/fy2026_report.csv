@@ -1,0 +1,41 @@
+Boughts for FY,2026
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2025-04-10 10:41:40,ETH,"Bought 2.00 ETH/ZAR @ 31,420",B_ETH_002,1be52889,2.00000000,31420.00,62840.00,0.00,0.00,0.00
+
+Solds for FY,2026
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Sold,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Buys for Others FY,2026
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Others for FY,2026
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Other,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2025-04-10 10:41:40,ZAR,"Bought 2.00 ETH/ZAR @ 31,420",S_ZAR_030,40253547,-28751.91640000,0.00,0.00,0.00,0.00,0.00
+2025-04-10 10:41:40,ZAR,"Bought 2.00 ETH/ZAR @ 31,420",S_ZAR_030,f4f316fc,-34088.08360000,0.00,0.00,0.00,0.00,0.00
+
+Balances at end of FY,2026
+Currency,Total Units,Total Value (ZAR),Lot Ref,Lot Qty,Lot Unit Cost (ZAR),Lot Total Value (ZAR)
+ETH,4.98600000,198299.73,,,,
+ETH,,,1ff28d5d,0.00700000,45231.43,316.62
+ETH,,,769c2bd4,2.98700000,45243.76,135143.11
+ETH,,,1be52889,2.00000000,31420.00,62840.00
+LTC,3.49900000,5072.40,,,,
+LTC,,,6031c3f6,3.49900000,1449.67,5072.40
+XBT,0.08339067,77228.95,,,,
+XBT,,,364721fe,0.06238915,837159.98,52229.70
+XBT,,,7124ac46,0.02631500,950000.00,24999.25
+XRP,0.22000000,34.89,,,,
+XRP,,,027c571f,2.80000000,12.46,34.89
+ZAR,208296.65640000,0.00,,,,
+ZAR,,,f4f316fc,15598.66640000,0.00,0.00
+ZAR,,,4b5c9b37,37630.45000000,0.00,0.00
+ZAR,,,ab5cbcf9,56020.24000000,0.00,0.00
+ZAR,,,5cc7598c,4060.65000000,0.00,0.00
+ZAR,,,afed4a34,62523.45000000,0.00,0.00
+ZAR,,,3a6478da,8419.60000000,0.00,0.00
+ZAR,,,a2dc4568,24043.60000000,0.00,0.00
+Buying Fees
+Date,Description,Trans Ref,Lot Ref,Fee (ZAR)
+2025-04-10 10:41:40,"Fee for Bought 2.00 ETH/ZAR @ 31,420",B_ETH_002,,250.65
+Total Buying Fees,,,,250.65
+

@@ -236,26 +236,34 @@ def main(input_csv, output_csv):
                  'Balance Value (ZAR)': s2(balance_value[ccy]),
              })
         elif qty_delta > 0:
-             # Other positive delta (not a buy)
-             balance_units[ccy] += qty_delta
-             balance_value[ccy] += value_amount
+              # Other positive delta - treat as buy to create lots
+              qty = qty_delta
+              unit_cost = value_amount / qty if qty != 0 else Decimal('0')
+              lots_by_ccy[ccy].append(Lot(qty=qty, unit_cost=unit_cost, ref=ref))
 
-             output_rows.append({
-                 'Financial Year': fy,
-                 'Trans Ref': '',
-                 'Date': row['Timestamp (UTC)'],
-                 'Description': desc,
-                 'Type': 'Other',
-                 'Lot Reference': '',
-                 'Qty Change': q8(qty_delta),
-                 'Unit Cost (ZAR)': '',
-                 'Total Cost (ZAR)': '',
-                 'Proceeds (ZAR)': '',
-                 'Profit (ZAR)': '',
-                 'Fee (ZAR)': '',
-                 'Balance Units': q8(balance_units[ccy]),
-                 'Balance Value (ZAR)': s2(balance_value[ccy]),
-             })
+              balance_units[ccy] += qty
+              total_cost = qty * unit_cost
+              balance_value[ccy] += total_cost
+
+              trans_id = next(buy_id_gen)
+              last_trans_ref = trans_id
+
+              output_rows.append({
+                  'Financial Year': fy,
+                  'Trans Ref': trans_id,
+                  'Date': row['Timestamp (UTC)'],
+                  'Description': desc,
+                  'Type': 'Buy',
+                  'Lot Reference': ref,
+                  'Qty Change': q8(qty),
+                  'Unit Cost (ZAR)': s2(unit_cost),
+                  'Total Cost (ZAR)': s2(total_cost),
+                  'Proceeds (ZAR)': s2(Decimal('0')),
+                  'Profit (ZAR)': s2(Decimal('0')),
+                  'Fee (ZAR)': s2(Decimal('0')),
+                  'Balance Units': q8(balance_units[ccy]),
+                  'Balance Value (ZAR)': s2(balance_value[ccy]),
+              })
         else:
             # Sell or Send (any outflow)
             sell_qty = -qty_delta  # positive
@@ -474,20 +482,30 @@ def process_fy(csv_files, output_dir, timestamp):
                 buys_per_fy[fy].append(buy_record)
                 
         elif qty_delta > 0:
-            balance_units[ccy] += qty_delta
-            balance_value[ccy] += value_amount
-            others_per_fy[fy].append({
+            qty = qty_delta
+            unit_cost = value_amount / qty if qty != 0 else Decimal('0')
+            lots_by_ccy[ccy].append(Lot(qty=qty, unit_cost=unit_cost, ref=ref))
+            balance_units[ccy] += qty
+            total_cost = qty * unit_cost
+            balance_value[ccy] += total_cost
+            if ccy not in buy_id_gens:
+                buy_id_gens[ccy] = gen_txn_ids(f'B_{ccy.upper()}_')
+            trans_id = next(buy_id_gens[ccy])
+            last_trans_per_ccy[ccy] = desc
+            last_trans_ref_per_ccy[ccy] = trans_id
+
+            buys_per_fy[fy].append({
                 'Date': row['Timestamp (UTC)'],
                 'Currency': ccy,
                 'Description': desc,
-                'Trans Ref': '',
-                'Lot Ref': '',
-                'Qty Sold': q8(qty_delta),
-                'Unit Cost': '',
-                'Total Cost': '',
-                'Proceeds': '',
-                'Profit': '',
-                'Fee (ZAR)': '',
+                'Trans Ref': trans_id,
+                'Lot Ref': ref,
+                'Qty Bought': q8(qty),
+                'Unit Cost': s2(unit_cost),
+                'Total Cost': s2(total_cost),
+                'Proceeds': s2(Decimal('0')),
+                'Profit': s2(Decimal('0')),
+                'Fee (ZAR)': s2(Decimal('0')),
             })
 
         else:
