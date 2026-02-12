@@ -99,7 +99,7 @@ def generate_fy_report(fy, buys, buys_for_others, sales, fees, others, lots_by_c
         writer.writerow(['Currency', 'Total Units', 'Total Value (ZAR)', 'Lot Ref', 'Lot Qty', 'Lot Unit Cost (ZAR)', 'Lot Total Value (ZAR)'])
         for ccy in sorted(lots_by_ccy.keys()):
             units = balance_units[ccy]
-            total_value = sum((lot.qty * r2(lot.unit_cost) for lot in lots_by_ccy[ccy]), Decimal('0'))
+            total_value = balance_value[ccy]
             # Total row
             writer.writerow([ccy, q8(units), s2(total_value), '', '', '', ''])
             # Lot rows
