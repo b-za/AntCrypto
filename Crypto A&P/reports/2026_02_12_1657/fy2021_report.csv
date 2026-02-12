@@ -1,0 +1,22 @@
+Boughts for FY,2021
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2021-01-21 10:17:12,XBT,"Bought 0.003 BTC/ZAR @ 500,000",B_XBT_019,b5e7b125,0.00300000,500000.00,1500.00,0.00,0.00,0.00
+
+Solds for FY,2021
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Sold,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+2021-02-06 01:40:25,XBT,"Sold 0.01 BTC/ZAR @ 600,000",S_XBT_011,4dac9a05,-0.01000000,110000.00,1100.00,6000.00,4900.00,0.00
+2021-02-08 13:31:09,XBT,"Sold 0.01 BTC/ZAR @ 650,000",S_XBT_012,4dac9a05,-0.01000000,110000.00,1100.00,6500.00,5400.00,0.00
+2021-02-09 00:04:14,XBT,"Sold 0.01 BTC/ZAR @ 700,000",S_XBT_013,4dac9a05,-0.01000000,110000.00,1100.00,7000.00,5900.00,0.00
+2021-02-19 14:48:59,XBT,"Sold 0.005 BTC/ZAR @ 800,000",S_XBT_014,4dac9a05,-0.00500000,110000.00,550.00,4000.00,3450.00,0.00
+
+Buys for Others FY,2021
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Bought,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Others for FY,2021
+Date,Currency,Description,Trans Ref,Lot Ref,Qty Other,Unit Cost (ZAR),Total Cost (ZAR),Proceeds (ZAR),Profit (ZAR),Fee (ZAR)
+
+Balances at end of FY,2021
+Currency,Total Units,Total Value (ZAR),Lot Ref,Lot Qty,Lot Unit Cost (ZAR),Lot Total Value (ZAR)
+XBT,0.00243400,1373.41,,,,
+XBT,,,4dac9a05,0.00397531,110000.00,437.28
+XBT,,,b5e7b125,0.00300000,500000.00,1500.00
