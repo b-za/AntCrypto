@@ -7,3 +7,53 @@ roots:
 settings:
   financial_year_start: 3
   hash_length: 7
+
+report_column_order:
+  fifo:
+    - "Financial Year"
+    - "Trans Ref"
+    - "Date"
+    - "Description"
+    - "Type"
+    - "Lot Reference"
+    - "Qty Change"
+    - "Balance Units"
+    - "Total Cost (ZAR)"
+    - "Balance Value (ZAR)"
+    - "Fee (ZAR)"
+    - "Proceeds (ZAR)"
+    - "Profit (ZAR)"
+    - "Unit Cost (ZAR)"
+  inventory:
+    - "Financial Year"
+    - "Coin"
+    - "Lot Reference"
+    - "Quantity"
+    - "Date of Original Purchase"
+    - "Unit Cost (ZAR)"
+    - "Total Cost (ZAR)"
+    - "Pool"
+  profit_loss:
+    - "Financial Year"
+    - "Coin"
+    - "Sale Reference"
+    - "Lot Reference"
+    - "Quantity Sold"
+    - "Unit Cost (ZAR)"
+    - "Total Cost (ZAR)"
+    - "Selling Price (ZAR)"
+    - "Proceeds (ZAR)"
+    - "Profit/Loss (ZAR)"
+    - "Fee Reference"
+    - "Fee Amount (ZAR)"
+  transfers:
+    - "Financial Year"
+    - "Coin"
+    - "Date"
+    - "Description"
+    - "Type"
+    - "Qty Change"
+    - "Value (ZAR)"
+    - "Unit Cost (ZAR) / Unit Cost Value"
+    - "Lot Reference"
+    - "Pool"

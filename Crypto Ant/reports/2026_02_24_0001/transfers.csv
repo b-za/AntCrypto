@@ -1,0 +1,364 @@
+Financial Year,Coin,Date,Description,Type,Qty Change,Value (ZAR),Unit Cost (ZAR) / Unit Cost Value,Lot Reference,Pool
+FY2021,XBT,2021-01-29 13:40:50,Trading fee,out_fee_sell,-0.000006,3.38,3.38,,out_fee_sell
+FY2021,XBT,2021-02-02 11:07:28,Trading fee,out_fee_sell,-0.000004,2.17,2.17,,out_fee_sell
+FY2021,XBT,2021-02-02 11:19:43,Trading fee,out_fee_sell,-0.000009,4.94,4.94,,out_fee_sell
+FY2021,XBT,2021-02-02 11:28:10,Trading fee,out_fee_sell,-0.000009,4.92,4.92,,out_fee_sell
+FY2021,ETH,2021-02-06 08:13:00,Trading fee,out_fee_sell,-0.0001,2.53,2.53,,out_fee_sell
+FY2021,ETH,2021-02-06 08:19:23,Trading fee,out_fee_sell,-0.0001,2.54,2.54,,out_fee_sell
+FY2021,XBT,2021-02-09 08:32:20,Trading fee,out_fee_buy,-0.00001,7.21,7.21,,out_fee_buy
+FY2021,XBT,2021-02-09 08:34:57,Trading fee,out_fee_sell,-0.000006,4.31,4.31,,out_fee_sell
+FY2021,XBT,2021-02-09 08:34:57,Trading fee,out_fee_sell,-0.000001,0.71,0.71,,out_fee_sell
+FY2021,XBT,2021-02-09 08:34:57,Trading fee,out_fee_sell,-0.000002,1.43,1.43,,out_fee_sell
+FY2021,XBT,2021-02-09 08:51:29,Trading fee,out_fee_buy,-0.00001,7.28,7.28,,out_fee_buy
+FY2021,XBT,2021-02-09 08:52:51,Trading fee,out_fee_sell,-0.000009,6.56,6.56,,out_fee_sell
+FY2021,XBT,2021-02-09 08:57:35,Trading fee,out_fee_buy,-0.000005,3.67,3.67,,out_fee_buy
+FY2021,XRP,2021-02-18 09:05:19,Trading fee,out_fee_buy,-0.119,0.99,0.99,,out_fee_buy
+FY2021,XBT,2021-02-20 06:03:31,Trading fee,out_fee_sell,-0.000001,0.83,0.83,,out_fee_sell
+FY2021,ETH,2021-02-22 12:12:04,Trading fee,out_fee_buy,-0.000036,0.99,0.99,,out_fee_buy
+FY2021,LTC,2021-02-22 12:18:23,Trading fee,out_fee_buy,-0.000179,0.58,0.58,,out_fee_buy
+FY2021,LTC,2021-02-22 12:18:23,Trading fee,out_fee_buy,-0.000125,0.4,0.4,,out_fee_buy
+FY2021,LTC,2021-02-22 16:18:23,Trading fee,out_fee_buy,-0.000344,0.97,0.97,,out_fee_buy
+FY2021,XBT,2021-02-22 16:19:45,Trading fee,out_fee_buy,-0.000001,0.75,0.75,,out_fee_buy
+FY2021,XBT,2021-02-22 16:22:06,Trading fee,out_fee_buy,-0.000001,0.76,0.76,,out_fee_buy
+FY2021,ETH,2021-02-23 07:33:49,Trading fee,out_fee_buy,-0.000082,1.97,1.97,,out_fee_buy
+FY2021,XBT,2021-02-28 21:07:32,Trading fee,out_fee_buy,-0.000001,0.68,0.68,,out_fee_buy
+FY2022,XBT,2021-03-03 12:26:26,Trading fee,out_fee_sell,-0.000001,0.78,0.78,,out_fee_sell
+FY2022,ETH,2021-03-06 20:18:33,Trading fee,out_fee_sell,-0.00005,1.26,1.26,,out_fee_sell
+FY2022,ETH,2021-03-06 20:19:50,Trading fee,out_fee_sell,-0.00005,1.26,1.26,,out_fee_sell
+FY2022,ETH,2021-03-06 23:02:25,Trading fee,out_fee_sell,-0.000047,1.22,1.22,,out_fee_sell
+FY2022,ETH,2021-03-06 23:02:25,Trading fee,out_fee_sell,-0.000002,0.05,0.05,,out_fee_sell
+FY2022,ETH,2021-03-06 23:18:28,Trading fee,out_fee_sell,-0.0001,2.56,2.56,,out_fee_sell
+FY2022,XBT,2021-03-08 23:10:57,Trading fee,out_fee_sell,-0.000001,0.81,0.81,,out_fee_sell
+FY2022,XBT,2021-03-09 07:53:20,Trading fee,out_fee_sell,-0.000003,2.54,2.54,,out_fee_sell
+FY2022,ETH,2021-03-09 07:55:53,Trading fee,out_fee_sell,-0.000103,2.96,2.96,,out_fee_sell
+FY2022,LTC,2021-03-11 12:02:29,Trading fee,out_fee_buy,-0.0005,1.49,1.49,,out_fee_buy
+FY2022,XBT,2021-03-11 23:09:05,Trading fee,out_fee_sell,-0.000002,1.76,1.76,,out_fee_sell
+FY2022,XBT,2021-03-11 23:16:25,Trading fee,out_fee_sell,-0.000003,2.63,2.63,,out_fee_sell
+FY2022,XBT,2021-03-13 22:57:42,Trading fee,out_fee_sell,-0.000003,2.76,2.76,,out_fee_sell
+FY2022,XBT,2021-03-17 22:23:44,Trading fee,out_fee_sell,-0.000005,4.39,4.39,,out_fee_sell
+FY2022,XBT,2021-03-18 19:40:35,Trading fee,out_fee_sell,-0.000005,4.43,4.43,,out_fee_sell
+FY2022,XBT,2021-03-19 13:50:38,Trading fee,out_fee_sell,-0.000003,2.63,2.63,,out_fee_sell
+FY2022,XBT,2021-03-19 13:50:38,Trading fee,out_fee_sell,-0.000001,0.87,0.87,,out_fee_sell
+FY2022,XRP,2021-03-20 18:22:24,Trading fee,out_fee_sell,-0.002,0.01,0.01,,out_fee_sell
+FY2022,XRP,2021-03-20 18:24:26,Trading fee,out_fee_sell,-0.3,2.23,2.23,,out_fee_sell
+FY2022,LTC,2021-03-20 22:39:29,Trading fee,out_fee_buy,-0.0005,1.49,1.49,,out_fee_buy
+FY2022,XRP,2021-03-20 22:41:18,Trading fee,out_fee_sell,-0.05,0.38,0.38,,out_fee_sell
+FY2022,LTC,2021-03-21 12:09:35,Trading fee,out_fee_buy,-0.000515,1.5,1.5,,out_fee_buy
+FY2022,ETH,2021-03-23 07:33:00,Trading fee,out_fee_buy,-0.000039,0.98,0.98,,out_fee_buy
+FY2022,LTC,2021-03-24 10:12:47,Trading fee,out_fee_sell,-0.0005,1.47,1.47,,out_fee_sell
+FY2022,XBT,2021-03-24 22:18:55,Trading fee,out_fee_buy,-0.00001,8.3,8.3,,out_fee_buy
+FY2022,XBT,2021-03-24 22:21:33,Trading fee,out_fee_sell,-0.000001,0.83,0.83,,out_fee_sell
+FY2022,XBT,2021-03-24 22:21:33,Trading fee,out_fee_sell,-0.000005,4.16,4.16,,out_fee_sell
+FY2022,XBT,2021-03-24 22:21:34,Trading fee,out_fee_sell,-0.000002,1.66,1.66,,out_fee_sell
+FY2022,XRP,2021-03-24 23:08:22,Trading fee,out_fee_sell,-0.3,2.42,2.42,,out_fee_sell
+FY2022,XRP,2021-03-25 07:58:03,Trading fee,out_fee_sell,-0.3,2.28,2.28,,out_fee_sell
+FY2022,XRP,2021-03-25 11:09:52,Trading fee,out_fee_sell,-0.3,2.34,2.34,,out_fee_sell
+FY2022,XBT,2021-03-26 05:42:38,Sent Bitcoin to paulspeirs@gmail.com: Transfer from Luno Test 1,out_other,-0.00012422,100.12,100.12,,out_other
+FY2022,LTC,2021-03-29 07:10:11,Trading fee,out_fee_sell,-0.001,2.89,2.89,,out_fee_sell
+FY2022,XRP,2021-04-05 07:03:38,Trading fee,out_fee_sell,-0.3,3.22,3.22,,out_fee_sell
+FY2022,LTC,2021-04-07 13:29:24,Trading fee,out_fee_buy,-0.001,3.29,3.29,,out_fee_buy
+FY2022,XBT,2021-04-13 11:04:02,"Bought 0.00106 BTC/ZAR @ 942,962",in_buy_for_other,0.00106,999.53,942952.830188679245283,in_buy_for_other_a75600f1c1027d,in_buy_for_other
+FY2022,XBT,2021-04-13 11:04:02,Trading fee,out_fee_buy_for_other,-0.000001,0.94,0.94,,out_fee_buy_for_other
+FY2022,LTC,2021-04-13 11:04:54,Trading fee,out_fee_buy,-0.000253,0.99,0.99,,out_fee_buy
+FY2022,XRP,2021-04-13 11:05:51,Trading fee,out_fee_buy,-0.041,0.99,0.99,,out_fee_buy
+FY2022,ETH,2021-04-13 11:08:28,Trading fee,out_fee_buy,-0.00003,0.99,0.99,,out_fee_buy
+FY2022,XRP,2021-04-13 13:59:02,Trading fee,out_fee_buy,-0.038,0.98,0.98,,out_fee_buy
+FY2022,XRP,2021-04-13 14:00:31,Trading fee,out_fee_sell,-0.038,0.98,0.98,,out_fee_sell
+FY2022,XRP,2021-04-14 16:18:28,Trading fee,out_fee_buy,-0.043,1.01,1.01,,out_fee_buy
+FY2022,XBT,2021-04-16 17:14:14,First bitcoin transaction to coinbase,out_other,-0.01,9157.52,9157.52,,out_other
+FY2022,XBT,2021-04-16 17:14:14,Bitcoin send fee,out_other,-0.00020901,191.4,191.4,,out_other
+FY2022,XRP,2021-04-23 07:32:25,Trading fee,out_fee_buy,-0.133,1.98,1.98,,out_fee_buy
+FY2022,XRP,2021-04-26 05:42:21,Trading fee,out_fee_sell,-0.081,1.35,1.35,,out_fee_sell
+FY2022,XRP,2021-04-26 05:42:21,Trading fee,out_fee_sell,-0.119,1.98,1.98,,out_fee_sell
+FY2022,ETH,2021-04-26 06:22:09,Trading fee,out_fee_sell,-0.0001,3.66,3.66,,out_fee_sell
+FY2022,XRP,2021-04-26 20:47:25,Trading fee,out_fee_sell,-0.1,1.97,1.97,,out_fee_sell
+FY2022,XRP,2021-04-27 05:07:54,Trading fee,out_fee_sell,-0.082,1.72,1.72,,out_fee_sell
+FY2022,ETH,2021-04-28 03:59:12,Trading fee,out_fee_sell,-0.0001,4,4,,out_fee_sell
+FY2022,LTC,2021-05-02 01:53:54,Trading fee,out_fee_sell,-0.0005,2.04,2.04,,out_fee_sell
+FY2022,LTC,2021-05-05 04:33:12,Trading fee,out_fee_sell,-0.0005,2.49,2.49,,out_fee_sell
+FY2022,LTC,2021-05-06 08:12:28,"Bought 0.0377 LTC/ZAR @ 4,941",in_buy_for_other,0.0377,186.27,4940.8488063660477454,in_buy_for_other_cf70954b57a788,in_buy_for_other
+FY2022,LTC,2021-05-06 08:12:31,"Bought 0.1623 LTC/ZAR @ 4,941",in_buy_for_other,0.1623,801.92,4940.9735058533579791,in_buy_for_other_ee57c25be45864,in_buy_for_other
+FY2022,XBT,2021-05-08 22:04:05,Trading fee,out_fee_sell,-0.00000142,1.22,1.22,,out_fee_sell
+FY2022,XRP,2021-05-09 06:37:53,Trading fee,out_fee_sell,-0.1,2.18,2.18,,out_fee_sell
+FY2022,ETH,2021-05-10 08:03:22,Trading fee,out_fee_buy,-0.00002,1.19,1.19,,out_fee_buy
+FY2022,ETH,2021-05-10 11:11:25,Trading fee,out_fee_buy,-0.00000449,0.27,0.27,,out_fee_buy
+FY2022,ETH,2021-05-10 11:11:25,Trading fee,out_fee_buy_for_other,-0.00001551,0.93,0.93,,out_fee_buy_for_other
+FY2022,ETH,2021-05-10 11:11:25,"Bought 0.01551 ETH/ZAR @ 60,426",in_buy_for_other,0.01551,937.2,60425.5319148936170213,in_buy_for_other_d795544d3a9a32,in_buy_for_other
+FY2022,LTC,2021-05-10 13:25:26,"Bought 0.30 LTC/ZAR @ 5,589",in_buy_for_other,0.3,1676.7,5589,in_buy_for_other_9362e95e3df5c9,in_buy_for_other
+FY2022,XBT,2021-05-10 16:51:54,"Bought 0.000641 BTC/ZAR @ 841,000",in_buy_for_other,0.000641,539.08,840998.4399375975039002,in_buy_for_other_bb4af23ba97986,in_buy_for_other
+FY2022,LTC,2021-05-10 19:18:22,Litecoin send fee,out_other,-0.00001477,0.08,0.08,,out_other
+FY2022,LTC,2021-05-10 19:18:22,Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ,out_other,-0.1,578.94,578.94,,out_other
+FY2022,LTC,2021-05-10 20:02:09,Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ,out_other,-1.67404034,9390.42,9390.42,,out_other
+FY2022,LTC,2021-05-10 20:02:09,Litecoin send fee,out_other,-0.00001477,0.08,0.08,,out_other
+FY2022,LTC,2021-05-10 20:47:05,Litecoin send fee,out_other,-0.00001477,0.08,0.08,,out_other
+FY2022,LTC,2021-05-10 20:47:05,Sent Litecoin to M8NBgkHKmv2EDFhz8QMogJVTQq5SKs2fmR,out_other,-0.17639445,995.74,995.74,,out_other
+FY2022,LTC,2021-05-10 22:05:08,"Bought 0.25 LTC/ZAR @ 5,421",in_buy_for_other,0.25,1355.25,5421,in_buy_for_other_de4c92dc139e58,in_buy_for_other
+FY2022,LTC,2021-05-11 00:14:38,Sent Litecoin to MTk2iYaLm6xcAwaNt7g2QEwfq1scsWDmMF,out_other,-1.61067714,8994.78,8994.78,,out_other
+FY2022,LTC,2021-05-11 00:14:38,Litecoin send fee,out_other,-0.00001477,0.08,0.08,,out_other
+FY2022,ETH,2021-05-11 02:32:41,Sent Ethereum to 0x1C5fEFB2FBaf17449253a9ce721B2f4eFd211c8D,out_other,-0.01697147,1015.87,1015.87,,out_other
+FY2022,ETH,2021-05-11 02:32:41,Ethereum send fee,out_other,-0.01691,1012.19,1012.19,,out_other
+FY2022,LTC,2021-05-12 06:02:34,Trading fee,out_fee_buy,-0.00025,1.43,1.43,,out_fee_buy
+FY2022,LTC,2021-05-12 18:46:45,"Bought 0.50 LTC/ZAR @ 5,101",in_buy_for_other,0.5,2550.5,5101,in_buy_for_other_5b9b92869d5549,in_buy_for_other
+FY2022,ETH,2021-05-12 21:37:54,Trading fee,out_fee_buy,-0.00005,2.98,2.98,,out_fee_buy
+FY2022,LTC,2021-05-12 22:29:38,Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ,out_other,-1.71031778,8957.65,8957.65,,out_other
+FY2022,LTC,2021-05-12 22:29:38,Litecoin send fee,out_other,-0.00001477,0.07,0.07,,out_other
+FY2022,XBT,2021-05-13 01:38:53,"Bought 0.002 BTC/ZAR @ 751,000",in_buy_for_other,0.002,1502,751000,in_buy_for_other_58c43e0c3fba2a,in_buy_for_other
+FY2022,XBT,2021-05-13 01:58:53,"Bought 0.000897 BTC/ZAR @ 731,000",in_buy_for_other,0.000897,655.7,730992.1962095875139353,in_buy_for_other_5a1cfa6402cb84,in_buy_for_other
+FY2022,LTC,2021-05-13 06:02:57,Trading fee,out_fee_buy,-0.0005,2.41,2.41,,out_fee_buy
+FY2022,XRP,2021-05-13 11:33:39,Trading fee,out_fee_buy,-0.15,2.85,2.85,,out_fee_buy
+FY2022,LTC,2021-05-13 18:54:44,"Bought 0.4624 LTC/ZAR @ 4,511",in_buy_for_other,0.4624,2085.88,4510.986159169550173,in_buy_for_other_e896395c76d21f,in_buy_for_other
+FY2022,XBT,2021-05-13 20:38:04,"Bought 0.003 BTC/ZAR @ 683,000",in_buy_for_other,0.003,2049,683000,in_buy_for_other_ef60ea4cb64cc1,in_buy_for_other
+FY2022,LTC,2021-05-15 12:15:49,"Bought 0.1155 LTC/ZAR @ 4,620",in_buy_for_other,0.1155,533.61,4620,in_buy_for_other_1b4beabce04670,in_buy_for_other
+FY2022,LTC,2021-05-15 12:16:23,"Bought 0.1845 LTC/ZAR @ 4,620",in_buy_for_other,0.1845,852.39,4620,in_buy_for_other_694301ba319966,in_buy_for_other
+FY2022,XRP,2021-05-15 17:09:03,Trading fee,out_fee_sell,-0.005,0.1,0.1,,out_fee_sell
+FY2022,XRP,2021-05-15 17:09:03,Trading fee,out_fee_sell,-0.165,3.61,3.61,,out_fee_sell
+FY2022,XRP,2021-05-15 17:09:03,Trading fee,out_fee_sell,-0.03,0.65,0.65,,out_fee_sell
+FY2022,LTC,2021-05-15 18:17:42,Litecoin send fee,out_other,-0.00001477,0.06,0.06,,out_other
+FY2022,LTC,2021-05-15 18:17:42,Sent Litecoin to Laroz6vbuFzi3EgjgsbHfxwEgUisgTj8eQ,out_other,-2.18151462,10016.09,10016.09,,out_other
+FY2022,LTC,2021-05-15 20:49:36,Trading fee,out_fee_buy,-0.0005,2.27,2.27,,out_fee_buy
+FY2022,LTC,2021-05-15 21:29:40,Litecoin send fee,out_other,-0.00001477,0.06,0.06,,out_other
+FY2022,LTC,2021-05-15 21:29:40,First LTC payment to KUcoin,out_other,-0.22334672,993.68,993.68,,out_other
+FY2022,LTC,2021-05-15 22:25:29,Second payment to Kucoin R2000,out_other,-0.43633611,2001.91,2001.91,,out_other
+FY2022,LTC,2021-05-15 22:25:29,Litecoin send fee,out_other,-0.00001477,0.06,0.06,,out_other
+FY2022,XBT,2021-05-16 21:54:44,"Bought 0.002 BTC/ZAR @ 663,000",in_buy_for_other,0.002,1326,663000,in_buy_for_other_6f9efcd5494700,in_buy_for_other
+FY2022,LTC,2021-05-17 06:06:36,"Bought 0.50 LTC/ZAR @ 3,988",in_buy_for_other,0.5,1994,3988,in_buy_for_other_8c108e9ae87311,in_buy_for_other
+FY2022,BCH,2021-05-17 07:56:50,Trading fee,out_fee_buy,-0.0002,3.02,3.02,,out_fee_buy
+FY2022,XBT,2021-05-17 07:56:50,Bought 0.20 BCH/BTC @ 0.02406,out_other,-0.004812,3023.22836,3023.22836,,out_other
+FY2022,LTC,2021-05-17 08:14:45,Litecoin send fee,out_other,-0.00001477,0.06,0.06,,out_other
+FY2022,LTC,2021-05-17 08:14:45,3rd payment to Kucoin,out_other,-1.65296019,6968.62,6968.62,,out_other
+FY2022,BCH,2021-05-17 08:26:13,Trading fee,out_fee_buy,-0.00005,0.8,0.8,,out_fee_buy
+FY2022,BCH,2021-05-17 08:26:13,Trading fee,out_fee_buy,-0.00009,1.45,1.45,,out_fee_buy
+FY2022,XBT,2021-05-17 08:26:13,Bought 0.09 BCH/BTC @ 0.024357,out_other,-0.00219213,1455.99823,1455.99823,,out_other
+FY2022,XBT,2021-05-17 08:26:13,Bought 0.05 BCH/BTC @ 0.024356,out_other,-0.0012178,808.8879,808.8879,,out_other
+FY2022,XBT,2021-05-17 08:26:14,Bought 0.05 BCH/BTC @ 0.024366,out_other,-0.0012183,808.8879,808.8879,,out_other
+FY2022,XBT,2021-05-17 08:26:15,Bought 0.01 BCH/BTC @ 0.024366,out_other,-0.00024366,161.77758,161.77758,,out_other
+FY2022,XBT,2021-05-17 17:32:46,Bought 0.20 BCH/BTC @ 0.023961,out_other,-0.0047922,3131.14876,3131.14876,,out_other
+FY2022,XBT,2021-05-18 21:33:03,Trading fee,out_fee_sell,-0.000002,1.24,1.24,,out_fee_sell
+FY2022,XBT,2021-05-19 06:07:33,Trading fee,out_fee_buy,-0.000002,1.18,1.18,,out_fee_buy
+FY2022,XBT,2021-05-19 06:26:49,"Bought 0.002 BTC/ZAR @ 562,000",in_buy_for_other,0.002,1124,562000,in_buy_for_other_c60e9e8c53b3f6,in_buy_for_other
+FY2022,ETH,2021-05-19 06:41:28,Trading fee,out_fee_buy,-0.00005,2.15,2.15,,out_fee_buy
+FY2022,XBT,2021-05-19 06:58:11,Bought 0.49 BCH/BTC @ 0.023858,out_other,-0.01169042,6515.85432,6515.85432,,out_other
+FY2022,XBT,2021-05-19 06:58:11,Bought 0.01 BCH/BTC @ 0.023858,out_other,-0.00023858,132.97661,132.97661,,out_other
+FY2022,LTC,2021-05-19 07:03:41,Trading fee,out_fee_buy,-0.0002134,0.81,0.81,,out_fee_buy
+FY2022,LTC,2021-05-19 07:08:42,Trading fee,out_fee_buy,-0.001,3.88,3.88,,out_fee_buy
+FY2022,ETH,2021-05-19 07:18:15,Trading fee,out_fee_buy,-0.0000158,0.68,0.68,,out_fee_buy
+FY2022,ETH,2021-05-19 07:18:15,Trading fee,out_fee_buy,-0.00000048,0.02,0.02,,out_fee_buy
+FY2022,LTC,2021-05-19 12:06:53,Trading fee,out_fee_buy_for_other,-0.0009875,3.82,3.82,,out_fee_buy_for_other
+FY2022,LTC,2021-05-19 12:06:53,"Bought 0.9875 LTC/ZAR @ 3,869",in_buy_for_other,0.9875,3820.63,3868.9924050632911392,in_buy_for_other_201048828dffdc,in_buy_for_other
+FY2022,LTC,2021-05-19 12:06:53,Trading fee,out_fee_buy,-0.0003252,1.26,1.26,,out_fee_buy
+FY2022,LTC,2021-05-19 12:12:04,Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2,out_other,-1.29477855,4985.54,4985.54,,out_other
+FY2022,LTC,2021-05-19 12:12:04,Litecoin send fee,out_other,-0.00001477,0.05,0.05,,out_other
+FY2022,XBT,2021-05-19 13:30:51,Bought 0.04 BCH/BTC @ 0.0225,out_other,-0.0009,497.2,497.2,,out_other
+FY2022,ETH,2021-05-19 14:03:45,Trading fee,out_fee_buy,-0.00012631,4.47,4.47,,out_fee_buy
+FY2022,LTC,2021-05-19 14:49:11,Trading fee,out_fee_buy,-0.0011144,3.01,3.01,,out_fee_buy
+FY2022,XBT,2021-05-19 15:03:14,Trading fee,out_fee_buy,-0.00001,4.88,4.88,,out_fee_buy
+FY2022,XRP,2021-05-21 23:15:21,Trading fee,out_fee_buy,-0.245,3.24,3.24,,out_fee_buy
+FY2022,XRP,2021-05-21 23:29:29,Trading fee,out_fee_buy,-0.2,2.77,2.77,,out_fee_buy
+FY2022,XRP,2021-05-21 23:42:44,Trading fee,out_fee_buy,-0.023,0.32,0.32,,out_fee_buy
+FY2022,LTC,2021-05-21 23:46:15,Trading fee,out_fee_buy,-0.0001219,0.31,0.31,,out_fee_buy
+FY2022,LTC,2021-05-23 09:50:00,"Bought 1.00 LTC/ZAR @ 2,315",in_buy_for_other,1,2315,2315,in_buy_for_other_0b5be433fa42e3,in_buy_for_other
+FY2022,LTC,2021-05-23 10:16:05,"Bought 1.00 LTC/ZAR @ 2,255",in_buy_for_other,1,2255,2255,in_buy_for_other_e1b6f2aa5816eb,in_buy_for_other
+FY2022,LTC,2021-05-25 14:50:41,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-05-25 14:50:41,Luno to Kucoin,out_other,-4.06928075,10076.88,10076.88,,out_other
+FY2022,LTC,2021-05-30 04:38:11,Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2,out_other,-4.28596249,9992.3,9992.3,,out_other
+FY2022,LTC,2021-05-30 04:38:11,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,XBT,2021-06-14 14:23:15,Trading fee,out_fee_sell,-0.000005,2.77,2.77,,out_fee_sell
+FY2022,ETH,2021-06-28 22:22:58,Trading fee,out_fee_sell,-0.00005,1.54,1.54,,out_fee_sell
+FY2022,ETH,2021-06-28 23:57:54,Trading fee,out_fee_sell,-0.00005,1.56,1.56,,out_fee_sell
+FY2022,XBT,2021-06-29 08:58:07,Trading fee,out_fee_sell,-0.000005,2.58,2.58,,out_fee_sell
+FY2022,ETH,2021-07-04 22:05:42,Trading fee,out_fee_sell,-0.00007,2.38,2.38,,out_fee_sell
+FY2022,XRP,2021-07-17 01:00:32,Trading fee,out_fee_buy,-0.271,2.37,2.37,,out_fee_buy
+FY2022,XRP,2021-07-17 01:05:09,Trading fee,out_fee_buy,-0.195,1.71,1.71,,out_fee_buy
+FY2022,XRP,2021-07-17 05:10:53,Trading fee,out_fee_buy,-0.041,0.34,0.34,,out_fee_buy
+FY2022,XRP,2021-07-26 07:46:03,Trading fee,out_fee_sell,-0.15,1.48,1.48,,out_fee_sell
+FY2022,XRP,2021-07-28 09:38:18,Trading fee,out_fee_sell,-0.15,1.6,1.6,,out_fee_sell
+FY2022,XRP,2021-07-28 09:39:32,Trading fee,out_fee_sell,-0.15,1.62,1.62,,out_fee_sell
+FY2022,XRP,2021-09-08 10:12:46,Trading fee,out_fee_buy,-0.1,1.59,1.59,,out_fee_buy
+FY2022,XRP,2021-09-08 10:22:12,Trading fee,out_fee_buy,-0.1,1.54,1.54,,out_fee_buy
+FY2022,XRP,2021-09-08 10:25:03,Trading fee,out_fee_buy,-0.1,1.53,1.53,,out_fee_buy
+FY2022,XRP,2021-09-20 06:01:57,Trading fee,out_fee_buy,-0.037,0.55,0.55,,out_fee_buy
+FY2022,XRP,2021-09-20 13:30:25,Trading fee,out_fee_buy,-0.1,1.4,1.4,,out_fee_buy
+FY2022,ETH,2021-09-20 13:36:23,Trading fee,out_fee_buy,-0.00005,2.35,2.35,,out_fee_buy
+FY2022,LTC,2021-09-20 14:44:22,Trading fee,out_fee_buy,-0.0000001,0,0,,out_fee_buy
+FY2022,XRP,2021-10-01 13:14:33,Trading fee,out_fee_sell,-0.261,4.05,4.05,,out_fee_sell
+FY2022,XRP,2021-10-01 13:14:33,Trading fee,out_fee_sell,-0.039,0.6,0.6,,out_fee_sell
+FY2022,ETH,2021-10-08 17:07:45,Trading fee,out_fee_sell,-0.00000255,0.14,0.14,,out_fee_sell
+FY2022,ETH,2021-11-02 12:12:59,Trading fee,out_fee_sell,-0.00005,3.41,3.41,,out_fee_sell
+FY2022,LTC,2021-11-11 06:30:17,Trading fee,out_fee_buy,-0.00005,0.2,0.2,,out_fee_buy
+FY2022,LTC,2021-12-02 05:58:55,Litecoin send fee,out_other,-0.00001477,0.04,0.04,,out_other
+FY2022,LTC,2021-12-02 05:58:55,Transfer to Kucoin,out_other,-2,6627.3,6627.3,,out_other
+FY2022,LTC,2021-12-02 10:27:08,Transfer to Kucoin,out_other,-1,3319.84,3319.84,,out_other
+FY2022,LTC,2021-12-02 10:27:08,Litecoin send fee,out_other,-0.00001477,0.04,0.04,,out_other
+FY2022,LTC,2021-12-02 15:29:59,"Bought 0.646 LTC/ZAR @ 3,270",in_buy_for_other,0.646,2112.42,3270,in_buy_for_other_a343afe72a42a6,in_buy_for_other
+FY2022,LTC,2021-12-03 04:52:58,"Bought 0.2491 LTC/ZAR @ 3,270",in_buy_for_other,0.2491,814.55,3269.9718988358089121,in_buy_for_other_6ddc6c4bcf60a4,in_buy_for_other
+FY2022,LTC,2021-12-03 08:59:16,Litecoin send fee,out_other,-0.00001477,0.04,0.04,,out_other
+FY2022,LTC,2021-12-03 08:59:16,Transfer to Kucoin,out_other,-3,9932.06,9932.06,,out_other
+FY2022,LTC,2021-12-03 22:45:57,Kucoin,out_other,-4.34364147,13248.52,13248.52,,out_other
+FY2022,LTC,2021-12-03 22:45:57,Litecoin send fee,out_other,-0.00001477,0.04,0.04,,out_other
+FY2022,LTC,2021-12-04 06:54:22,"Bought 0.5595 LTC/ZAR @ 2,857",in_buy_for_other,0.5595,1598.49,2856.9973190348525469,in_buy_for_other_024e683953689d,in_buy_for_other
+FY2022,LTC,2021-12-04 07:19:31,Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2,out_other,-3.99998523,10519.87,10519.87,,out_other
+FY2022,LTC,2021-12-04 07:19:31,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-12-04 09:13:52,"Bought 2.00 LTC/ZAR @ 2,507",in_buy_for_other,2,5014,2507,in_buy_for_other_ee68f65e94368f,in_buy_for_other
+FY2022,LTC,2021-12-04 09:13:52,Trading fee,out_fee_buy_for_other,-0.002,5.01,5.01,,out_fee_buy_for_other
+FY2022,LTC,2021-12-04 09:19:38,Sent Litecoin to MDqbAfCvbeaPWDm2F26vXy67cbk5yaYNc2,out_other,-1.99798523,5052,5052,,out_other
+FY2022,LTC,2021-12-04 09:19:38,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-12-05 02:34:37,"Bought 2.00 LTC/ZAR @ 2,675",in_buy_for_other,2,5350,2675,in_buy_for_other_a0d025066111fc,in_buy_for_other
+FY2022,LTC,2021-12-05 11:33:05,Transfer to Kucoin,out_other,-3.99998523,10617.23,10617.23,,out_other
+FY2022,LTC,2021-12-05 11:33:05,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-12-10 13:52:21,Trading fee,out_fee_buy,-0.00037,0.93,0.93,,out_fee_buy
+FY2022,LTC,2021-12-10 13:52:22,"Bought 0.63 LTC/ZAR @ 2,523",in_buy_for_other,0.63,1589.49,2523,in_buy_for_other_f555d56674147a,in_buy_for_other
+FY2022,LTC,2021-12-10 13:57:36,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-12-10 13:57:36,Send to Kucoin,out_other,-2.76191523,6971.28,6971.28,,out_other
+FY2022,LTC,2021-12-10 16:58:25,"Bought 0.7394 LTC/ZAR @ 2,480",in_buy_for_other,0.7394,1833.71,2479.9972951041384907,in_buy_for_other_f2d9ecc122fb4f,in_buy_for_other
+FY2022,LTC,2021-12-11 10:27:48,Kucoin deposit,out_other,-3.99998523,10081.5,10081.5,,out_other
+FY2022,LTC,2021-12-11 10:27:48,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,LTC,2021-12-13 17:20:23,"Bought 2.2685 LTC/ZAR @ 2,420",in_buy_for_other,2.2685,5489.77,2420,in_buy_for_other_bdf99d6fe59006,in_buy_for_other
+FY2022,LTC,2021-12-13 17:34:23,Kucoin deposit,out_other,-6.71328523,16185.97,16185.97,,out_other
+FY2022,LTC,2021-12-13 17:34:23,Litecoin send fee,out_other,-0.00001477,0.03,0.03,,out_other
+FY2022,XRP,2021-12-21 21:38:16,Trading fee,out_fee_sell,-0.015,0.22,0.22,,out_fee_sell
+FY2022,XRP,2021-12-21 21:38:17,Trading fee,out_fee_sell,-0.006,0.08,0.08,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:23,Trading fee,out_fee_sell,-0.005,0.07,0.07,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:23,Trading fee,out_fee_sell,-0.013,0.19,0.19,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:23,Trading fee,out_fee_sell,-0.135,1.99,1.99,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:23,Trading fee,out_fee_sell,-0.912,13.46,13.46,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:23,Trading fee,out_fee_sell,-0.811,11.97,11.97,,out_fee_sell
+FY2022,XRP,2021-12-21 21:50:24,Trading fee,out_fee_sell,-2.725,40.23,40.23,,out_fee_sell
+FY2022,XRP,2022-02-08 00:38:43,Trading fee,out_fee_sell,-2.5,32.84,32.84,,out_fee_sell
+FY2022,XRP,2022-02-08 07:52:22,Trading fee,out_fee_sell,-0.225,3.2,3.2,,out_fee_sell
+FY2022,XRP,2022-02-08 07:52:22,Trading fee,out_fee_sell,-0.385,5.49,5.49,,out_fee_sell
+FY2022,XRP,2022-02-08 07:52:22,Trading fee,out_fee_sell,-0.14,1.99,1.99,,out_fee_sell
+FY2023,LTC,2022-05-13 14:27:07,Trading fee,out_fee_buy,-0.001132,1.33,1.33,,out_fee_buy
+FY2023,LTC,2022-05-13 14:27:07,Trading fee,out_fee_buy,-0.0036628,4.3,4.3,,out_fee_buy
+FY2023,LTC,2022-05-13 14:27:07,Trading fee,out_fee_buy_for_other,-0.0001309,0.15,0.15,,out_fee_buy_for_other
+FY2023,LTC,2022-05-13 14:27:07,"Bought 0.1309 LTC/ZAR @ 1,189",in_buy_for_other,0.1309,155.64,1188.9992360580595875,in_buy_for_other_0e5b365b5afe84,in_buy_for_other
+FY2023,LTC,2022-05-13 14:38:50,To Kucoin,out_other,-6.24535953,7380.77,7380.77,,out_other
+FY2023,LTC,2022-05-13 14:38:50,Litecoin send fee,out_other,-0.00001477,0.01,0.01,,out_other
+FY2023,LTC,2022-05-14 16:45:26,Trading fee,out_fee_buy,-0.001,1.08,1.08,,out_fee_buy
+FY2023,LTC,2022-05-14 16:45:26,"Bought 3.4843 LTC/ZAR @ 1,084",in_buy_for_other,3.4843,3776.98,1083.999655597968028,in_buy_for_other_3a2780cab00351,in_buy_for_other
+FY2023,LTC,2022-05-14 16:45:26,Trading fee,out_fee_buy_for_other,-0.0034843,3.77,3.77,,out_fee_buy_for_other
+FY2023,LTC,2022-05-14 18:29:41,Litecoin send fee,out_other,-0.00001477,0.01,0.01,,out_other
+FY2023,LTC,2022-05-14 18:29:41,To Kucoin,out_other,-7.35520093,8024.16,8024.16,,out_other
+FY2023,LTC,2022-05-28 08:56:01,Trading fee,out_fee_buy,-0.0005947,0.59,0.59,,out_fee_buy
+FY2023,LTC,2022-05-28 09:04:16,Trading fee,out_fee_buy,-0.0009019,0.9,0.9,,out_fee_buy
+FY2023,LTC,2022-05-28 09:06:58,Bought 0.0044 LTC/ZAR @ 999,in_buy_for_other,0.0044,4.39,997.7272727272727273,in_buy_for_other_e967dd2814f1c1,in_buy_for_other
+FY2023,LTC,2022-05-28 09:10:33,Kucoin transfer,out_other,-9.90378863,9896.17,9896.17,,out_other
+FY2023,LTC,2022-05-28 09:10:33,Litecoin send fee,out_other,-0.00001477,0.01,0.01,,out_other
+FY2023,ETH,2022-06-11 18:46:18,Trading fee,out_fee_buy,-0.00200008,49.9,49.9,,out_fee_buy
+FY2023,ETH,2022-06-15 11:10:59,Trading fee,out_fee_buy,-0.00118623,19.95,19.95,,out_fee_buy
+FY2023,ETH,2022-07-16 21:44:32,Trading fee,out_fee_sell,-0.0000323,0.74,0.74,,out_fee_sell
+FY2023,ETH,2022-07-16 21:44:32,Trading fee,out_fee_sell,-0.0000767,1.76,1.76,,out_fee_sell
+FY2023,ETH,2022-07-26 22:35:37,Trading fee,out_fee_buy,-0.000022,0.52,0.52,,out_fee_buy
+FY2023,ETH,2022-07-26 22:35:37,Trading fee,out_fee_buy,-0.000478,11.29,11.29,,out_fee_buy
+FY2023,XRP,2022-09-23 09:07:08,Trading fee,out_fee_sell,-1,9.69,9.69,,out_fee_sell
+FY2023,ETH,2022-10-25 19:01:34,Trading fee,out_fee_sell,-0.00003,0.8,0.8,,out_fee_sell
+FY2023,ETH,2022-10-25 19:01:34,Trading fee,out_fee_sell,-0.00047,12.62,12.62,,out_fee_sell
+FY2023,ETH,2022-10-25 19:02:31,Trading fee,out_fee_sell,-0.0004504,12.25,12.25,,out_fee_sell
+FY2023,ETH,2022-10-25 19:02:31,Trading fee,out_fee_sell,-0.0000496,1.34,1.34,,out_fee_sell
+FY2023,XBT,2022-11-09 04:27:40,Trading fee,out_fee_buy,-0.000007,2.35,2.35,,out_fee_buy
+FY2023,XBT,2022-11-09 04:29:56,Trading fee,out_fee_buy,-0.0000031,1.04,1.04,,out_fee_buy
+FY2023,XBT,2022-11-09 06:37:54,Trading fee,out_fee_buy,-0.000001,0.33,0.33,,out_fee_buy
+FY2023,XBT,2022-11-09 06:38:24,Trading fee,out_fee_buy,-0.000009,2.99,2.99,,out_fee_buy
+FY2023,XBT,2023-02-04 00:58:16,Trading fee,out_fee_sell,-0.000009,3.71,3.71,,out_fee_sell
+FY2024,LTC,2023-04-20 06:34:35,Trading fee,out_fee_buy,-0.0010589,1.79,1.79,,out_fee_buy
+FY2024,LTC,2023-04-20 06:34:35,Trading fee,out_fee_buy,-0.0009411,1.59,1.59,,out_fee_buy
+FY2024,LTC,2023-04-20 06:35:48,Trading fee,out_fee_buy,-0.0011232,1.9,1.9,,out_fee_buy
+FY2024,LTC,2023-04-20 06:35:48,Trading fee,out_fee_buy,-0.0018768,3.18,3.18,,out_fee_buy
+FY2024,ETH,2023-04-20 06:54:47,Trading fee,out_fee_buy,-0.0002,7.29,7.29,,out_fee_buy
+FY2024,ETH,2023-05-30 05:28:48,Trading fee,out_fee_sell,-0.0002,7.55,7.55,,out_fee_sell
+FY2024,XBT,2023-05-30 05:30:32,Trading fee,out_fee_sell,-0.00001,5.52,5.52,,out_fee_sell
+FY2024,LTC,2023-05-30 05:32:06,Trading fee,out_fee_sell,-0.001,1.81,1.81,,out_fee_sell
+FY2024,LTC,2023-06-13 02:01:15,Trading fee,out_fee_buy,-0.006,8.78,8.78,,out_fee_buy
+FY2024,ETH,2023-06-13 02:03:20,Trading fee,out_fee_buy,-0.000965,31.76,31.76,,out_fee_buy
+FY2024,ETH,2023-06-13 02:03:20,Trading fee,out_fee_buy,-0.000035,1.15,1.15,,out_fee_buy
+FY2024,XBT,2023-06-13 02:06:20,Trading fee,out_fee_buy,-0.00005,24.47,24.47,,out_fee_buy
+FY2024,LTC,2023-06-14 22:05:45,Trading fee,out_fee_buy,-0.006,8.57,8.57,,out_fee_buy
+FY2024,XBT,2023-06-21 17:39:40,Trading fee,out_fee_sell,-0.00002141,11.93,11.93,,out_fee_sell
+FY2024,ETH,2023-06-22 04:34:41,Trading fee,out_fee_sell,-0.00050976,18.31,18.31,,out_fee_sell
+FY2024,ETH,2023-06-22 04:34:44,Trading fee,out_fee_sell,-0.00009023,3.24,3.24,,out_fee_sell
+FY2024,XBT,2023-06-23 18:08:05,Trading fee,out_fee_sell,-0.0000055,3.27,3.27,,out_fee_sell
+FY2024,XBT,2023-06-23 18:08:05,Trading fee,out_fee_sell,-0.0000445,26.51,26.51,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:21,Trading fee,out_fee_sell,-0.0000025,0.09,0.09,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:21,Trading fee,out_fee_sell,-0.0000025,0.09,0.09,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:21,Trading fee,out_fee_sell,-0.00000164,0.06,0.06,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:38,Trading fee,out_fee_sell,-0.00001589,0.58,0.58,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:54,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:55,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:55,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:56,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:56,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:57,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:58,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:12:59,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:13:26,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-06-23 18:13:27,Trading fee,out_fee_sell,-0.00056512,20.81,20.81,,out_fee_sell
+FY2024,ETH,2023-06-23 18:13:27,Trading fee,out_fee_sell,-0.0000015,0.05,0.05,,out_fee_sell
+FY2024,ETH,2023-07-03 09:38:16,Trading fee,out_fee_sell,-0.0006,22.56,22.56,,out_fee_sell
+FY2024,LTC,2023-07-03 21:33:20,Trading fee,out_fee_sell,-0.0253795,51.86,51.86,,out_fee_sell
+FY2024,LTC,2023-07-03 21:33:20,Trading fee,out_fee_sell,-0.0090027,18.39,18.39,,out_fee_sell
+FY2024,XBT,2023-07-03 21:34:57,Trading fee,out_fee_sell,-0.000027,16.12,16.12,,out_fee_sell
+FY2024,XBT,2023-07-03 21:34:57,Trading fee,out_fee_sell,-0.000003,1.79,1.79,,out_fee_sell
+FY2024,ETH,2023-07-03 21:45:05,Trading fee,out_fee_sell,-0.0005,18.79,18.79,,out_fee_sell
+FY2024,LTC,2023-07-04 23:39:27,Trading fee,out_fee_sell,-0.0000295,0.05,0.05,,out_fee_sell
+FY2024,XRP,2023-07-12 21:17:12,Trading fee,out_fee_buy,-2.5,21.99,21.99,,out_fee_buy
+FY2024,XRP,2023-07-13 18:20:48,Trading fee,out_fee_sell,-0.115,1.28,1.28,,out_fee_sell
+FY2024,XRP,2023-07-13 18:20:49,Trading fee,out_fee_sell,-2.931,32.8,32.8,,out_fee_sell
+FY2024,XRP,2023-07-13 19:06:49,Trading fee,out_fee_sell,-1.479,17.05,17.05,,out_fee_sell
+FY2024,ETH,2023-11-09 17:19:19,Trading fee,out_fee_sell,-0.0006,23.14,23.14,,out_fee_sell
+FY2024,ETH,2023-12-07 23:10:25,Trading fee,out_fee_sell,-0.0016428,73.47,73.47,,out_fee_sell
+FY2024,ETH,2023-12-07 23:10:25,Trading fee,out_fee_sell,-0.00008503,3.8,3.8,,out_fee_sell
+FY2025,XRP,2024-07-04 04:00:55,Trading fee,out_fee_buy,-1.5,12.82,12.82,,out_fee_buy
+FY2025,XRP,2024-11-18 12:13:40,Trading fee,out_fee_sell,-1.47,30.47,30.47,,out_fee_sell
+FY2025,XRP,2024-11-18 12:13:40,Trading fee,out_fee_sell,-1.5,31.1,31.1,,out_fee_sell
+FY2025,ETH,2024-11-18 12:14:56,Trading fee,out_fee_sell,-0.000738,41.98,41.98,,out_fee_sell
+FY2025,ETH,2024-11-18 12:14:57,Trading fee,out_fee_sell,-0.00024018,13.66,13.66,,out_fee_sell
+FY2025,ETH,2024-11-18 12:14:57,Trading fee,out_fee_sell,-0.00006781,3.85,3.85,,out_fee_sell
+FY2025,ETH,2024-11-21 14:12:38,Trading fee,out_fee_sell,-0.00003929,2.29,2.29,,out_fee_sell
+FY2025,ETH,2024-11-21 14:12:44,Trading fee,out_fee_sell,-0.00064684,37.85,37.85,,out_fee_sell
+FY2025,ETH,2024-11-21 14:12:51,Trading fee,out_fee_sell,-0.00011385,6.66,6.66,,out_fee_sell
+FY2025,ETH,2024-11-21 20:51:17,Trading fee,out_fee_sell,-0.00019099,11.69,11.69,,out_fee_sell
+FY2025,ETH,2024-11-21 20:53:18,Trading fee,out_fee_sell,-0.00000957,0.58,0.58,,out_fee_sell
+FY2025,ETH,2024-11-21 20:53:38,Trading fee,out_fee_sell,-0.00007173,4.38,4.38,,out_fee_sell
+FY2025,ETH,2024-11-21 20:54:41,Trading fee,out_fee_sell,-0.00024296,14.86,14.86,,out_fee_sell
+FY2025,ETH,2024-11-21 20:55:08,Trading fee,out_fee_sell,-0.00008474,5.18,5.18,,out_fee_sell
+FY2025,ETH,2024-11-23 16:27:34,Trading fee,out_fee_sell,-0.0008,50.66,50.66,,out_fee_sell
+FY2025,ETH,2024-11-27 23:50:45,Trading fee,out_fee_sell,-0.00060644,40.38,40.38,,out_fee_sell
+FY2025,BCH,2024-12-04 22:27:22,Trading fee,out_fee_sell,-0.000275,2.9,2.9,,out_fee_sell
+FY2025,BCH,2024-12-04 22:46:30,Trading fee,out_fee_sell,-0.0032826,34.28,34.28,,out_fee_sell
+FY2026,ETH,2025-04-07 20:48:54,Trading fee,out_fee_buy,-0.00038708,12.01,12.01,,out_fee_buy
+FY2026,ETH,2025-04-07 20:51:28,Trading fee,out_fee_buy,-0.00041291,12.8,12.8,,out_fee_buy
+FY2026,LTC,2025-04-08 02:30:26,Trading fee,out_fee_buy,-0.008,11.2,11.2,,out_fee_buy
+FY2026,ETH,2025-04-08 18:56:39,Trading fee,out_fee_buy,-0.00016391,4.84,4.84,,out_fee_buy
+FY2026,ETH,2025-04-08 18:56:39,Trading fee,out_fee_buy,-0.00063608,18.8,18.8,,out_fee_buy
+FY2026,ETH,2025-04-09 03:27:14,Trading fee,out_fee_buy,-0.0008,22.51,22.51,,out_fee_buy
+FY2026,ETH,2025-04-10 18:41:42,Trading fee,out_fee_buy,-0.0003,8.91,8.91,,out_fee_buy
+FY2026,ETH,2025-04-10 18:41:42,Trading fee,out_fee_buy,-0.0003,8.91,8.91,,out_fee_buy
+FY2026,ETH,2025-04-10 18:41:42,Trading fee,out_fee_buy,-0.00177407,52.72,52.72,,out_fee_buy
+FY2026,ETH,2025-04-10 18:41:43,Trading fee,out_fee_buy,-0.0003,8.91,8.91,,out_fee_buy
+FY2026,ETH,2025-04-10 18:41:43,Trading fee,out_fee_buy,-0.0003,8.91,8.91,,out_fee_buy
+FY2026,ETH,2025-04-10 18:47:11,Trading fee,out_fee_buy,-0.00002592,0.77,0.77,,out_fee_buy
+FY2026,XBT,2025-05-30 19:13:27,"Bought 0.010273 BTC/ZAR @ 1,893,691",in_buy_for_other,0.010273,19453.88,1893690.2560109023654239,in_buy_for_other_de0f43e0f438f7,in_buy_for_other
+FY2026,XBT,2025-05-30 19:13:27,Trading fee,out_fee_buy_for_other,-0.00006163,116.72,116.72,,out_fee_buy_for_other
+FY2026,XBT,2025-05-30 19:13:27,Trading fee,out_fee_buy,-0.0000429,81.24,81.24,,out_fee_buy
+FY2026,XBT,2025-05-30 20:27:17,Ant Speirs,out_other,-0.01722567,32765.55,32765.55,,out_other
+FY2026,XBT,2025-05-30 20:27:17,Bitcoin send fee,out_other,-0.00011409,217.01,217.01,,out_other
+FY2026,XBT,2025-06-05 19:10:46,"Bought 0.016127 BTC/ZAR @ 1,860,200",in_buy_for_other,0.016127,29999.44,1860199.6651578098840454,in_buy_for_other_b1e9891a6b130f,in_buy_for_other
+FY2026,XBT,2025-06-05 19:10:46,Trading fee,out_fee_buy_for_other,-0.00004838,90.05,90.05,,out_fee_buy_for_other
+FY2026,XBT,2025-06-05 19:26:14,Bitcoin send fee,out_other,-0.00005999,111.53,111.53,,out_other
+FY2026,XBT,2025-06-05 19:26:14,Ant S,out_other,-0.01601863,29783.31,29783.31,,out_other
+FY2026,XBT,2025-11-12 20:04:18,Trading fee,out_fee_buy,-0.00000469,8.23,8.23,,out_fee_buy
+FY2026,XBT,2025-11-12 20:04:18,Trading fee,out_fee_buy,-0.00001806,31.7,31.7,,out_fee_buy
+FY2026,XBT,2025-11-12 20:05:14,"Bought 0.000002 BTC/ZAR @ 1,756,898",in_buy_for_other,0.000002,3.51,1755000,in_buy_for_other_73dc7544392b0c,in_buy_for_other
+FY2026,ETH,2025-11-17 01:03:00,Trading fee,out_fee_buy,-0.00045758,24.34,24.34,,out_fee_buy
+FY2026,ETH,2025-11-17 01:03:19,Trading fee,out_fee_buy,-0.00014378,7.61,7.61,,out_fee_buy
+FY2026,ETH,2025-11-17 01:03:20,Trading fee,out_fee_buy,-0.00005485,2.9,2.9,,out_fee_buy
+FY2026,ETH,2025-11-17 01:03:20,Trading fee,out_fee_buy,-0.00014378,7.61,7.61,,out_fee_buy
+FY2026,XBT,2025-11-17 09:09:21,Bitcoin send fee,out_other,-0.00006,98.53,98.53,,out_other
+FY2026,XBT,2025-11-17 09:09:21,Ant Speirs,out_other,-0.00560825,9210.06,9210.06,,out_other
+FY2026,ETH,2025-11-21 10:14:46,Trading fee,out_fee_buy,-0.00009528,4.52,4.52,,out_fee_buy
+FY2026,ETH,2025-11-21 10:14:47,Trading fee,out_fee_buy,-0.00030204,14.34,14.34,,out_fee_buy
+FY2026,ETH,2025-11-21 10:14:48,Trading fee,out_fee_buy,-0.00050266,23.86,23.86,,out_fee_buy
+FY2026,XBT,2025-11-22 15:50:27,"Bought 0.027255 BTC/ZAR @ 1,465,950",in_buy_for_other,0.027255,39954.46,1465949.7339937626123647,in_buy_for_other_355f812518dd76,in_buy_for_other
+FY2026,XBT,2025-11-22 15:50:27,Trading fee,out_fee_buy_for_other,-0.00013627,199.58,199.58,,out_fee_buy_for_other
+FY2026,XBT,2025-11-22 16:05:38,Bitcoin send fee,out_other,-0.00006,88.09,88.09,,out_other
+FY2026,XBT,2025-11-22 16:05:38,Ant Speirs,out_other,-0.02705873,39730.61,39730.61,,out_other
+FY2026,LTC,2025-12-01 14:40:33,Trading fee,out_fee_buy,-0.008,10.67,10.67,,out_fee_buy

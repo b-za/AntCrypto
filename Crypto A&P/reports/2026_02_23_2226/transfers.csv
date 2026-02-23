@@ -1,0 +1,5 @@
+Financial Year,Coin,Date,Description,Type,Qty Change,Value (ZAR),Unit Cost (ZAR) / Unit Cost Value,Lot Reference,Pool
+FY2021,XRP,2021-05-19 11:30:35,Trading fee,out_fee_sell,-0.336,7.05,7.05,,out_fee_sell
+FY2023,XRP,2023-12-08 13:45:18,Received Ripple into Ripple from bittrex,in_other,749.8,9339.61,12.4561349693251534,in_other_440023b08a9aa9,in_other
+FY2024,XRP,2024-12-05 09:44:47,Trading fee,out_fee_sell,-0.582,25.17,25.17,,out_fee_sell
+FY2024,XRP,2024-12-05 09:44:51,Trading fee,out_fee_sell,-1.662,71.88,71.88,,out_fee_sell

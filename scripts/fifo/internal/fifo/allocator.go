@@ -100,3 +100,8 @@ func (fa *FIFOAllocator) GetLotsConsumedByTransaction(row int) []pool.Lot {
 	}
 	return []pool.Lot{}
 }
+
+// SetTxToLots allows setting the txToLots map from external allocations
+func (fa *FIFOAllocator) SetTxToLots(txToLots map[int][]pool.Lot) {
+	fa.txToLots = txToLots
+}

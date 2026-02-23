@@ -15,17 +15,12 @@ import (
 	"github.com/beerguevara/antcrypto/fifo/internal/parser"
 	"github.com/beerguevara/antcrypto/fifo/internal/pool"
 	"github.com/beerguevara/antcrypto/fifo/internal/report"
-	"github.com/beerguevara/antcrypto/fifo/pkg/utils"
 )
-
-type coinFile struct {
-	coin string
-	path string
-}
 
 func main() {
 	configPath := flag.String("config", "../../config/config.yaml", "Path to config file")
 	rootsFlag := flag.String("roots", "", "Comma-separated list of root aliases to process (default: all)")
+	coinsFlag := flag.String("coins", "", "Comma-separated list of coins to process (default: all)")
 	flag.Parse()
 
 	cfg, err := config.LoadConfig(*configPath)
@@ -40,7 +35,7 @@ func main() {
 	}
 
 	for _, root := range roots {
-		err := processRoot(root, cfg)
+		err := processRoot(root, *coinsFlag, cfg)
 		if err != nil {
 			fmt.Fprintf(os.Stderr, "Failed to process root %s: %v\n", root.Alias, err)
 		} else {
@@ -51,7 +46,6 @@ func main() {
 
 func filterRoots(allRoots []config.RootConfig, aliases string) []config.RootConfig {
 	aliasMap := make(map[string]bool)
-
 	for _, alias := range parseList(aliases) {
 		aliasMap[alias] = true
 	}
@@ -62,23 +56,13 @@ func filterRoots(allRoots []config.RootConfig, aliases string) []config.RootConf
 			filtered = append(filtered, root)
 		}
 	}
-
 	return filtered
 }
 
-type coinProcessingResult struct {
-	transactions []*classifier.Transaction
-	allocator    *fifo.FIFOAllocator
-	allocations  []*fifo.Allocation
-	poolManager  *pool.PoolManager
-}
-
-func processRoot(root config.RootConfig, cfg *config.Config) error {
+func processRoot(root config.RootConfig, coinsFlag string, cfg *config.Config) error {
 	dataDir := filepath.Join(root.Path, "data")
 	reportsBaseDir := filepath.Join(root.Path, "reports")
 	timestamp := time.Now().Format("2006_01_02_1504")
-
-	// Create reports directory with timestamp
 	reportsDir := filepath.Join(reportsBaseDir, timestamp)
 
 	if err := os.MkdirAll(reportsDir, 0755); err != nil {
@@ -92,63 +76,54 @@ func processRoot(root config.RootConfig, cfg *config.Config) error {
 	}
 	defer errorLog.Close()
 
-	coinFiles, err := findCoinFiles(dataDir)
+	coinFiles, err := findCoinFiles(dataDir, coinsFlag)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to find coin files: %w", err)
 	}
 
-	// Aggregate data from all coins
-	allTransactions := []*classifier.Transaction{}
-	allAllocations := []*fifo.Allocation{}
-	coinPoolsMap := make(map[string]*pool.PoolManager)
-
-	for _, cf := range coinFiles {
-		result, err := processCoin(cf, errorLog, cfg)
+	for _, coinFile := range coinFiles {
+		err := processCoin(coinFile, reportsDir, errorLog, root.Alias, cfg)
 		if err != nil {
 			errorLog.LogError(parser.ErrorEntry{
 				Type:    "PROCESS_ERROR",
 				Message: fmt.Sprintf("Failed to process coin: %v", err),
-				Coin:    cf.coin,
+				Coin:    coinFile.coin,
 			})
-			continue
 		}
-
-		// Accumulate data
-		allTransactions = append(allTransactions, result.transactions...)
-		allAllocations = append(allAllocations, result.allocations...)
-		coinPoolsMap[cf.coin] = result.poolManager
 	}
 
-	// Generate aggregated reports once
-	coordinator := report.NewReportCoordinator(coinPoolsMap, allTransactions, allAllocations, cfg)
-	err = coordinator.GenerateAllReports(reportsDir)
-	if err != nil {
-		return fmt.Errorf("failed to generate reports: %w", err)
-	}
-
-	fmt.Printf("Successfully processed root %s\n", root.Alias)
 	return nil
 }
 
-func findCoinFiles(dataDir string) ([]coinFile, error) {
+type coinFile struct {
+	coin string
+	path string
+}
+
+func findCoinFiles(dataDir string, coinsFlag string) ([]coinFile, error) {
 	entries, err := os.ReadDir(dataDir)
 	if err != nil {
 		return nil, err
 	}
 
-	var coinMap map[string]bool
+	var coinFiles []coinFile
+	coinMap := make(map[string]bool)
 
-	coinMap = make(map[string]bool)
-	for _, entry := range entries {
-		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".csv" {
-			coin := filepath.Base(entry.Name()[:len(entry.Name())-4])
-			if !utils.EqualCaseInsensitive(coin, "zar") {
-				coinMap[coin] = true
+	if coinsFlag != "" {
+		for _, coin := range parseList(coinsFlag) {
+			coinMap[coin] = true
+		}
+	} else {
+		for _, entry := range entries {
+			if !entry.IsDir() && filepath.Ext(entry.Name()) == ".csv" {
+				coin := filepath.Base(entry.Name()[:len(entry.Name())-4])
+				if !utils.EqualCaseInsensitive(coin, "zar") {
+					coinMap[coin] = true
+				}
 			}
 		}
 	}
 
-	var coinFiles []coinFile
 	for _, entry := range entries {
 		if entry.IsDir() {
 			continue
@@ -176,31 +151,18 @@ func findCoinFiles(dataDir string) ([]coinFile, error) {
 	return coinFiles, nil
 }
 
-func processCoin(cf coinFile, errorLog *parser.JSONLErrorLogger, cfg *config.Config) (*coinProcessingResult, error) {
+func processCoin(cf coinFile, reportsDir string, errorLog *parser.JSONLErrorLogger, rootAlias string, cfg *config.Config) error {
 	transactions, err := parser.NewCSVReader(cf.path).ReadAll()
 	if err != nil {
-		return nil, fmt.Errorf("failed to read transactions: %w", err)
-	}
+		return fmt.Errorf("failed to read transactions: %w", err)
+		}
 
 	classifierTxs, err := convertToClassifierTransactions(transactions)
 	if err != nil {
-		return nil, err
+		return fmt.Errorf("failed to convert transactions: %w", err)
 	}
 
 	c := classifier.NewClassifier()
-
-	for _, tx := range classifierTxs {
-		txType, err := c.Classify(*tx)
-		if err != nil {
-			errorLog.LogError(parser.ErrorEntry{
-				Type:    "CLASSIFICATION_ERROR",
-				Message: err.Error(),
-				Coin:    cf.coin,
-			})
-			continue
-		}
-		tx.Type = txType
-	}
 
 	poolClassifier := classifier.NewPoolClassifier()
 	poolClassifier.ClassifyPools(classifierTxs)
@@ -260,13 +222,15 @@ func processCoin(cf coinFile, errorLog *parser.JSONLErrorLogger, cfg *config.Con
 		}
 	}
 
-	return &coinProcessingResult{
-		transactions: classifierTxs,
-		allocator:    allocator,
-		allocations:  allocator.GetAllocations(),
-		poolManager:  pm,
-	}, nil
-}
+	reportCoordinator := report.NewReportCoordinator(pm, allocator, classifierTxs, allocator.GetAllocations(), cfg)
+
+	err = reportCoordinator.GenerateAllReports(root.Alias, reportsDir)
+	if err != nil {
+		return fmt.Errorf("failed to generate reports: %w", err)
+	}
+
+	fmt.Printf("Successfully processed root %s\n", root.Alias)
+	return nil
 
 func convertToClassifierTransactions(transactions []parser.Transaction) ([]*classifier.Transaction, error) {
 	var classifierTxs []*classifier.Transaction

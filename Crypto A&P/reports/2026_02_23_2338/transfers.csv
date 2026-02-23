@@ -1,0 +1,39 @@
+Financial Year,Coin,Date,Description,Type,Qty Change,Value (ZAR),Unit Cost (ZAR) / Unit Cost Value,Lot Reference,Pool
+FY2017,XBT,2017-08-28 21:43:03,"Bought BTC 0.15934 for ZAR 10,000.00",in_buy_for_other,0.15934,10000,62758.88038157399272,in_buy_for_other_231126a25de1d7,in_buy_for_other
+FY2017,XBT,2017-08-28 22:09:07,Test Transaction,out_other,-0.00162595,99.99,99.99,,out_other
+FY2017,XBT,2017-08-28 22:09:07,Bitcoin send fee,out_other,-0.00149004,91.64,91.64,,out_other
+FY2017,XBT,2017-08-30 20:32:21,all bitcoin,out_other,-0.15622401,9967.4,9967.4,,out_other
+FY2017,XBT,2017-09-02 00:13:39,"Bought BTC 0.07241 for ZAR 5,000.00",in_buy_for_other,0.07241,5000,69051.2360171247065322,in_buy_for_other_70eecd7222ea0a,in_buy_for_other
+FY2017,XBT,2017-09-02 00:13:40,Ants bitcoin,out_other,-0.07162321,4846.67,4846.67,,out_other
+FY2017,XBT,2017-09-02 00:13:40,Bitcoin send fee,out_other,-0.00078679,53.24,53.24,,out_other
+FY2017,XBT,2017-09-04 18:43:08,"Bought BTC 0.07758 for ZAR 5,000.00",in_buy_for_other,0.07758,5000,64449.6004124774426399,in_buy_for_other_fbd744fe5afd25,in_buy_for_other
+FY2017,XBT,2017-09-04 18:43:10,Bitcoin send fee,out_other,-0.00091817,58.07,58.07,,out_other
+FY2017,XBT,2017-09-04 18:43:10,ants 2nd half,out_other,-0.07666183,4848.63,4848.63,,out_other
+FY2017,XBT,2017-11-01 10:38:18,"Bought BTC 0.04741216 for ZAR 5,000.00",in_buy_for_other,0.04741216,5000,105458.1778176737782037,in_buy_for_other_9bd2dbf312c1dd,in_buy_for_other
+FY2017,XBT,2017-11-01 10:41:37,bruce investment,out_other,-0.04741216,4904.36,4904.36,,out_other
+FY2017,XBT,2017-12-09 17:29:22,"Bought BTC 0.02076245 for ZAR 5,000.00",in_buy_for_other,0.02076245,5000,240819.3638034047041655,in_buy_for_other_67a165c7dce57c,in_buy_for_other
+FY2017,XBT,2017-12-09 17:32:03,Bitcoin send fee,out_other,-0.00000045,0.1,0.1,,out_other
+FY2017,XBT,2017-12-09 17:32:03,ripple time,out_other,-0.020762,4901.03,4901.03,,out_other
+FY2017,XBT,2017-12-13 14:59:38,"Bought BTC 0.01829724 for ZAR 5,000.00",in_buy_for_other,0.01829724,5000,273265.2574923868299263,in_buy_for_other_6c90fb7463cccf,in_buy_for_other
+FY2017,XBT,2017-12-13 15:00:06,next 5k,out_other,-0.01695138,4544.63,4544.63,,out_other
+FY2017,XBT,2017-12-13 15:00:06,Bitcoin send fee,out_other,-0.00134586,360.82,360.82,,out_other
+FY2017,XBT,2017-12-18 01:20:29,"Bought 0.01675 BTC/ZAR @ 298,500",in_buy_for_other,0.01675,4999.87,298499.7014925373134328,in_buy_for_other_f2079944b2c94a,in_buy_for_other
+FY2017,XBT,2017-12-18 10:38:19,last R5000 with bruce,out_other,-0.01675,5108.73,5108.73,,out_other
+FY2017,XBT,2018-01-08 08:30:36,paul and ant extra 20 k and 10 from bruces last deal,out_other,-0.143142,30615.35,30615.35,,out_other
+FY2021,XBT,2021-03-26 05:42:38,Received Bitcoin from Antonie: Transfer from Luno Test 1,in_other,0.00012422,100.12,805989.3736918370632748,in_other_431c0435075463,in_other
+FY2021,XRP,2021-05-19 11:30:35,Trading fee,out_fee_sell,-0.336,7.05,7.05,,out_fee_sell
+FY2023,XRP,2023-12-08 13:45:18,Received Ripple into Ripple from bittrex,in_other,749.8,9339.61,12.4561349693251534,in_other_440023b08a9aa9,in_other
+FY2023,XBT,2023-12-08 13:58:07,Received Bitcoin,in_other,0.0017,1421.9,836411.7647058823529412,in_other_0076960a68ab50,in_other
+FY2023,ETH,2023-12-08 14:10:39,Received Ethereum into Ethereum from Bittrex,in_other,0.007,316.62,45231.4285714285714286,in_other_5f974011cc74d4,in_other
+FY2023,LTC,2023-12-08 14:23:05,Received Litecoin into Litecoin from bittrex,in_other,3.499,5072.39,1449.6684767076307516,in_other_de5502fc177ad0,in_other
+FY2023,ETH,2023-12-08 14:39:49,Received Ethereum into Ethereum from Bittrex,in_other,2.987,135143.12,45243.7629728824907934,in_other_523707c49803f2,in_other
+FY2023,XBT,2023-12-08 14:48:08,Received Bitcoin,in_other,0.20409362,170859.01,837159.9758973357422932,in_other_c3d0538cec773d,in_other
+FY2023,XBT,2024-02-15 02:23:54,Trading fee,out_fee_sell,-0.000215,214.26,214.26,,out_fee_sell
+FY2024,XBT,2024-08-05 14:28:45,Trading fee,out_fee_buy,-0.00010526,100.25,100.25,,out_fee_buy
+FY2024,XBT,2024-11-11 08:24:59,Trading fee,out_fee_sell,-0.00010526,150.63,150.63,,out_fee_sell
+FY2024,XBT,2024-11-11 14:40:09,Trading fee,out_fee_sell,-0.0002256,335.83,335.83,,out_fee_sell
+FY2024,XBT,2024-11-13 17:28:13,Trading fee,out_fee_sell,-0.00000738,12.14,12.14,,out_fee_sell
+FY2024,XBT,2024-11-13 17:28:25,Trading fee,out_fee_sell,-0.00011367,187,187,,out_fee_sell
+FY2024,XRP,2024-12-05 09:44:47,Trading fee,out_fee_sell,-0.582,25.17,25.17,,out_fee_sell
+FY2024,XRP,2024-12-05 09:44:51,Trading fee,out_fee_sell,-1.662,71.88,71.88,,out_fee_sell
+FY2025,ETH,2025-04-10 12:41:40,Trading fee,out_fee_buy,-0.008,250.65,250.65,,out_fee_buy

@@ -24,23 +24,23 @@ type Pool struct {
 }
 
 type PoolManager struct {
-	pools map[string]*Pool
+	Pools map[string]*Pool
 }
 
 func NewPoolManager() *PoolManager {
 	return &PoolManager{
-		pools: make(map[string]*Pool),
+		Pools: make(map[string]*Pool),
 	}
 }
 
 func (pm *PoolManager) InitializePools() {
-	pm.pools["in_buy"] = &Pool{Name: "in_buy", Lots: []*Lot{}}
-	pm.pools["in_buy_for_other"] = &Pool{Name: "in_buy_for_other", Lots: []*Lot{}}
-	pm.pools["in_other"] = &Pool{Name: "in_other", Lots: []*Lot{}}
+	pm.Pools["in_buy"] = &Pool{Name: "in_buy", Lots: []*Lot{}}
+	pm.Pools["in_buy_for_other"] = &Pool{Name: "in_buy_for_other", Lots: []*Lot{}}
+	pm.Pools["in_other"] = &Pool{Name: "in_other", Lots: []*Lot{}}
 }
 
 func (pm *PoolManager) AddLot(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, rawLine string) error {
-	pool, exists := pm.pools[poolName]
+	pool, exists := pm.Pools[poolName]
 	if !exists {
 		return fmt.Errorf("pool %s does not exist", poolName)
 	}
@@ -58,7 +58,7 @@ func (pm *PoolManager) AddLot(poolName string, quantity, unitCost decimal.Decima
 }
 
 func (pm *PoolManager) AddLotWithReference(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, lotRef string) error {
-	pool, exists := pm.pools[poolName]
+	pool, exists := pm.Pools[poolName]
 	if !exists {
 		return fmt.Errorf("pool %s does not exist", poolName)
 	}
@@ -86,7 +86,7 @@ func (pm *PoolManager) Consume(quantityNeeded decimal.Decimal, priority []string
 	var remainingQty = quantityNeeded
 
 	for _, poolName := range priority {
-		pool, exists := pm.pools[poolName]
+		pool, exists := pm.Pools[poolName]
 		if !exists || len(pool.Lots) == 0 {
 			continue
 		}
@@ -131,7 +131,7 @@ func (pm *PoolManager) Consume(quantityNeeded decimal.Decimal, priority []string
 }
 
 func (pm *PoolManager) ConsumeFromSpecificLot(lotReference string, quantityNeeded decimal.Decimal) (*Lot, decimal.Decimal, error) {
-	for _, pool := range pm.pools {
+	for _, pool := range pm.Pools {
 		for i, lot := range pool.Lots {
 			if lot.Reference == lotReference {
 				if lot.Quantity.GreaterThanOrEqual(quantityNeeded) {
@@ -171,7 +171,7 @@ func (pm *PoolManager) ConsumeFromSpecificLot(lotReference string, quantityNeede
 }
 
 func (pm *PoolManager) GetPoolBalance(poolName string) decimal.Decimal {
-	pool, exists := pm.pools[poolName]
+	pool, exists := pm.Pools[poolName]
 	if !exists {
 		return decimal.Zero
 	}
