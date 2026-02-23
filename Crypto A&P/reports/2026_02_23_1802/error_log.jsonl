@@ -1,0 +1,4 @@
+{"type":"PROCESS_ERROR","message":"Failed to process coin: failed to read transactions: failed to parse row 2: invalid value amount: can't convert ZAR to decimal","coin":"eth","row":0,"timestamp":""}
+{"type":"PROCESS_ERROR","message":"Failed to process coin: failed to read transactions: failed to parse row 2: invalid value amount: can't convert ZAR to decimal","coin":"ltc","row":0,"timestamp":""}
+{"type":"PROCESS_ERROR","message":"Failed to process coin: failed to read transactions: failed to parse row 2: invalid value amount: can't convert ZAR to decimal","coin":"xbt","row":0,"timestamp":""}
+{"type":"PROCESS_ERROR","message":"Failed to process coin: failed to read transactions: failed to parse row 2: invalid value amount: can't convert ZAR to decimal","coin":"xrp","row":0,"timestamp":""}

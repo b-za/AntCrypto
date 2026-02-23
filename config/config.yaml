@@ -1,0 +1,9 @@
+roots:
+  - alias: "cap"
+    path: "/Users/bh/code/beerguevara/AntCrypto/Crypto A&P"
+  - alias: "cal"
+    path: "/Users/bh/code/beerguevara/AntCrypto/Crypto Ant"
+
+settings:
+  financial_year_start: 3
+  hash_length: 7

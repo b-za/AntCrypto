@@ -1,0 +1,7 @@
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot b98eb80d: lot with reference b98eb80d not found","coin":"xbt","row":6,"timestamp":"2017-08-30 18:32:21"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot b4ca59cc: lot with reference b4ca59cc not found","coin":"xbt","row":9,"timestamp":"2017-09-01 22:13:40"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot 975ad480: lot with reference 975ad480 not found","coin":"xbt","row":13,"timestamp":"2017-09-04 16:43:10"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot b00e5f81: lot with reference b00e5f81 not found","coin":"xbt","row":17,"timestamp":"2017-11-01 08:41:37"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot f453b6fb: lot with reference f453b6fb not found","coin":"xbt","row":20,"timestamp":"2017-12-09 15:32:03"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot 777d8006: lot with reference 777d8006 not found","coin":"xbt","row":24,"timestamp":"2017-12-13 13:00:06"}
+{"type":"ALLOCATION_ERROR","message":"failed to consume from specific lot 249bdc0a: lot with reference 249bdc0a not found","coin":"xbt","row":28,"timestamp":"2017-12-18 08:38:19"}
