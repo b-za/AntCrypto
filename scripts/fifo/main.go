@@ -11,8 +11,10 @@ import (
 
 	"github.com/shopspring/decimal"
 
+	"github.com/beerguevara/antcrypto/fifo/internal/broker"
 	"github.com/beerguevara/antcrypto/fifo/internal/classifier"
 	"github.com/beerguevara/antcrypto/fifo/internal/config"
+	"github.com/beerguevara/antcrypto/fifo/internal/exchangerate"
 	"github.com/beerguevara/antcrypto/fifo/internal/fifo"
 	"github.com/beerguevara/antcrypto/fifo/internal/parser"
 	"github.com/beerguevara/antcrypto/fifo/internal/pool"
@@ -104,6 +106,23 @@ func processRoot(root config.RootConfig, cfg *config.Config) error {
 	allTransactions := []*classifier.Transaction{}
 	allAllocations := []*fifo.Allocation{}
 	coinPoolsMap := make(map[string]*pool.PoolManager)
+
+	// Initialize broker system
+	templateLoader := exchangerate.NewTemplateLoader()
+	if len(roots) > 0 {
+		if err := templateLoader.LoadLatestTemplate(roots[0].Path); err != nil {
+			fmt.Fprintf(os.Stderr, "WARNING: Could not load exchange_rates_template.yaml: %v\n", err)
+			fmt.Fprintf(os.Stderr, "Broker processing will be skipped.\n")
+		}
+	}
+
+	brokerPM := broker.NewBrokerPoolManager()
+	var brokerReport *broker.BrokerReportGenerator
+	if templateLoader != nil {
+		brokerPM.SetTemplateLoader(templateLoader)
+		brokerPM.InitializePools()
+		brokerReport = broker.NewBrokerReportGenerator()
+	}
 
 	for _, cf := range coinFiles {
 		result, err := processCoin(cf, errorLog, cfg)

@@ -68,3 +68,16 @@ func (rc *RateCache) Set(coin string, date time.Time, value decimal.Decimal, sou
 func cacheKey(coin string, date time.Time) string {
 	return coin + "_" + date.Format("2006-01-02")
 }
+
+// Template types for loading exchange_rates_template.yaml
+type DateRates struct {
+	Date                  string            `yaml:"date"`
+	TransactionReferences []string          `yaml:"transaction_references"`
+	USDPrices             map[string]string `yaml:"usd_prices"`      // BTC, ETH, XRP, LTC prices in USD
+	USDToZARRate          string            `yaml:"usd_to_zar_rate"` // USD to ZAR rate
+}
+
+type RatesTemplate struct {
+	DatesRequired []DateRates `yaml:"dates_required"`
+	Usage         string      `yaml:"usage"`
+}
