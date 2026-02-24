@@ -11,11 +11,13 @@ import (
 )
 
 type Lot struct {
-	Reference string
-	Quantity  decimal.Decimal
-	UnitCost  decimal.Decimal
-	Timestamp int64
-	Pool      string
+	Reference       string
+	Quantity        decimal.Decimal
+	UnitCost        decimal.Decimal
+	Timestamp       int64
+	Pool            string
+	CustomCost      bool
+	CustomCostNotes string
 }
 
 type Pool struct {
@@ -39,36 +41,40 @@ func (pm *PoolManager) InitializePools() {
 	pm.Pools["in_other"] = &Pool{Name: "in_other", Lots: []*Lot{}}
 }
 
-func (pm *PoolManager) AddLot(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, rawLine string) error {
+func (pm *PoolManager) AddLot(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, rawLine string, customCost bool, customCostNotes string) error {
 	pool, exists := pm.Pools[poolName]
 	if !exists {
 		return fmt.Errorf("pool %s does not exist", poolName)
 	}
 
 	lot := &Lot{
-		Reference: GenerateLotReference(poolName, rawLine),
-		Quantity:  quantity,
-		UnitCost:  unitCost,
-		Timestamp: timestamp,
-		Pool:      poolName,
+		Reference:       GenerateLotReference(poolName, rawLine),
+		Quantity:        quantity,
+		UnitCost:        unitCost,
+		Timestamp:       timestamp,
+		Pool:            poolName,
+		CustomCost:      customCost,
+		CustomCostNotes: customCostNotes,
 	}
 
 	pool.Lots = append(pool.Lots, lot)
 	return nil
 }
 
-func (pm *PoolManager) AddLotWithReference(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, lotRef string) error {
+func (pm *PoolManager) AddLotWithReference(poolName string, quantity, unitCost decimal.Decimal, timestamp int64, lotRef string, customCost bool, customCostNotes string) error {
 	pool, exists := pm.Pools[poolName]
 	if !exists {
 		return fmt.Errorf("pool %s does not exist", poolName)
 	}
 
 	lot := &Lot{
-		Reference: lotRef,
-		Quantity:  quantity,
-		UnitCost:  unitCost,
-		Timestamp: timestamp,
-		Pool:      poolName,
+		Reference:       lotRef,
+		Quantity:        quantity,
+		UnitCost:        unitCost,
+		Timestamp:       timestamp,
+		Pool:            poolName,
+		CustomCost:      customCost,
+		CustomCostNotes: customCostNotes,
 	}
 
 	pool.Lots = append(pool.Lots, lot)
@@ -96,11 +102,13 @@ func (pm *PoolManager) Consume(quantityNeeded decimal.Decimal, priority []string
 
 			if lot.Quantity.GreaterThanOrEqual(remainingQty) {
 				consumedLot := &Lot{
-					Reference: lot.Reference,
-					Quantity:  remainingQty,
-					UnitCost:  lot.UnitCost,
-					Timestamp: lot.Timestamp,
-					Pool:      lot.Pool,
+					Reference:       lot.Reference,
+					Quantity:        remainingQty,
+					UnitCost:        lot.UnitCost,
+					Timestamp:       lot.Timestamp,
+					Pool:            lot.Pool,
+					CustomCost:      lot.CustomCost,
+					CustomCostNotes: lot.CustomCostNotes,
 				}
 				consumedLots = append(consumedLots, *consumedLot)
 
@@ -136,11 +144,13 @@ func (pm *PoolManager) ConsumeFromSpecificLot(lotReference string, quantityNeede
 			if lot.Reference == lotReference {
 				if lot.Quantity.GreaterThanOrEqual(quantityNeeded) {
 					consumedLot := &Lot{
-						Reference: lot.Reference,
-						Quantity:  quantityNeeded,
-						UnitCost:  lot.UnitCost,
-						Timestamp: lot.Timestamp,
-						Pool:      lot.Pool,
+						Reference:       lot.Reference,
+						Quantity:        quantityNeeded,
+						UnitCost:        lot.UnitCost,
+						Timestamp:       lot.Timestamp,
+						Pool:            lot.Pool,
+						CustomCost:      lot.CustomCost,
+						CustomCostNotes: lot.CustomCostNotes,
 					}
 
 					lot.Quantity = lot.Quantity.Sub(quantityNeeded)
@@ -151,11 +161,13 @@ func (pm *PoolManager) ConsumeFromSpecificLot(lotReference string, quantityNeede
 					return consumedLot, decimal.Zero, nil
 				} else {
 					consumedLot := &Lot{
-						Reference: lot.Reference,
-						Quantity:  lot.Quantity,
-						UnitCost:  lot.UnitCost,
-						Timestamp: lot.Timestamp,
-						Pool:      lot.Pool,
+						Reference:       lot.Reference,
+						Quantity:        lot.Quantity,
+						UnitCost:        lot.UnitCost,
+						Timestamp:       lot.Timestamp,
+						Pool:            lot.Pool,
+						CustomCost:      lot.CustomCost,
+						CustomCostNotes: lot.CustomCostNotes,
 					}
 
 					remaining := quantityNeeded.Sub(lot.Quantity)

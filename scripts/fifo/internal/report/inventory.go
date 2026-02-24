@@ -12,15 +12,17 @@ import (
 )
 
 type InventoryRow struct {
-	FinancialYear  string
-	Coin           string
-	LotReference   string
-	Quantity       decimal.Decimal
-	DateOfPurchase string
-	UnitCost       decimal.Decimal
-	TotalCost      decimal.Decimal
-	Pool           string
-	IsSummary      bool
+	FinancialYear   string
+	Coin            string
+	LotReference    string
+	Quantity        decimal.Decimal
+	DateOfPurchase  string
+	UnitCost        decimal.Decimal
+	CustomCost      bool
+	CustomCostNotes string
+	TotalCost       decimal.Decimal
+	Pool            string
+	IsSummary       bool
 }
 
 type InventoryReportGenerator struct {
@@ -57,15 +59,17 @@ func (ig *InventoryReportGenerator) collectInventoryRows(pm *pool.PoolManager) {
 				financialYear := ig.getFinancialYearFromTimestamp(lot.Timestamp)
 
 				row := InventoryRow{
-					FinancialYear:  financialYear,
-					Coin:           ig.coin,
-					LotReference:   lot.Reference,
-					Quantity:       lot.Quantity,
-					DateOfPurchase: time.Unix(lot.Timestamp, 0).Format("2006-01-02 15:04:05"),
-					UnitCost:       lot.UnitCost,
-					TotalCost:      lot.Quantity.Mul(lot.UnitCost),
-					Pool:           poolName,
-					IsSummary:      false,
+					FinancialYear:   financialYear,
+					Coin:            ig.coin,
+					LotReference:    lot.Reference,
+					Quantity:        lot.Quantity,
+					DateOfPurchase:  time.Unix(lot.Timestamp, 0).Format("2006-01-02 15:04:05"),
+					UnitCost:        lot.UnitCost,
+					CustomCost:      lot.CustomCost,
+					CustomCostNotes: lot.CustomCostNotes,
+					TotalCost:       lot.Quantity.Mul(lot.UnitCost),
+					Pool:            poolName,
+					IsSummary:       false,
 				}
 
 				ig.reportRows = append(ig.reportRows, row)
@@ -111,15 +115,17 @@ func (ig *InventoryReportGenerator) addSummaryLines() {
 		coin := parts[1]
 
 		summaryRow := InventoryRow{
-			FinancialYear:  financialYear,
-			Coin:           coin,
-			LotReference:   "Total",
-			Quantity:       summary.Quantity,
-			DateOfPurchase: "",
-			UnitCost:       decimal.Zero,
-			TotalCost:      summary.TotalValue,
-			Pool:           "",
-			IsSummary:      true,
+			FinancialYear:   financialYear,
+			Coin:            coin,
+			LotReference:    "Total",
+			Quantity:        summary.Quantity,
+			DateOfPurchase:  "",
+			UnitCost:        decimal.Zero,
+			CustomCost:      false,
+			CustomCostNotes: "",
+			TotalCost:       summary.TotalValue,
+			Pool:            "",
+			IsSummary:       true,
 		}
 
 		ig.reportRows = append(ig.reportRows, summaryRow)
@@ -147,7 +153,8 @@ func (ig *InventoryReportGenerator) buildCSV() [][]string {
 
 	headers := []string{
 		"Financial Year", "Coin", "Lot Reference", "Quantity",
-		"Date of Original Purchase", "Unit Cost (ZAR)", "Total Cost (ZAR)", "Pool",
+		"Date of Original Purchase", "Unit Cost (ZAR)", "Custom Cost", "Custom Cost Notes",
+		"Total Cost (ZAR)", "Pool",
 	}
 	records = append(records, headers)
 
@@ -162,6 +169,8 @@ func (ig *InventoryReportGenerator) buildCSV() [][]string {
 				row.Quantity.String(),
 				row.DateOfPurchase,
 				row.UnitCost.String(),
+				fmt.Sprintf("%t", row.CustomCost),
+				row.CustomCostNotes,
 				row.TotalCost.String(),
 				row.Pool,
 			}
@@ -173,6 +182,8 @@ func (ig *InventoryReportGenerator) buildCSV() [][]string {
 				row.Quantity.String(),
 				row.DateOfPurchase,
 				row.UnitCost.String(),
+				fmt.Sprintf("%t", row.CustomCost),
+				row.CustomCostNotes,
 				row.TotalCost.String(),
 				row.Pool,
 			}

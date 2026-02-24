@@ -9,12 +9,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/shopspring/decimal"
+
 	"github.com/beerguevara/antcrypto/fifo/internal/classifier"
 	"github.com/beerguevara/antcrypto/fifo/internal/config"
 	"github.com/beerguevara/antcrypto/fifo/internal/fifo"
 	"github.com/beerguevara/antcrypto/fifo/internal/parser"
 	"github.com/beerguevara/antcrypto/fifo/internal/pool"
 	"github.com/beerguevara/antcrypto/fifo/internal/report"
+	"github.com/beerguevara/antcrypto/fifo/internal/unitcost"
 	"github.com/beerguevara/antcrypto/fifo/pkg/utils"
 )
 
@@ -213,11 +216,25 @@ func processCoin(cf coinFile, errorLog *parser.JSONLErrorLogger, cfg *config.Con
 
 	for _, tx := range classifierTxs {
 		if tx.Type == classifier.InflowBuy || tx.Type == classifier.InflowBuyForOther || tx.Type == classifier.InflowOther {
-			unitCost := tx.ValueAmount.Div(tx.BalanceDelta.Abs())
+			var unitCost decimal.Decimal
+			var isCustomCost bool
+			var customCostNotes string
+
+			if tx.Type == classifier.InflowOther {
+				result := unitcost.CalculateCustomUnitCost(tx)
+				unitCost = result.Value
+				isCustomCost = result.IsCustom
+				customCostNotes = result.CustomNotes
+			} else {
+				unitCost = tx.ValueAmount.Div(tx.BalanceDelta.Abs())
+				isCustomCost = false
+				customCostNotes = ""
+			}
+
 			poolName := string(tx.Type)
-			rawLine := fmt.Sprintf("%d|%s|%s|%s", tx.Row, tx.Timestamp, tx.Description, tx.ValueAmount.String())
+			rawLine := fmt.Sprintf("%d|%d|%s|%s", tx.Row, tx.Timestamp, tx.Description, tx.ValueAmount.String())
 			lotRef := pool.GenerateLotReference(poolName, rawLine)
-			err := pm.AddLotWithReference(poolName, tx.BalanceDelta.Abs(), unitCost, tx.Timestamp, lotRef)
+			err := pm.AddLotWithReference(poolName, tx.BalanceDelta.Abs(), unitCost, tx.Timestamp, lotRef, isCustomCost, customCostNotes)
 			if err != nil {
 				errorLog.LogError(parser.ErrorEntry{
 					Type:      "POOL_ERROR",

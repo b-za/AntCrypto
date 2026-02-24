@@ -9,19 +9,22 @@ import (
 
 	"github.com/beerguevara/antcrypto/fifo/internal/classifier"
 	"github.com/beerguevara/antcrypto/fifo/internal/config"
+	"github.com/beerguevara/antcrypto/fifo/internal/unitcost"
 )
 
 type TransferRow struct {
-	FinancialYear string
-	Coin          string
-	Date          string
-	Description   string
-	Type          string
-	QtyChange     decimal.Decimal
-	Value         decimal.Decimal
-	UnitCost      decimal.Decimal
-	LotReference  string
-	Pool          string
+	FinancialYear   string
+	Coin            string
+	Date            string
+	Description     string
+	Type            string
+	QtyChange       decimal.Decimal
+	Value           decimal.Decimal
+	UnitCost        decimal.Decimal
+	CustomCost      bool
+	CustomCostNotes string
+	LotReference    string
+	Pool            string
 }
 
 type TransfersReportGenerator struct {
@@ -53,26 +56,42 @@ func (tr *TransfersReportGenerator) filterAndProcessTransactions(transactions []
 
 		// Calculate Unit Cost or Unit Cost Value
 		var unitCost decimal.Decimal
+		var isCustomCost bool
+		var customCostNotes string
+
 		if tx.Type == classifier.InflowBuy || tx.Type == classifier.InflowBuyForOther || tx.Type == classifier.InflowOther {
 			// Incoming - Unit Cost from purchase
-			unitCost = tx.ValueAmount.Div(tx.BalanceDelta.Abs())
+			if tx.Type == classifier.InflowOther {
+				result := unitcost.CalculateCustomUnitCost(tx)
+				unitCost = result.Value
+				isCustomCost = result.IsCustom
+				customCostNotes = result.CustomNotes
+			} else {
+				unitCost = tx.ValueAmount.Div(tx.BalanceDelta.Abs())
+				isCustomCost = false
+				customCostNotes = ""
+			}
 		} else {
 			// Outgoing or fees - Unit Cost Value (what's being sent out)
 			// For fees, show value; for other outflows, could be zero
 			unitCost = tx.ValueAmount
+			isCustomCost = false
+			customCostNotes = ""
 		}
 
 		row := TransferRow{
-			FinancialYear: financialYear,
-			Coin:          tx.Currency,
-			Date:          txTime.Format("2006-01-02 15:04:05"),
-			Description:   tx.Description,
-			Type:          string(tx.Type),
-			QtyChange:     tx.BalanceDelta,
-			Value:         tx.ValueAmount,
-			UnitCost:      unitCost,
-			LotReference:  tr.getLotReference(tx),
-			Pool:          tr.getPoolFromType(tx.Type),
+			FinancialYear:   financialYear,
+			Coin:            tx.Currency,
+			Date:            txTime.Format("2006-01-02 15:04:05"),
+			Description:     tx.Description,
+			Type:            string(tx.Type),
+			QtyChange:       tx.BalanceDelta,
+			Value:           tx.ValueAmount,
+			UnitCost:        unitCost,
+			CustomCost:      isCustomCost,
+			CustomCostNotes: customCostNotes,
+			LotReference:    tr.getLotReference(tx),
+			Pool:            tr.getPoolFromType(tx.Type),
 		}
 
 		tr.reportRows = append(tr.reportRows, row)
@@ -100,7 +119,8 @@ func (tr *TransfersReportGenerator) buildCSV() [][]string {
 
 	headers := []string{
 		"Financial Year", "Coin", "Date", "Description", "Type", "Qty Change",
-		"Value (ZAR)", "Unit Cost (ZAR) / Unit Cost Value", "Lot Reference", "Pool",
+		"Value (ZAR)", "Unit Cost (ZAR) / Unit Cost Value", "Custom Cost", "Custom Cost Notes",
+		"Lot Reference", "Pool",
 	}
 	records = append(records, headers)
 
@@ -114,6 +134,8 @@ func (tr *TransfersReportGenerator) buildCSV() [][]string {
 			row.QtyChange.String(),
 			row.Value.String(),
 			row.UnitCost.String(),
+			fmt.Sprintf("%t", row.CustomCost),
+			row.CustomCostNotes,
 			row.LotReference,
 			row.Pool,
 		}

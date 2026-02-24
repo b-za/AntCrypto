@@ -13,19 +13,21 @@ import (
 )
 
 type ProfitLossRow struct {
-	FinancialYear string
-	Coin          string
-	SaleReference string
-	LotReference  string
-	QuantitySold  decimal.Decimal
-	UnitCost      decimal.Decimal
-	TotalCost     decimal.Decimal
-	SellingPrice  decimal.Decimal
-	Proceeds      decimal.Decimal
-	ProfitLoss    decimal.Decimal
-	FeeReference  string
-	FeeAmount     decimal.Decimal
-	IsSummary     bool
+	FinancialYear   string
+	Coin            string
+	SaleReference   string
+	LotReference    string
+	QuantitySold    decimal.Decimal
+	UnitCost        decimal.Decimal
+	CustomCost      bool
+	CustomCostNotes string
+	TotalCost       decimal.Decimal
+	SellingPrice    decimal.Decimal
+	Proceeds        decimal.Decimal
+	ProfitLoss      decimal.Decimal
+	FeeReference    string
+	FeeAmount       decimal.Decimal
+	IsSummary       bool
 }
 
 type ProfitLossReportGenerator struct {
@@ -98,19 +100,21 @@ func (pl *ProfitLossReportGenerator) processAllocations(allocations []*fifo.Allo
 
 			// Create row for this lot
 			row := ProfitLossRow{
-				FinancialYear: financialYear,
-				Coin:          allocation.Transaction.Currency,
-				SaleReference: allocation.Transaction.Reference,
-				LotReference:  lot.Reference,
-				QuantitySold:  lot.Quantity,
-				UnitCost:      lot.UnitCost,
-				TotalCost:     totalCost,
-				SellingPrice:  sellingPricePerUnit,
-				Proceeds:      proceedsPerLot,
-				ProfitLoss:    profitPerLot,
-				FeeReference:  "",
-				FeeAmount:     decimal.Zero,
-				IsSummary:     false,
+				FinancialYear:   financialYear,
+				Coin:            allocation.Transaction.Currency,
+				SaleReference:   allocation.Transaction.Reference,
+				LotReference:    lot.Reference,
+				QuantitySold:    lot.Quantity,
+				UnitCost:        lot.UnitCost,
+				CustomCost:      lot.CustomCost,
+				CustomCostNotes: lot.CustomCostNotes,
+				TotalCost:       totalCost,
+				SellingPrice:    sellingPricePerUnit,
+				Proceeds:        proceedsPerLot,
+				ProfitLoss:      profitPerLot,
+				FeeReference:    "",
+				FeeAmount:       decimal.Zero,
+				IsSummary:       false,
 			}
 
 			pl.reportRows = append(pl.reportRows, row)
@@ -158,19 +162,21 @@ func (pl *ProfitLossReportGenerator) addFeeLines(allocations []*fifo.Allocation)
 			financialYear := pl.getFinancialYear(allocation.Transaction.Timestamp)
 
 			row := ProfitLossRow{
-				FinancialYear: financialYear,
-				Coin:          allocation.Transaction.Currency,
-				SaleReference: "",
-				LotReference:  "",
-				QuantitySold:  allocation.Transaction.BalanceDelta.Abs(),
-				UnitCost:      decimal.Zero,
-				TotalCost:     decimal.Zero,
-				SellingPrice:  decimal.Zero,
-				Proceeds:      decimal.Zero,
-				ProfitLoss:    decimal.Zero,
-				FeeReference:  allocation.Transaction.Reference,
-				FeeAmount:     allocation.Transaction.ValueAmount.Abs(),
-				IsSummary:     false,
+				FinancialYear:   financialYear,
+				Coin:            allocation.Transaction.Currency,
+				SaleReference:   "",
+				LotReference:    "",
+				QuantitySold:    allocation.Transaction.BalanceDelta.Abs(),
+				UnitCost:        decimal.Zero,
+				CustomCost:      false,
+				CustomCostNotes: "",
+				TotalCost:       decimal.Zero,
+				SellingPrice:    decimal.Zero,
+				Proceeds:        decimal.Zero,
+				ProfitLoss:      decimal.Zero,
+				FeeReference:    allocation.Transaction.Reference,
+				FeeAmount:       allocation.Transaction.ValueAmount.Abs(),
+				IsSummary:       false,
 			}
 
 			pl.reportRows = append(pl.reportRows, row)
@@ -183,19 +189,21 @@ func (pl *ProfitLossReportGenerator) addSummaryLines(summaries map[string]*Finan
 		// Loss summary line
 		if summary.LossSales.IsPositive() {
 			lossSummary := ProfitLossRow{
-				FinancialYear: summary.FY,
-				Coin:          "",
-				SaleReference: "Losses Total",
-				LotReference:  "",
-				QuantitySold:  summary.LossSales,
-				UnitCost:      decimal.Zero,
-				TotalCost:     summary.TotalCost,
-				SellingPrice:  decimal.Zero,
-				Proceeds:      summary.TotalProceeds,
-				ProfitLoss:    summary.TotalProceeds.Sub(summary.TotalCost),
-				FeeReference:  "",
-				FeeAmount:     decimal.Zero,
-				IsSummary:     true,
+				FinancialYear:   summary.FY,
+				Coin:            "",
+				SaleReference:   "Losses Total",
+				LotReference:    "",
+				QuantitySold:    summary.LossSales,
+				UnitCost:        decimal.Zero,
+				CustomCost:      false,
+				CustomCostNotes: "",
+				TotalCost:       summary.TotalCost,
+				SellingPrice:    decimal.Zero,
+				Proceeds:        summary.TotalProceeds,
+				ProfitLoss:      summary.TotalProceeds.Sub(summary.TotalCost),
+				FeeReference:    "",
+				FeeAmount:       decimal.Zero,
+				IsSummary:       true,
 			}
 			pl.reportRows = append(pl.reportRows, lossSummary)
 		}
@@ -203,38 +211,42 @@ func (pl *ProfitLossReportGenerator) addSummaryLines(summaries map[string]*Finan
 		// Profit summary line
 		if summary.ProfitSales.IsPositive() {
 			profitSummary := ProfitLossRow{
-				FinancialYear: summary.FY,
-				Coin:          "",
-				SaleReference: "Profits Total",
-				LotReference:  "",
-				QuantitySold:  summary.ProfitSales,
-				UnitCost:      decimal.Zero,
-				TotalCost:     summary.TotalCost,
-				SellingPrice:  decimal.Zero,
-				Proceeds:      summary.TotalProceeds,
-				ProfitLoss:    summary.TotalProceeds.Sub(summary.TotalCost),
-				FeeReference:  "",
-				FeeAmount:     decimal.Zero,
-				IsSummary:     true,
+				FinancialYear:   summary.FY,
+				Coin:            "",
+				SaleReference:   "Profits Total",
+				LotReference:    "",
+				QuantitySold:    summary.ProfitSales,
+				UnitCost:        decimal.Zero,
+				CustomCost:      false,
+				CustomCostNotes: "",
+				TotalCost:       summary.TotalCost,
+				SellingPrice:    decimal.Zero,
+				Proceeds:        summary.TotalProceeds,
+				ProfitLoss:      summary.TotalProceeds.Sub(summary.TotalCost),
+				FeeReference:    "",
+				FeeAmount:       decimal.Zero,
+				IsSummary:       true,
 			}
 			pl.reportRows = append(pl.reportRows, profitSummary)
 		}
 
 		// Combined line
 		combinedSummary := ProfitLossRow{
-			FinancialYear: summary.FY,
-			Coin:          "",
-			SaleReference: "Combined",
-			LotReference:  "",
-			QuantitySold:  summary.TotalSales,
-			UnitCost:      decimal.Zero,
-			TotalCost:     summary.TotalCost,
-			SellingPrice:  decimal.Zero,
-			Proceeds:      summary.TotalProceeds,
-			ProfitLoss:    summary.NetProfit,
-			FeeReference:  "",
-			FeeAmount:     decimal.Zero,
-			IsSummary:     true,
+			FinancialYear:   summary.FY,
+			Coin:            "",
+			SaleReference:   "Combined",
+			LotReference:    "",
+			QuantitySold:    summary.TotalSales,
+			UnitCost:        decimal.Zero,
+			CustomCost:      false,
+			CustomCostNotes: "",
+			TotalCost:       summary.TotalCost,
+			SellingPrice:    decimal.Zero,
+			Proceeds:        summary.TotalProceeds,
+			ProfitLoss:      summary.NetProfit,
+			FeeReference:    "",
+			FeeAmount:       decimal.Zero,
+			IsSummary:       true,
 		}
 		pl.reportRows = append(pl.reportRows, combinedSummary)
 	}
@@ -245,7 +257,7 @@ func (pl *ProfitLossReportGenerator) buildCSV() [][]string {
 
 	headers := []string{
 		"Financial Year", "Coin", "Sale Reference", "Lot Reference", "Quantity Sold",
-		"Unit Cost (ZAR)", "Total Cost (ZAR)", "Selling Price (ZAR)",
+		"Unit Cost (ZAR)", "Custom Cost", "Custom Cost Notes", "Total Cost (ZAR)", "Selling Price (ZAR)",
 		"Proceeds (ZAR)", "Profit/Loss (ZAR)", "Fee Reference", "Fee Amount (ZAR)",
 	}
 	records = append(records, headers)
@@ -258,6 +270,8 @@ func (pl *ProfitLossReportGenerator) buildCSV() [][]string {
 			row.LotReference,
 			row.QuantitySold.String(),
 			row.UnitCost.String(),
+			fmt.Sprintf("%t", row.CustomCost),
+			row.CustomCostNotes,
 			row.TotalCost.String(),
 			row.SellingPrice.String(),
 			row.Proceeds.String(),
