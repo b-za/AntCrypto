@@ -1,106 +1,106 @@
 dates_required:
-    - date: "2017-08-28"
-      transaction_references:
-        - 037b4604
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-08-30"
-      transaction_references:
-        - 7481d775
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-09-01"
-      transaction_references:
-        - 651305a8
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-09-04"
-      transaction_references:
-        - 12a372f1
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-11-01"
-      transaction_references:
-        - 571115f7
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-12-09"
-      transaction_references:
-        - aa239e16
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-12-13"
-      transaction_references:
-        - ba1e9f8a
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2017-12-18"
-      transaction_references:
-        - 2947f821
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2018-01-08"
-      transaction_references:
-        - 1ad86832
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2021-03-26"
-      transaction_references:
-        - 66bea72d
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
-    - date: "2023-12-08"
-      transaction_references:
-        - 027c571f
-        - 1ff28d5d
-        - 364721fe
-        - 6031c3f6
-        - 769c2bd4
-        - c78b0fbd
-      usd_prices:
-        btc: "0.00"
-        eth: "0.00"
-        ltc: "0.00"
-        xrp: "0.00"
-      usd_to_zar_rate: "0.00"
+  - date: "2017-08-28"
+    transaction_references:
+      - 037b4604
+    usd_prices:
+      btc: "4382.66"
+      eth: "347.75"
+      ltc: "62.36"
+      xrp: "0.2245"
+    usd_to_zar_rate: "13.55504"
+  - date: "2017-08-30"
+    transaction_references:
+      - 7481d775
+    usd_prices:
+      btc: "4565.30"
+      eth: "378.49"
+      ltc: "64.17"
+      xrp: "0.228"
+    usd_to_zar_rate: "13.55504"
+  - date: "2017-09-01"
+    transaction_references:
+      - 651305a8
+    usd_prices:
+      btc: "4892.01"
+      eth: "387.74"
+      ltc: "86.04"
+      xrp: "0.2485"
+    usd_to_zar_rate: "13.55504"
+  - date: "2017-09-04"
+    transaction_references:
+      - 12a372f1
+    usd_prices:
+      btc: "4236.31"
+      eth: "295.17"
+      ltc: "65.21"
+      xrp: "0.205"
+    usd_to_zar_rate: "13.55504"
+  - date: "2017-11-01"
+    transaction_references:
+      - 571115f7
+    usd_prices:
+      btc: "6767.31"
+      eth: "291.69"
+      ltc: "53.18"
+      xrp: "0.1941"
+    usd_to_zar_rate: "13.71087"
+  - date: "2017-12-09"
+    transaction_references:
+      - aa239e16
+    usd_prices:
+      btc: "15178.22"
+      eth: "473.50"
+      ltc: "155.24"
+      xrp: "0.2447"
+    usd_to_zar_rate: "12.37619"
+  - date: "2017-12-13"
+    transaction_references:
+      - ba1e9f8a
+    usd_prices:
+      btc: "16408.17"
+      eth: "702.77"
+      ltc: "302.60"
+      xrp: "0.4711"
+    usd_to_zar_rate: "12.37619"
+  - date: "2017-12-18"
+    transaction_references:
+      - 2947f821
+    usd_prices:
+      btc: "19114.22"
+      eth: "794.64"
+      ltc: "358.34"
+      xrp: "0.7784"
+    usd_to_zar_rate: "12.37619"
+  - date: "2018-01-08"
+    transaction_references:
+      - 1ad86832
+    usd_prices:
+      btc: "15170.08"
+      eth: "1148.53"
+      ltc: "255.76"
+      xrp: "2.4562"
+    usd_to_zar_rate: "11.84707"
+  - date: "2021-03-26"
+    transaction_references:
+      - 66bea72d
+    usd_prices:
+      btc: "55137.31"
+      eth: "1702.84"
+      ltc: "184.28"
+      xrp: "0.5671"
+    usd_to_zar_rate: "14.50355"
+  - date: "2023-12-08"
+    transaction_references:
+      - 027c571f
+      - 1ff28d5d
+      - 364721fe
+      - 6031c3f6
+      - 769c2bd4
+      - c78b0fbd
+    usd_prices:
+      btc: "44166.60"
+      eth: "2358.73"
+      ltc: "78.40"
+      xrp: "0.6731"
+    usd_to_zar_rate: "18.29815"
 usage: For each date, fill in the USD prices (BTC, ETH, XRP, LTC) and USD→ZAR exchange rate. These will be used in Part 2 to calculate cross-currency conversions.
