@@ -1,0 +1,16 @@
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-08-28","coin":"xbt","timestamp":"2017-08-28 20:09:07"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-08-30","coin":"xbt","timestamp":"2017-08-30 18:32:21"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-09-01","coin":"xbt","timestamp":"2017-09-01 22:13:40"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-09-04","coin":"xbt","timestamp":"2017-09-04 16:43:10"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-11-01","coin":"xbt","timestamp":"2017-11-01 08:41:37"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-12-09","coin":"xbt","timestamp":"2017-12-09 15:32:03"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-12-13","coin":"xbt","timestamp":"2017-12-13 13:00:06"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2017-12-18","coin":"xbt","timestamp":"2017-12-18 08:38:19"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2018-01-08","coin":"xbt","timestamp":"2018-01-08 06:30:36"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2021-03-26","coin":"xbt","timestamp":"2021-03-26 03:42:38"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"xrp","timestamp":"2023-12-08 11:45:18"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"xbt","timestamp":"2023-12-08 11:58:07"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"eth","timestamp":"2023-12-08 12:10:39"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"ltc","timestamp":"2023-12-08 12:23:05"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"eth","timestamp":"2023-12-08 12:39:49"}
+{"type":"API_ERROR","message":"USD→ZAR rate: no data available within ±7 days of 2023-12-08","coin":"xbt","timestamp":"2023-12-08 12:48:08"}

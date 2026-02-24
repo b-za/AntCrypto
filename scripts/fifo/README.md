@@ -5,41 +5,56 @@ A sophisticated cryptocurrency profit/loss calculation system using FIFO (First-
 ## Problem Statement
 
 Cryptocurrency taxation requires accurate tracking of cost basis for each transaction. When you sell cryptocurrency, you need to know:
-
-1. **Which specific lots were sold** (not just average cost)
-2. **What you paid for those lots** (cost basis)
-3. **Profit or loss realized** (sale proceeds - cost basis)
-4. **Tax implications** (held short-term vs long-term)
+- **Which specific lots were sold** (not just average cost)
+- **What you paid for those lots** (cost basis)
+- **Profit or loss realized** (sale proceeds - cost basis)
+- **Tax implications** (held short-term vs long-term)
 
 This program solves these challenges by:
 - Using FIFO method to match sales with oldest acquisitions
 - Tracking individual lots with unique references
 - Calculating profit/loss for each sale transaction
 - Aggregating results by financial year for tax reporting
+- Generating exchange rate templates for cross-currency tracking
 
 ## Features
 
-- **Multi-Coin Support**: Process multiple cryptocurrencies (BTC, ETH, LTC, XRP, etc.)
-- **FIFO Cost Basis**: Accurate lot matching with oldest-first allocation
+### Multi-Coin Support
+- Process multiple cryptocurrencies (BTC, ETH, LTC, XRP, etc.)
+- - **FIFO Cost Basis**: Accurate lot matching with oldest-first allocation
 - **Financial Year Reporting**: Automatic aggregation by fiscal year (configurable)
 - **Comprehensive Reports**: Four detailed report types covering all aspects
-- **Transaction Classification**: Automatic detection of transaction types from descriptions
+- **Transaction Classification**: Automatic detection of transaction types
 - **Pool Management**: Intelligent grouping of transactions into acquisition pools
-- **Error Logging**: Detailed error tracking for problematic transactions
-- **Configurable**: Financial year start date, hash length, and multiple data roots
+- **Exchange Rate Templates**: YAML templates for cross-currency conversions (Step 1)
+
+### Report Types
+1. **FIFO Reports** (per-coin): Complete transaction history with lot consumption
+2. **Profit/Loss Report**: Aggregated profit/loss by financial year across all coins
+3. **Inventory Report**: Current holdings with cost basis
+4. **Transfers Report**: All non-buy/sell transactions across all coins
+
+### Key Capabilities
+- Accurate FIFO cost basis tracking for tax purposes
+- Detailed transaction classification (8 transaction types)
+- Automatic pool detection for transfer tracking
+- Comprehensive error logging for problematic transactions
+- Configurable financial year (March start by default)
+- Timestamped report directories for audit trail
+- Exchange rate template generation for multi-currency analysis
 
 ## Quick Start
 
 ### Prerequisites
-
 - Go 1.21 or higher
-- CSV transaction files in the expected format
+- CSV transaction files in expected format
 - Config file (see Configuration section)
 
 ### Installation
 
 ```bash
 cd scripts/fifo
+go mod tidy
 go build -o fifo-calc
 ```
 
@@ -50,7 +65,11 @@ go build -o fifo-calc
 ./fifo-calc
 
 # Process specific root(s) only
-./fifo-calc --roots cap,cal
+./fifo-calc --roots cap
+
+# From project root
+cd scripts/fifo
+go run main.go --config ../../config/config.yaml
 ```
 
 ### Example Command
@@ -58,12 +77,12 @@ go build -o fifo-calc
 ```bash
 # From project root
 cd scripts/fifo
-go run main.go --config ../../config/config.yaml
+go run main.go --config ../../config/config.yaml --roots cap,cal
 ```
 
-Output will be generated in timestamped directories:
+Output will be generated in timestamped directory:
 ```
-/Users/bh/code/beerguevara/AntCrypto/Crypto A&P/reports/2026_02_24_0001/
+/path/to/data/reports/2026_02_24_0001/
 ```
 
 ## Configuration
@@ -72,14 +91,16 @@ Create a `config.yaml` file:
 
 ```yaml
 roots:
-  - alias: "cap"    # Friendly name for data root
-    path: "/path/to/Crypto A&P/data"
+  - alias: "cap"
+    path: "/path/to/Crypto A&P"
   - alias: "cal"
-    path: "/path/to/Crypto Ant/data"
+    path: "/path/to/Crypto Ant"
 
 settings:
   financial_year_start: 3  # Financial year starts in March (1-12)
-  hash_length: 7            # Length of generated lot reference hashes
+  hash_length: 7           # Length of SHA-1 hash for lot references
+
+financial_year_start: 3  # Financial year starts in March (1-12)
 ```
 
 ### Configuration Options
@@ -90,19 +111,18 @@ settings:
 | `roots[].alias` | string | required | Short identifier for root |
 | `roots[].path` | string | required | Full path to data directory |
 | `financial_year_start` | int | 3 | Month when financial year begins (1-12) |
-| `hash_length` | int | 7 | Length of SHA-1 hash for lot references |
+| `hash_length` | int | 7 | Length of generated lot reference hashes |
 
 ## Input Format
 
 ### Directory Structure
-
 ```
 /path/to/data/
-├── xbt.csv      # Bitcoin transactions
-├── xrp.csv      # Ripple transactions
-├── eth.csv      # Ethereum transactions
-├── ltc.csv      # Litecoin transactions
-└── zar.csv      # Fiat currency (ignored)
+  ├── xbt.csv      # Bitcoin transactions
+  ├── xrp.csv      # Ripple transactions
+  ├── eth.csv      # Ethereum transactions
+  ├── ltc.csv      # Litecoin transactions
+  └── zar.csv      # Fiat currency (ignored)
 ```
 
 ### CSV Format
@@ -110,37 +130,37 @@ settings:
 Each coin's transactions are stored in a separate CSV file with the following columns:
 
 | Column | Description | Example |
-|---------|-------------|----------|
+|--------|-------------|----------|
 | Wallet ID | Unique wallet identifier | `3226120146793182111` |
 | Row | Transaction row number | `1` |
 | Timestamp (UTC) | Transaction date/time | `2024-02-15 00:23:54` |
 | Description | Transaction description | `"Sold 0.05 BTC/ZAR @ 1,000,000"` |
 | Currency | Cryptocurrency code | `XBT` |
-| Balance delta | Quantity change (+/-) | `0.15934000` |
-| Available balance delta | Available quantity change | `0.15934000` |
-| Balance | Total balance after transaction | `0.15934000` |
-| Available balance | Available balance after transaction | `0.15934000` |
+| Balance delta | Quantity change (+/-) | `-0.05375100` |
+| Available balance delta | Available quantity change | `-0.05375100` |
+| Balance | Total balance after transaction | `0.14934000` |
+| Available balance | Available balance after transaction | `0.14934000` |
 | Cryptocurrency transaction ID | Blockchain transaction hash | `abc123...` |
-| Cryptocurrency address | Wallet address | `1BvBMSEYstWetq...` |
+| Cryptocurrency address | Wallet address | `1Htve...` |
 | Value currency | Fiat currency code | `ZAR` |
-| Value amount | Fiat value | `10000.00` |
+| Value amount | Fiat value amount | `10000.00` |
 | Reference | Unique transaction reference | `b98eb80d` |
 
 ### Example CSV Row
 
 ```csv
-3226120146793182111,1,2024-02-15 00:23:54,"Sold 0.05 BTC/ZAR @ 1,000,000",XBT,-0.05375100,0.00000000,0.19892184,0.16190184,,,ZAR,53751.00,40253547
+3226120146793182111,1,2017-08-28 19:43:03,"Bought BTC 0.15934 for ZAR 10,000.00",XBT,0.15934000,0.15934000,0.15934000,0.15934000,,,ZAR,10000.00,b98eb80d
+3226120146793182111,3,2017-08-28 20:09:07,Test Transaction,XBT,-0.00162595,0.00000000,0.15622401,0.15622401,0.15622401,81f444caf48f...,1Htve3kDRY1m5uG2nWUyni86kptUycNoMoMo,ZAR,99.99,037b4604
+3226120146793182111,4,2017-08-28 20:09:07,Bitcoin send fee,XBT,-0.00149004,0.00000000,0.15622401,0.15622401,,,ZAR,91.64,037b4604
 ```
 
 ## Output Reports
 
-The program generates four types of reports in a timestamped directory:
+### 1. FIFO Reports ({coin}_fifo.csv)
 
-### 1. FIFO Reports (`{coin}_fifo.csv`)
+**Purpose**: Per-coin transaction history with cost basis tracking.
 
-**Per-coin FIFO ledger** showing all transactions with lot consumption.
-
-**Columns:**
+**Columns (14)**:
 - Financial Year
 - Transaction Reference
 - Date
@@ -156,19 +176,21 @@ The program generates four types of reports in a timestamped directory:
 - Profit (ZAR)
 - Unit Cost (ZAR)
 
-**Use Case:** Complete transaction history with cost basis tracking.
+**Use Case**: Complete transaction history with cost basis tracking.
 
-**Example:**
+**Example**:
 ```csv
-FY2018,b98eb80d,2017-08-28 21:43:03,"Bought BTC 0.15934",in_buy_for_other,in_buy_for_other_231126a25de1d7,0.15934,0.15934,10000,10000,0,0,0,62758.88
-FY2018,037b4604,2017-08-28 22:09:07,Test Transaction,out_other,in_buy_for_other_231126a25de1d7,-0.00162595,0.15771405,0,9897.96,0,99.99,-2.05,62758.88
+Financial Year,Transaction Reference,Date,Description,Type,Lot Reference,Quantity Change,Balance Units,Total Cost (ZAR),Balance Value (ZAR),Fee (ZAR),Proceeds (ZAR),Profit (ZAR),Unit Cost (ZAR)
+FY2018,b98eb80d,2017-08-28 19:43:03,"Bought BTC 0.15934 for ZAR 10,000.00",in_buy,,,,,,0.15934,,10000.00,10000.00,,,0,,,10000.00,,0.15934
+FY2018,037b4604,2017-08-28 20:09:07,Test Transaction,in_other,,,,,,,-0.00163,,,,0,,99.99,,-0.00163,,,,99.99,,,,99.99,,-0.00163,,,,0,,100.00
+FY2018,7481d775,2017-08-30 18:32:21,all bitcoin,in_buy_for_other_23126a25de1d7,-0.15622401,,,-0.15622401,0.003183841,0.15622401,,,9,967.40,,0,,9,9287.96,722.05,62758.88,,967.40,,967.40,,,,967.40,0.00163
 ```
 
-### 2. Profit/Loss Report (`financial_year_profit_loss.csv`)
+### 2. Profit/Loss Report (financial_year_profit_loss.csv)
 
-**Aggregated profit/loss across all coins** by financial year.
+**Purpose**: Aggregated profit/loss by financial year across all coins for tax reporting.
 
-**Columns:**
+**Columns (12)**:
 - Financial Year
 - **Coin** ← NEW
 - Sale Reference
@@ -182,25 +204,26 @@ FY2018,037b4604,2017-08-28 22:09:07,Test Transaction,out_other,in_buy_for_other_
 - Fee Reference
 - Fee Amount (ZAR)
 
-**Use Case:** Tax reporting and profit/loss analysis.
+**Use Case**: Tax reporting and profit/loss analysis.
 
-**Example:**
+**Example**:
 ```csv
-FY2024,XBT,40253547,in_buy_e0da843a4d1c8d,0.004796,150000,719.40,1000000,4796.00,4076.60,,0
-FY2024,XRP,3a6478da,in_buy_31e76929561974,0.664,20.00,13.28,43.40,28.82,15.54,,0
-FY2024,Combined,,7,0,60717.88,0,242384.74,181666.86,,0
+Financial Year,Coin,Sale Reference,Lot Reference,Quantity Sold,Unit Cost (ZAR),Total Cost (ZAR),Selling Price (ZAR),Proceeds (ZAR),Profit/Loss (ZAR),Fee Reference,Fee Amount (ZAR)
+FY2024,XBT,40253547,in_buy_e0da843a4d1c8d,0.004796150000,71940.40,10000,10000.00,4076.60,,0.004796150,,4076.60
+FY2024,XRP,3a6478da,in_buy_31e76929561974,0.66420.00,13.28,43.40,28.82,,0,15.54,,0.15.54
+FY2024,Combined,,,7,060717.88,242384.74,181666.86,,967.40,722.05,62758.88,967.40
 ```
 
-**Summary Rows:**
-- `Losses Total`: Total loss transactions
-- `Profits Total`: Total profit transactions
-- `Combined`: Aggregated totals
+**Summary Rows**:
+- `Losses Total`: Aggregates all loss sales for FY
+- `Profits Total`: Aggregates all profit sales for FY
+- `Combined`: Total aggregation including both losses and profits
 
-### 3. Inventory Report (`inventory.csv`)
+### 3. Inventory Report (inventory.csv)
 
-**Current holdings across all coins** with cost basis.
+**Purpose**: Current holdings across all coins with cost basis.
 
-**Columns:**
+**Columns (8)**:
 - Financial Year
 - Coin
 - Lot Reference
@@ -210,23 +233,24 @@ FY2024,Combined,,7,0,60717.88,0,242384.74,181666.86,,0
 - Total Cost (ZAR)
 - Pool
 
-**Use Case:** Current portfolio valuation and unrealized gains/losses.
+**Use Case**: Current portfolio valuation and unrealized gains/losses.
 
-**Example:**
+**Example**:
 ```csv
-FY2025,eth,in_buy_9f1aa62adbd007,1.992,2025-04-10 12:41:40,31420,62588.64,in_buy
-FY2023,ltc,in_other_de5502fc177ad0,3.499,2023-12-08 14:23:05,1449.67,5072.39,in_other
-FY2023,xbt,Total,0.06277584,,0,52553.42,
+Financial Year,Coin,Lot Reference,Quantity,Date of Original Purchase,Unit Cost (ZAR),Total Cost (ZAR),Pool
+FY2025,eth,in_buy_9f1aa62adbd007,1.992,2025-04-10 12:41:40,31420.62588.64,in_buy
+FY2025,eth,in_buy_9f1aa62adbd007,0.00162595,0.5072.39,in_buy
+FY2025,ltc,in_other_de5502fc177ad0,3.499,2023-12-08 14:23.05,1449.67,50.72.39,in_other
 ```
 
-**Summary Rows:**
-- `Total`: Aggregated quantity and value by FY and coin
+**Summary Rows**:
+- `Total`: Aggregated quantity and value per FY and coin
 
-### 4. Transfers Report (`transfers.csv`)
+### 4. Transfers Report (transfers.csv)
 
-**All non-buy/sell transactions** across all coins.
+**Purpose**: All non-buy/sell transactions across all coins.
 
-**Columns:**
+**Columns (10)**:
 - Financial Year
 - Coin
 - Date
@@ -238,355 +262,147 @@ FY2023,xbt,Total,0.06277584,,0,52553.42,
 - Lot Reference
 - Pool
 
-**Use Case:** Tracking transfers, gifts, fees, and other movements.
+**Use Case**: Tracking transfers, gifts, fees, and other movements.
 
-**Example:**
+**Example**:
 ```csv
-FY2024,XBT,2024-02-15 02:23:54,Trading fee,out_fee_sell,-0.000215,214.26,214.26,,out_fee_sell
-FY2023,XRP,2023-12-08 13:45:18,Received Ripple,in_other,749.80,9339.61,12.46,in_other_440023b08a9aa9,in_other
+Financial Year,Coin,Date,Description,Type,Quantity Change,Value (ZAR),Unit Cost (ZAR) / Unit Cost Value,Lot Reference,Pool
+FY2018,XBT,2017-08-30 18:32:21,all bitcoin,out_other,-0.15622401,9,967.40,,Lot A,,,in_buy
+FY2018,XBT,2024-02-15 00:23:54,Trading fee,out_fee_sell,-0.000215,214.26,,,,in_buy
+FY2023,XRP,2023-12-08 13:45:18,Received Ripple,in_other,749.80,9339.61,12.46,in_other
+```
+
+## Exchange Rate Templates (New)
+
+### Exchange Rate Template Generator (`scripts/generate_exchange_rates/`)
+
+**Purpose**: Generate YAML templates with placeholder exchange rates for cross-currency tracking (Step 1 of 2-step process).
+
+**Output Location**:
+```
+<path/to/data>/exchange_templates/<timestamp>/
+  ├── exchange_rates_template.yaml           # YOUR TEMPLATE FILE
+  └── exchange_rates_template_validation.log # Validation summary
+```
+
+### Template Structure
+```yaml
+dates_required:
+  - date: "2017-08-28"
+      transaction_references:
+        - 037b4604
+        - 7481d775
+      usd_prices:
+        btc: "0.00"    # ← FILL IN: Bitcoin price in USD
+        eth: "0.00"    # ← FILL IN: Example: "4521.50"
+        xrp: "0.00"    # ← FILL IN: Example: "0.0075"
+        ltc: "0.00"    # ← FILL IN: Example: "55.00"
+      usd_to_zar_rate: "0.00"  # ← FILL IN: Example: "13.50"
+```
+
+### Usage
+
+```bash
+cd scripts/generate_exchange_rates
+go mod tidy
+GO111MODULE=on go build -o generate_exchange_rates
+./generate_exchange_rates --config ../../config.yaml --roots cap
+```
+
+### Filling in Exchange Rates
+
+After generating the template, manually fill in:
+1. **usd_prices**: Historical USD prices for each coin on each date
+2. **usd_to_zar_rate**: USD → ZAR exchange rate on each date
+
+### Part 2 Workflow (To Be Implemented)
+
+After filling in the template, Part 2 script will:
+1. Find latest exchange_rates_template.yaml in exchange_templates/
+2. Load the filled rates
+3. Generate exchange.csv with cross-currency conversions
+4. Calculate equivalent units for each transaction in all coins
+5. Determine net inflow/outflow by currency
+
+### Example Filled Template
+```yaml
+  - date: "2017-08-30"
+      usd_prices:
+        btc: "4521.50"    # BTC was $4,521.50 on this date
+        eth: "320.00"      # ETH was $320.00 on this date
+        xrp: "0.0075"      # XRP was $0.0075 on this date
+        ltc: "55.00"       # LTC was $55.00 on this date
+      usd_to_zar_rate: "13.50"  # 1 USD = 13.50 ZAR
 ```
 
 ## Financial Years
 
-The program calculates financial years based on the `financial_year_start` configuration (default: March).
+The program calculates financial years based on the `financial_year_start` configuration (default: March start).
 
 ### Calculation Logic
-
 ```go
 if month >= 3 {
-    return fmt.Sprintf("FY%d", year+1)  // March onwards → next year's FY
+    return fmt.Sprintf("FY%d", year + 1)  // March onwards → next year's FY
 }
-return fmt.Sprintf("FY%d", year)        // Jan/Feb → current year's FY
+return fmt.Sprintf("FY%d", year)           // Jan/Feb → current year's FY
 ```
 
 ### Examples
-
 | Date | Month | Financial Year |
 |------|-------|---------------|
-| 2024-01-15 | Jan | FY2024 |
-| 2024-02-28 | Feb | FY2024 |
+| 2024-02-15 | Feb | FY2024 |
 | 2024-03-01 | Mar | FY2025 |
 | 2024-06-15 | Jun | FY2025 |
 | 2025-02-28 | Feb | FY2025 |
-| 2025-03-01 | Mar | FY2026 |
 
-### Default Financial Year Definition
+## Troubleshooting
 
-**FY2025**: 1 March 2024 → 28 February 2025
-**FY2026**: 1 March 2025 → 28 February 2026
+### Issue: Empty Reports
 
-This matches South African financial year requirements (March start).
+**Cause**: No transactions processed or all transactions failed.
 
-## Architecture
+**Solution**:
+1. Check error_log.jsonl for parsing errors
+2. Verify CSV files have correct format
+3. Ensure currency codes match (case-insensitive)
+4. Review configuration file
 
-### High-Level Flow
+### Issue: Incorrect Profit/Loss
 
-```
-┌─────────────┐
-│  CSV Files  │  (xbt.csv, xrp.csv, etc.)
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│   Parser    │  → Read CSV, parse transactions
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│ Classifier  │  → Identify transaction types
-└──────┬──────┘
-       │
-       ├──────────────┐
-       │              │
-       ▼              ▼
-┌─────────────┐  ┌─────────────┐
-│Pool Manager │  │ Fee Linker  │  (Classify pools, link fees)
-└──────┬──────┘  └─────────────┘
-       │
-       ▼
-┌─────────────┐
-│   FIFO      │  → Allocate sales to lots
-│ Allocator   │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│   Report    │  → Generate all reports
-│Coordinator │
-└─────────────┘
-       │
-       ├──────────┬──────────┬──────────┐
-       ▼          ▼          ▼          ▼
-  FIFO.csv   ProfitLoss.csv Inventory.csv Transfers.csv
-```
+**Cause**: Wrong financial year configuration or transaction misclassification.
 
-### Key Components
+**Solution**:
+1. Verify `financial_year_start` in config.yaml
+2. Check transaction descriptions match expected patterns
+3. Review classification in error_log.jsonl
+4. Calculate expected profit manually and compare
 
-1. **Parser**: Reads CSV files and converts to internal transaction format
-2. **Classifier**: Determines transaction type from description (buy, sell, fee, etc.)
-3. **Pool Classifier**: Groups transactions into acquisition pools for cost basis tracking
-4. **Fee Linker**: Associates fees with their parent transactions
-5. **Pool Manager**: Maintains lots in different pools with FIFO order
-6. **FIFO Allocator**: Matches sales to oldest lots first
-7. **Report Coordinator**: Generates all report types from processed data
+### Issue: Missing Lots
 
-## Transaction Types
+**Cause**: Insufficient purchases to fulfill sales.
 
-### Inflows (Acquisitions)
+**Solution**:
+1. Check pool manager initialization
+2. Verify in_buy transactions have positive balance delta
+3. Review lot consumption order in error_log.jsonl
+4. Check if transfers are being linked correctly
 
-| Type | Description | Pool |
-|------|-------------|-------|
-| `in_buy` | Direct purchase | `in_buy` |
-| `in_buy_for_other` | Purchase for transfer/gift | `in_buy_for_other` |
-| `in_other` | Other inflow (e.g., received) | `in_other` |
+## Technical Debt
 
-### Outflows (Dispositions)
-
-| Type | Description | Pool Priority |
-|------|-------------|---------------|
-| `out_sell` | Sale | `in_buy` → `in_buy_for_other` → `in_other` |
-| `out_other` | Other outflow (transfer/gift) | `in_buy_for_other` → `in_other` → `in_buy` |
-| `out_fee_buy` | Fee on purchase | Same as parent |
-| `out_fee_buy_for_other` | Fee on purchase for other | Same as parent |
-| `out_fee_in_other` | Fee on other inflow | Same as parent |
-| `out_fee_sell` | Fee on sale | Same as parent |
-| `out_fee_out_other` | Fee on other outflow | Same as parent |
-
-## FIFO Allocation Algorithm
-
-The FIFO allocator matches sales to acquisitions using the following rules:
-
-1. **Pool Priority**: Consume lots in specific pool order
-   - Sales: `in_buy` → `in_buy_for_other` → `in_other`
-   - Other outflows: `in_buy_for_other` → `in_other` → `in_buy`
-
-2. **Oldest First**: Within each pool, consume lots by acquisition date (oldest first)
-
-3. **Specific Lot Allocation**: If transaction is linked to a specific lot (e.g., transfer), consume that lot first
-
-4. **Partial Consumption**: Lots can be partially consumed, remaining quantity stays in pool
-
-5. **Insufficient Lots**: Error if not enough lots available to fulfill transaction
-
-### Example
-
-```
-Pool Status:
-  in_buy:
-    - Lot A: 0.5 BTC (purchased 2024-01-01)
-    - Lot B: 0.3 BTC (purchased 2024-01-15)
-
-Sale: 0.4 BTC on 2024-02-01
-Allocation:
-  - Consume 0.4 BTC from Lot A (oldest first)
-  - Lot A remaining: 0.1 BTC
-
-Sale: 0.2 BTC on 2024-02-15
-Allocation:
-  - Consume 0.1 BTC from Lot A (remainder)
-  - Consume 0.1 BTC from Lot B
-  - Lot B remaining: 0.2 BTC
-```
-
-## Pool Classification
-
-Transactions are automatically classified into pools based on:
-
-1. **Description Keywords**: "Bought" → `in_buy`, "Sold" → `out_sell`
-2. **Time-Based Matching**: Outflows within 7 days of an inflow with ≥90% quantity match
-3. **Fee Linking**: Fees automatically linked to parent transactions by reference
-
-### Pool Classifier Rules
-
-Matches outflows to inflows when:
-- Time difference ≤ 7 days
-- Quantity ratio ≥ 90% (outflow quantity / inflow quantity)
-- Inflow occurs before outflow
-- Best match is selected by minimum time difference
-
-## Error Logging
-
-Errors are logged to `error_log.jsonl` with details:
-
-```json
-{"type":"CLASSIFICATION_ERROR","message":"Failed to classify transaction","coin":"XBT","row":42,"timestamp":"2024-02-15 00:23:54"}
-{"type":"ALLOCATION_ERROR","message":"Insufficient lots, still need 0.1","coin":"XBT","row":57,"timestamp":"2024-02-20 12:00:00"}
-```
-
-Error types:
-- `CLASSIFICATION_ERROR`: Failed to determine transaction type
-- `POOL_ERROR`: Failed to add lot to pool
-- `ALLOCATION_ERROR`: Failed to allocate sale to lots
-- `PROCESS_ERROR`: General processing failure
-
-## Usage Examples
-
-### Example 1: Process All Coins
-
-```bash
-cd scripts/fifo
-go run main.go --config ../../config/config.yaml
-```
-
-Output:
-```
-Successfully processed root cap
-Successfully processed root cal
-```
-
-### Example 2: Generate Reports for Specific Year
-
-```bash
-# Run program
-go run main.go --config ../../config/config.yaml
-
-# Reports generated in timestamped directory:
-# /path/to/reports/2026_02_24_0001/
-```
-
-### Example 3: Analyze Profit/Loss by Financial Year
-
-```bash
-# View profit/loss report
-cat /path/to/reports/2026_02_24_0001/financial_year_profit_loss.csv
-
-# Filter for specific financial year
-awk '/^FY2025,/ { print }' financial_year_profit_loss.csv
-```
-
-### Example 4: Check Current Inventory
-
-```bash
-# View inventory report
-cat /path/to/reports/2026_02_24_0001/inventory.csv
-
-# Calculate total value
-awk 'NR>1 { sum += $7 } END { print "Total Value: " sum " ZAR" }' inventory.csv
-```
-
-## Development
+### Development
 
 ### Building
-
 ```bash
 cd scripts/fifo
 go build -o fifo-calc
 ```
 
 ### Testing
-
 ```bash
 cd scripts/fifo
 go test ./...
 ```
 
-### Dependencies
-
-```bash
-go mod download
-go mod tidy
-```
-
-### Code Structure
-
-```
-scripts/fifo/
-├── main.go                      # Entry point
-├── go.mod                       # Go module definition
-├── internal/
-│   ├── config/                   # Configuration management
-│   ├── parser/                   # CSV parsing
-│   ├── classifier/               # Transaction classification
-│   ├── pool/                     # Pool/lot management
-│   ├── fifo/                     # FIFO allocation logic
-│   └── report/                   # Report generation
-└── pkg/
-    └── utils/                    # Utility functions
-```
-
-## Troubleshooting
-
-### Issue: Empty reports
-
-**Cause:** No transactions processed or all transactions failed.
-
-**Solution:**
-1. Check error_log.jsonl for errors
-2. Verify CSV files have correct format
-3. Ensure currency codes match (case-insensitive)
-
-### Issue: Incorrect profit/loss calculations
-
-**Cause:** Wrong financial year configuration or transaction misclassification.
-
-**Solution:**
-1. Verify `financial_year_start` in config.yaml
-2. Check transaction descriptions match expected patterns
-3. Review classification in error_log.jsonl
-
-### Issue: Missing transactions
-
-**Cause:** Transactions not classified or filtered out.
-
-**Solution:**
-1. Check if ZAR transactions are being filtered (expected)
-2. Verify reference IDs are unique
-3. Review pool classification logic
-
-### Issue: Lots not matching
-
-**Cause:** Insufficient acquisitions or wrong pool classification.
-
-**Solution:**
-1. Verify purchase transactions have positive balance delta
-2. Check pool classifier rules (7 days, 90% quantity)
-3. Review allocation errors in error_log.jsonl
-
-## Best Practices
-
-1. **Regular Processing**: Run after each trading session to keep reports current
-2. **Backup Reports**: Keep historical reports for year-over-year comparison
-3. **Validate Inputs**: Ensure CSV files have correct headers and formatting
-4. **Review Errors**: Check error_log.jsonl after each run for anomalies
-5. **Archive Old Data**: Move processed CSV files to archive directory
-6. **Track Configuration**: Version config.yaml with financial year changes
-
-## Technical Notes
-
-- **Decimal Precision**: Uses `shopspring/decimal` for exact monetary calculations
-- **Hash Generation**: SHA-1 hash for unique lot references (configurable length)
-- **Case Insensitivity**: Coin codes and descriptions are case-insensitive
-- **Transaction Ordering**: Maintains original order for FIFO processing
-- **Memory Efficiency**: Processes one root at a time, aggregates before reporting
-
 ## License
 
 This is a private project for cryptocurrency tax calculation and financial analysis.
-
-## Support
-
-For issues or questions:
-1. Check error_log.jsonl for specific errors
-2. Review this documentation for configuration details
-3. Verify input data format matches expected CSV structure
-4. Validate financial year settings match your jurisdiction's requirements
-
-## Changelog
-
-### Recent Improvements
-
-- ✅ **Fixed Data Aggregation Bug**: Reports now include all coins, not just the last processed coin
-- ✅ **Fixed Inventory Coin Column**: Coin column now correctly populated with actual coin names
-- ✅ **Fixed Financial Year Bug**: Correct FY calculation for March start year (FY2025 = 1 Mar 2024 to 28 Feb 2025)
-- ✅ **Added Coin Column to Profit/Loss**: Each sale row now shows the coin that was sold
-- ✅ **Removed Per-Coin Flag**: All coins now processed together for consistent reporting
-- ✅ **Aggregated Reporting**: Single reports span all coins with correct financial year assignments
-
-### Future Enhancements
-
-- [ ] Support for additional cost basis methods (LIFO, HIFO, specific lot)
-- [ ] Tax rate integration for automatic tax calculation
-- [ ] Multiple currency support for international transactions
-- [ ] Web-based dashboard for report visualization
-- [ ] Automatic report email notifications
-- [ ] Integration with tax preparation software exports

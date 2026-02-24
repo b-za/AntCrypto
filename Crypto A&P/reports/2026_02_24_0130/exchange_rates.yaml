@@ -1,0 +1,545 @@
+exchange_rates:
+    - transaction_date: "2017-08-28 20:09:07"
+      transaction_ref: 037b4604
+      direction: out
+      from_coin: xbt
+      zar_value: "99.99"
+      rates:
+        eth:
+            zar_per_unit: "4513.57"
+            units_for_zar: "1"
+            rate_date: "2017-08-28"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3783.18045"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "57224.37105"
+            units_for_zar: "1"
+            rate_date: "2017-08-28"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.6087455"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "13.045"
+        usd_to_zar_date: "2017-08-28"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-08-30 18:32:21"
+      transaction_ref: 7481d775
+      direction: out
+      from_coin: xbt
+      zar_value: "9967.4"
+      rates:
+        eth:
+            zar_per_unit: "5038.31615"
+            units_for_zar: "1"
+            rate_date: "2017-08-30"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3786.08055"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "59467.3527"
+            units_for_zar: "1"
+            rate_date: "2017-08-30"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.6176445"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "13.055"
+        usd_to_zar_date: "2017-08-30"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-09-01 22:13:40"
+      transaction_ref: 651305a8
+      direction: out
+      from_coin: xbt
+      zar_value: "4846.67"
+      rates:
+        eth:
+            zar_per_unit: "5024.7301"
+            units_for_zar: "1"
+            rate_date: "2017-09-01"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3751.27935"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "62539.56085"
+            units_for_zar: "1"
+            rate_date: "2017-09-01"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.5108565"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "12.935"
+        usd_to_zar_date: "2017-09-01"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-09-04 16:43:10"
+      transaction_ref: 12a372f1
+      direction: out
+      from_coin: xbt
+      zar_value: "4848.63"
+      rates:
+        eth:
+            zar_per_unit: "3673.090503"
+            units_for_zar: "1"
+            rate_date: "2017-09-04"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3753.860439"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "53071.413829"
+            units_for_zar: "1"
+            rate_date: "2017-09-04"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.51877661"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "12.9439"
+        usd_to_zar_date: "2017-09-04"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-11-01 08:41:37"
+      transaction_ref: 571115f7
+      direction: out
+      from_coin: xbt
+      zar_value: "4904.36"
+      rates:
+        eth:
+            zar_per_unit: "4051.404459"
+            units_for_zar: "1"
+            rate_date: "2017-11-01"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "4093.752159"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "95338.506282"
+            units_for_zar: "1"
+            rate_date: "2017-11-01"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "12.56173941"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "14.1159"
+        usd_to_zar_date: "2017-11-01"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-12-09 15:32:03"
+      transaction_ref: aa239e16
+      direction: out
+      from_coin: xbt
+      zar_value: "4901.03"
+      rates:
+        eth:
+            zar_per_unit: "6283.416"
+            units_for_zar: "1"
+            rate_date: "2017-12-09"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3961.420596"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "200196.053772"
+            units_for_zar: "1"
+            rate_date: "2017-12-09"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "12.15567804"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "13.6596"
+        usd_to_zar_date: "2017-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-12-13 13:00:06"
+      transaction_ref: ba1e9f8a
+      direction: out
+      from_coin: xbt
+      zar_value: "4544.63"
+      rates:
+        eth:
+            zar_per_unit: "9317.31178"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3950.51622"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "218405.47638"
+            units_for_zar: "1"
+            rate_date: "2017-12-13"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "12.1222178"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "13.622"
+        usd_to_zar_date: "2017-12-13"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2017-12-18 08:38:19"
+      transaction_ref: 2947f821
+      direction: out
+      from_coin: xbt
+      zar_value: "5108.73"
+      rates:
+        eth:
+            zar_per_unit: "10080.7504"
+            units_for_zar: "1"
+            rate_date: "2017-12-18"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "4526.0512"
+            units_for_zar: "1"
+            rate_date: "2017-12-18"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "242455.548125"
+            units_for_zar: "1"
+            rate_date: "2017-12-18"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.44242319"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "12.8581"
+        usd_to_zar_date: "2017-12-18"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2018-01-08 06:30:36"
+      transaction_ref: 1ad86832
+      direction: out
+      from_coin: xbt
+      zar_value: "30615.35"
+      rates:
+        eth:
+            zar_per_unit: "14094.832794"
+            units_for_zar: "1"
+            rate_date: "2018-01-08"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "3142.536495"
+            units_for_zar: "1"
+            rate_date: "2018-01-08"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "185362.263282"
+            units_for_zar: "1"
+            rate_date: "2018-01-08"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "11.06884317"
+            units_for_zar: "1"
+            rate_date: "2018-05-04"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "12.4383"
+        usd_to_zar_date: "2018-01-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2021-03-26 03:42:38"
+      transaction_ref: 66bea72d
+      direction: in
+      from_coin: xbt
+      zar_value: "100.12"
+      rates:
+        eth:
+            zar_per_unit: "25499.248632"
+            units_for_zar: "1"
+            rate_date: "2021-03-26"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "2753.54781"
+            units_for_zar: "1"
+            rate_date: "2021-03-26"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "825923.100782"
+            units_for_zar: "1"
+            rate_date: "2021-03-26"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "8.459072986"
+            units_for_zar: "1"
+            rate_date: "2021-03-26"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "15.0098"
+        usd_to_zar_date: "2021-03-26"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 11:45:18"
+      transaction_ref: 027c571f
+      direction: in
+      from_coin: xrp
+      zar_value: "9339.61"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: ""
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: ""
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: ""
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: ""
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 11:58:07"
+      transaction_ref: c78b0fbd
+      direction: in
+      from_coin: xbt
+      zar_value: "1421.9"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 12:10:39"
+      transaction_ref: 1ff28d5d
+      direction: in
+      from_coin: eth
+      zar_value: "316.62"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 12:23:05"
+      transaction_ref: 6031c3f6
+      direction: in
+      from_coin: ltc
+      zar_value: "5072.39"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 12:39:49"
+      transaction_ref: 769c2bd4
+      direction: in
+      from_coin: eth
+      zar_value: "135143.12"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
+    - transaction_date: "2023-12-08 12:48:08"
+      transaction_ref: 364721fe
+      direction: in
+      from_coin: xbt
+      zar_value: "170859.01"
+      rates:
+        eth:
+            zar_per_unit: "44574.382944"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        ltc:
+            zar_per_unit: "1483.46945"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xbt:
+            zar_per_unit: "834730.117723"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+        xrp:
+            zar_per_unit: "12.70114417"
+            units_for_zar: "1"
+            rate_date: "2023-12-08"
+            rate_source: Binance
+            note: From cache
+      zar_exchange:
+        usd_to_zar_rate: "18.8977"
+        usd_to_zar_date: "2023-12-08"
+        usd_to_zar_source: Frankfurter
