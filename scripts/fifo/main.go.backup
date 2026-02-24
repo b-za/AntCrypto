@@ -1,0 +1,367 @@
+package main
+
+import (
+	"flag"
+	"fmt"
+	"os"
+	"path/filepath"
+	"sort"
+	"strings"
+	"time"
+
+	"github.com/shopspring/decimal"
+
+	"github.com/beerguevara/antcrypto/fifo/internal/broker"
+	"github.com/beerguevara/antcrypto/fifo/internal/classifier"
+	"github.com/beerguevara/antcrypto/fifo/internal/config"
+	"github.com/beerguevara/antcrypto/fifo/internal/exchangerate"
+	"github.com/beerguevara/antcrypto/fifo/internal/fifo"
+	"github.com/beerguevara/antcrypto/fifo/internal/parser"
+	"github.com/beerguevara/antcrypto/fifo/internal/pool"
+	"github.com/beerguevara/antcrypto/fifo/internal/report"
+	"github.com/beerguevara/antcrypto/fifo/internal/unitcost"
+	"github.com/beerguevara/antcrypto/fifo/pkg/utils"
+)
+
+type coinFile struct {
+	coin string
+	path string
+}
+
+func main() {
+	configPath := flag.String("config", "../../config/config.yaml", "Path to config file")
+	rootsFlag := flag.String("roots", "", "Comma-separated list of root aliases to process (default: all)")
+	flag.Parse()
+
+	cfg, err := config.LoadConfig(*configPath)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Failed to load config: %v\n", err)
+		os.Exit(1)
+	}
+
+	roots := cfg.Roots
+	if *rootsFlag != "" {
+		roots = filterRoots(cfg.Roots, *rootsFlag)
+	}
+
+	for _, root := range roots {
+		err := processRoot(root, cfg)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "Failed to process root %s: %v\n", root.Alias, err)
+		} else {
+			fmt.Printf("Successfully processed root %s\n", root.Alias)
+		}
+	}
+}
+
+func filterRoots(allRoots []config.RootConfig, aliases string) []config.RootConfig {
+	aliasMap := make(map[string]bool)
+
+	for _, alias := range parseList(aliases) {
+		aliasMap[alias] = true
+	}
+
+	var filtered []config.RootConfig
+	for _, root := range allRoots {
+		if aliasMap[root.Alias] {
+			filtered = append(filtered, root)
+		}
+	}
+
+	return filtered
+}
+
+type coinProcessingResult struct {
+	transactions []*classifier.Transaction
+	allocator    *fifo.FIFOAllocator
+	allocations  []*fifo.Allocation
+	poolManager  *pool.PoolManager
+}
+
+func processRoot(root config.RootConfig, cfg *config.Config) error {
+	dataDir := filepath.Join(root.Path, "data")
+	reportsBaseDir := filepath.Join(root.Path, "reports")
+	timestamp := time.Now().Format("2006_01_02_1504")
+
+	// Create reports directory with timestamp
+	reportsDir := filepath.Join(reportsBaseDir, timestamp)
+
+	if err := os.MkdirAll(reportsDir, 0755); err != nil {
+		return fmt.Errorf("failed to create reports directory: %w", err)
+	}
+
+	errorLogPath := filepath.Join(reportsDir, "error_log.jsonl")
+	errorLog, err := parser.NewJSONLErrorLogger(errorLogPath)
+	if err != nil {
+		return fmt.Errorf("failed to create error log: %w", err)
+	}
+	defer errorLog.Close()
+
+	coinFiles, err := findCoinFiles(dataDir)
+	if err != nil {
+		return err
+	}
+
+	// Aggregate data from all coins
+	allTransactions := []*classifier.Transaction{}
+	allAllocations := []*fifo.Allocation{}
+	coinPoolsMap := make(map[string]*pool.PoolManager)
+
+	// NEW: Initialize broker system
+	templateLoader := exchangerate.NewTemplateLoader()
+	if err := templateLoader.LoadLatestTemplate(roots[0].Path); err != nil {
+		fmt.Fprintf(os.Stderr, "WARNING: Could not load exchange_rates_template.yaml: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Broker processing will be skipped.\n")
+		// Continue without broker processing
+		templateLoader = nil
+	}
+
+	brokerPM := broker.NewBrokerPoolManager()
+	var brokerReport *broker.BrokerReportGenerator
+	if templateLoader != nil {
+		brokerPM.SetTemplateLoader(templateLoader)
+		brokerPM.InitializePools()
+		brokerReport = broker.NewBrokerReportGenerator()
+	}
+
+	for _, cf := range coinFiles {
+		result, err := processCoin(cf, errorLog, cfg)
+		if err != nil {
+			errorLog.LogError(parser.ErrorEntry{
+				Type:    "PROCESS_ERROR",
+				Message: fmt.Sprintf("Failed to process coin: %v", err),
+				Coin:    cf.coin,
+			})
+			continue
+		}
+
+		// Accumulate data
+		allTransactions = append(allTransactions, result.transactions...)
+		allAllocations = append(allAllocations, result.allocations...)
+		coinPoolsMap[cf.coin] = result.poolManager
+	}
+
+	// Generate aggregated reports once
+	coordinator := report.NewReportCoordinator(coinPoolsMap, allTransactions, allAllocations, cfg)
+	err = coordinator.GenerateAllReports(reportsDir)
+	if err != nil {
+		return fmt.Errorf("failed to generate reports: %w", err)
+	}
+
+	fmt.Printf("Successfully processed root %s\n", root.Alias)
+	return nil
+}
+
+func findCoinFiles(dataDir string) ([]coinFile, error) {
+	entries, err := os.ReadDir(dataDir)
+	if err != nil {
+		return nil, err
+	}
+
+	var coinMap map[string]bool
+
+	coinMap = make(map[string]bool)
+	for _, entry := range entries {
+		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".csv" {
+			coin := filepath.Base(entry.Name()[:len(entry.Name())-4])
+			if !utils.EqualCaseInsensitive(coin, "zar") {
+				coinMap[coin] = true
+			}
+		}
+	}
+
+	var coinFiles []coinFile
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+
+		filename := entry.Name()
+		coin := filepath.Base(filename[:len(filename)-4])
+
+		if filepath.Ext(filename) != ".csv" {
+			continue
+		}
+
+		if utils.EqualCaseInsensitive(coin, "zar") {
+			continue
+		}
+
+		if coinMap[coin] {
+			coinFiles = append(coinFiles, coinFile{
+				coin: coin,
+				path: filepath.Join(dataDir, filename),
+			})
+		}
+	}
+
+	return coinFiles, nil
+}
+
+func processCoin(cf coinFile, errorLog *parser.JSONLErrorLogger, cfg *config.Config) (*coinProcessingResult, error) {
+	transactions, err := parser.NewCSVReader(cf.path).ReadAll()
+	if err != nil {
+		return nil, fmt.Errorf("failed to read transactions: %w", err)
+	}
+
+	classifierTxs, err := convertToClassifierTransactions(transactions)
+	if err != nil {
+		return nil, err
+	}
+
+	c := classifier.NewClassifier()
+
+	for _, tx := range classifierTxs {
+		txType, err := c.Classify(*tx)
+		if err != nil {
+			errorLog.LogError(parser.ErrorEntry{
+				Type:    "CLASSIFICATION_ERROR",
+				Message: err.Error(),
+				Coin:    cf.coin,
+			})
+			continue
+		}
+		tx.Type = txType
+	}
+
+	poolClassifier := classifier.NewPoolClassifier()
+	poolClassifier.ClassifyPools(classifierTxs)
+
+	feeLinker := classifier.NewFeeLinker()
+	feeLinker.LinkFees(classifierTxs)
+
+	pm := pool.NewPoolManager()
+	pm.InitializePools()
+
+	sort.Slice(classifierTxs, func(i, j int) bool {
+		return classifierTxs[i].Row < classifierTxs[j].Row
+	})
+
+	allocator := fifo.NewFIFOAllocator(pm)
+
+	// NEW: Process out_other transactions - add to broker pool
+	if templateLoader != nil {
+		for _, tx := range classifierTxs {
+			if tx.Type == classifier.OutflowOther {
+				consumedLots := allocator.GetLotsConsumedByTransaction(tx.Row)
+				if len(consumedLots) > 0 {
+					brokerLots, err := brokerPM.AddToBrokerPool(tx, consumedLots)
+					if err != nil {
+						errorLog.LogError(parser.ErrorEntry{
+							Type:      "BROKER_ERROR",
+							Message:   err.Error(),
+							Coin:      cf.coin,
+							Row:       tx.Row,
+							Timestamp: tx.TimestampStr,
+						})
+						continue
+					}
+
+					for _, brokerLot := range brokerLots {
+						brokerReport.AddEntryRow(brokerLot, tx)
+					}
+				}
+			}
+		}
+	}
+
+	for _, tx := range classifierTxs {
+		if tx.Type == classifier.InflowBuy || tx.Type == classifier.InflowBuyForOther || tx.Type == classifier.InflowOther {
+			var unitCost decimal.Decimal
+			var isCustomCost bool
+			var customCostNotes string
+
+			if tx.Type == classifier.InflowOther {
+				result := unitcost.CalculateCustomUnitCost(tx)
+				unitCost = result.Value
+				isCustomCost = result.IsCustom
+				customCostNotes = result.CustomNotes
+			} else {
+				unitCost = tx.ValueAmount.Div(tx.BalanceDelta.Abs())
+				isCustomCost = false
+				customCostNotes = ""
+			}
+
+			poolName := string(tx.Type)
+			rawLine := fmt.Sprintf("%d|%d|%s|%s", tx.Row, tx.Timestamp, tx.Description, tx.ValueAmount.String())
+			lotRef := pool.GenerateLotReference(poolName, rawLine)
+			err := pm.AddLotWithReference(poolName, tx.BalanceDelta.Abs(), unitCost, tx.Timestamp, lotRef, isCustomCost, customCostNotes)
+			if err != nil {
+				errorLog.LogError(parser.ErrorEntry{
+					Type:      "POOL_ERROR",
+					Message:   err.Error(),
+					Coin:      cf.coin,
+					Row:       tx.Row,
+					Timestamp: tx.TimestampStr,
+				})
+			}
+			tx.LotReference = &lotRef
+		}
+	}
+
+	sort.Slice(classifierTxs, func(i, j int) bool {
+		return classifierTxs[i].Row < classifierTxs[j].Row
+	})
+
+	allocator := fifo.NewFIFOAllocator(pm)
+
+	for _, tx := range classifierTxs {
+		if tx.Type == classifier.OutflowSell || tx.Type == classifier.OutflowOther ||
+			tx.Type == classifier.OutflowFeeBuy || tx.Type == classifier.OutflowFeeBuyForOther ||
+			tx.Type == classifier.OutflowFeeInOther || tx.Type == classifier.OutflowFeeSell || tx.Type == classifier.OutflowFeeOutOther {
+
+			var linkedLotRef *string
+			if tx.LinkedRef != nil {
+				linkedLotRef = tx.LinkedRef
+			}
+
+			err := allocator.AllocateTransaction(tx, linkedLotRef)
+			if err != nil {
+				errorLog.LogError(parser.ErrorEntry{
+					Type:      "ALLOCATION_ERROR",
+					Message:   err.Error(),
+					Coin:      cf.coin,
+					Row:       tx.Row,
+					Timestamp: tx.TimestampStr,
+				})
+			}
+		}
+	}
+
+	return &coinProcessingResult{
+		transactions: classifierTxs,
+		allocator:    allocator,
+		allocations:  allocator.GetAllocations(),
+		poolManager:  pm,
+	}, nil
+}
+
+func convertToClassifierTransactions(transactions []parser.Transaction) ([]*classifier.Transaction, error) {
+	var classifierTxs []*classifier.Transaction
+
+	for _, tx := range transactions {
+		classifierTx := &classifier.Transaction{
+			WalletID:              tx.WalletID,
+			Row:                   tx.Row,
+			Timestamp:             tx.Timestamp.Unix(),
+			TimestampStr:          tx.Timestamp.Format("2006-01-02 15:04:05"),
+			Description:           tx.Description,
+			Currency:              tx.Currency,
+			BalanceDelta:          tx.BalanceDelta,
+			ValueAmount:           tx.ValueAmount,
+			Reference:             tx.Reference,
+			CryptocurrencyAddress: tx.CryptocurrencyAddress,
+			CryptocurrencyTxID:    tx.CryptocurrencyTxID,
+		}
+		classifierTxs = append(classifierTxs, classifierTx)
+	}
+
+	return classifierTxs, nil
+}
+
+func parseList(s string) []string {
+	if s == "" {
+		return []string{}
+	}
+	return strings.Split(s, ",")
+}
